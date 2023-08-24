@@ -30,14 +30,11 @@ public class Port {
         return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lat-this.lat))*6371; // (6371 is Earth radius in km.)
     }
 
-    // TODO: Figure out what happens when port capacity exceeds maximum (allow vehicle or not?)
     public void addVehicle(Vehicle vehicle) {
-        for (Container container: vehicle.getContainers()) {
-            addContainer(container);
-        }
+        vehicles.add(vehicle);
     }
 
-    private void addContainer(Container container) {
+    public void addContainer(Container container) {
         if (currentWeight > capacity) {
             System.out.println("Port capacity exceeded");
             return;
