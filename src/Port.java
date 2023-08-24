@@ -51,4 +51,20 @@ public class Port {
     public void removeContainer(Container container) {
         containers.remove(container);
     }
+
+    public ArrayList<Vehicle> getShips() {
+        ArrayList<Vehicle> res = new ArrayList<>();
+        for (Vehicle vehicle: vehicles) {
+            if (vehicle instanceof Vehicle.Ship) res.add(vehicle);
+        }
+        return res;
+    }
+
+    public ArrayList<Vehicle> getTrucks() {
+        ArrayList<Vehicle> res = new ArrayList<>();
+        for (Vehicle vehicle: vehicles) {
+            if (vehicle instanceof Vehicle.Truck) res.add(vehicle);
+        }
+        return res;
+    }
 }
