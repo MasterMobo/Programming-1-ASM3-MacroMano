@@ -27,7 +27,7 @@ public class Port {
 
     public double getDist(Port other) {
         // Calculates the distance between this port and the other port (in km)
-        return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lat-this.lat))*6371; // (6371 is Earth radius in km.)
+        return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lon-this.lon))*6371; // (6371 is Earth radius in km.)
     }
 
     public void addVehicle(Vehicle vehicle) {

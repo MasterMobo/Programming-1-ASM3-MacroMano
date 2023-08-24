@@ -8,6 +8,7 @@ public class Trip {
     private Date arriveDate;
     private Port departPort;
     private Port arrivePort;
+    private double length;
     private Status status;
 
     public Trip() {
