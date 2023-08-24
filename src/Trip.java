@@ -1,11 +1,11 @@
-import java.util.Date;
+import java.time.LocalDate;
 
 import Utils.Status;
 
 public class Trip {
     private Vehicle vehicle;
-    private Date departDate;
-    private Date arriveDate;
+    private LocalDate departDate;
+    private LocalDate arriveDate;
     private Port departPort;
     private Port arrivePort;
     private double length;
@@ -15,7 +15,7 @@ public class Trip {
     }
 
     // TODO: Do you need to initialize status?
-    public Trip(Vehicle vehicle, Date departDate, Date arriveDate, Port departPort, Port arrivePort) {
+    public Trip(Vehicle vehicle, LocalDate departDate, LocalDate arriveDate, Port departPort, Port arrivePort) {
         this.vehicle = vehicle;
         this.departDate = departDate;
         this.arriveDate = arriveDate;
@@ -24,7 +24,12 @@ public class Trip {
         this.status = Status.PROCESSING;
     }
 
+    public LocalDate getDepartDate() {
+        return departDate;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
+
 }
