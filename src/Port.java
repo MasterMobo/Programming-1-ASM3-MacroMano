@@ -8,7 +8,7 @@ public class Port {
     private double lat;
     private double lon;
     private double capacity;
-//    private double currentWeight;
+    private double currentWeight;
     private boolean isLanding;
     private ArrayList<Container> containers;
     private ArrayList<Vehicle> vehicles;
@@ -28,5 +28,22 @@ public class Port {
     public double getDist(Port other) {
         // Calculates the distance between this port and the other port (in km)
         return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lat-this.lat))*6371; // (6371 is Earth radius in km.)
+    }
+
+    // TODO: Figure out what happens when port capacity exceeds maximum (allow vehicle or not?)
+    public void addVehicle(Vehicle vehicle) {
+        for (Container container: vehicle.getContainers()) {
+            addContainer(container);
+        }
+    }
+
+    private void addContainer(Container container) {
+        if (currentWeight > capacity) {
+            System.out.println("Port capacity exceeded");
+            return;
+        }
+
+        containers.add(container);
+        currentWeight += container.getWeight();
     }
 }
