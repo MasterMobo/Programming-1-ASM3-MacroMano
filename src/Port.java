@@ -34,6 +34,10 @@ public class Port {
         vehicles.add(vehicle);
     }
 
+    public void removeVehicle(Vehicle vehicle) {
+        vehicles.remove(vehicle);
+    }
+
     public void addContainer(Container container) {
         if (currentWeight > capacity) {
             System.out.println("Port capacity exceeded");
@@ -42,5 +46,9 @@ public class Port {
 
         containers.add(container);
         currentWeight += container.getWeight();
+    }
+
+    public void removeContainer(Container container) {
+        containers.remove(container);
     }
 }
