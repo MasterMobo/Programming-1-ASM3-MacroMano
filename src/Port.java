@@ -50,6 +50,7 @@ public class Port {
 
     public void removeContainer(Container container) {
         containers.remove(container);
+        currentWeight -= container.getWeight();
     }
 
     public ArrayList<Vehicle> getShips() {
