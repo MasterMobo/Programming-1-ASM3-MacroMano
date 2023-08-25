@@ -1,15 +1,18 @@
-package Utils.Containers;
-public class Container {
+package Containers;
+//Parent class
+public abstract class Container {
     private String id;
     private double weight;
     private float shipFuelConsumption;
     private float truckFuelConsumption;
+    private String type;
 
-    public Container(String id, double weight, float shipFuelConsumption, float truckFuelConsumption) {
+    public Container(String id, double weight, float shipFuelConsumption, float truckFuelConsumption, String type) {
         this.id = id;
         this.weight = weight;
         this.shipFuelConsumption = shipFuelConsumption;
         this.truckFuelConsumption = truckFuelConsumption;
+        this.type = type;
     }
 
     public String getId() {
@@ -44,13 +47,13 @@ public class Container {
         this.truckFuelConsumption = truckFuelConsumption;
     }
 
-    @Override
-    public String toString() {
-        return "Container{" +
-                "id='" + id + '\'' +
-                ", weight=" + weight +
-                ", shipFuelConsumption=" + shipFuelConsumption +
-                ", truckFuelConsumption=" + truckFuelConsumption +
-                '}';
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
+
+
