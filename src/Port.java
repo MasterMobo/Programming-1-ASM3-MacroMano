@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 import static java.lang.Math.*;
 
+import Containers.*;
+
 public class Port {
     private String name;
     private String id;
@@ -39,13 +41,14 @@ public class Port {
     }
 
     public void addContainer(Container container) {
-        if (currentWeight > capacity) {
+        double containerWeight = container.getWeight();
+        if (currentWeight + containerWeight > capacity) {
             System.out.println("Port capacity exceeded");
             return;
         }
 
         containers.add(container);
-        currentWeight += container.getWeight();
+        currentWeight += containerWeight;
     }
 
     public void removeContainer(Container container) {

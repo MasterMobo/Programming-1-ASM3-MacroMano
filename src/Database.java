@@ -41,7 +41,7 @@ public class Database {
 
     public ArrayList<Trip> tripsBetween(String dateString1, String dateString2) {
         // Expecting date in "dd/MM/yyyy" format
-        // Returns all the trips departed between one day to another
+        // Returns all the trips departed between one day and another
         ArrayList<Trip> res = new ArrayList<>();
         LocalDate date1 = toLocalDate(dateString1);
         LocalDate date2 = toLocalDate(dateString2);
