@@ -24,8 +24,32 @@ public class Trip {
         this.status = Status.PROCESSING;
     }
 
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public LocalDate getArriveDate() {
+        return arriveDate;
+    }
+
     public LocalDate getDepartDate() {
         return departDate;
+    }
+
+    public Port getDepartPort() {
+        return departPort;
+    }
+
+    public Port getArrivePort() {
+        return arrivePort;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public void setStatus(Status status) {

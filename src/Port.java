@@ -27,6 +27,42 @@ public class Port {
         this.isLanding = isLanding;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public double getCapacity() {
+        return capacity;
+    }
+
+    public double getCurrentWeight() {
+        return currentWeight;
+    }
+
+    public boolean isLanding() {
+        return isLanding;
+    }
+
+    public ArrayList<Container> getContainers() {
+        return containers;
+    }
+
+    public ArrayList<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
     public double getDist(Port other) {
         // Calculates the distance between this port and the other port (in km)
         return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lon-this.lon))*6371; // (6371 is Earth radius in km.)
