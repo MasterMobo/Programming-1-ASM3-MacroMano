@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static Utils.DateUtils.*;
@@ -9,8 +8,16 @@ public class Database {
     private ArrayList<Trip> trips;
     private ArrayList<Vehicle> vehicles;
 
+    public void refresh() {
+        // Deletes all trip records that are older than 7 days
+        LocalDate now = LocalDate.now();
+        for (Trip trip: trips){
+            if (trip.getDepartDate().until(now).getDays() > 7) {
+                trips.remove(trip);
+            }
+        }
+    }
 
-    // TODO: is the date in question the arrival or departure day?
     public ArrayList<Trip> tripsOn(String dateString) {
         // Expecting date in "dd/MM/yyyy" format
         // Returns all the trips departed on the given date
