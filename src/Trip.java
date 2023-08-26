@@ -56,4 +56,16 @@ public class Trip {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "vehicle=" + vehicle +
+                ", departDate=" + departDate +
+                ", arriveDate=" + arriveDate +
+                ", departPort=" + departPort.getName() +
+                ", arrivePort=" + arrivePort.getName() +
+                ", length=" + length +
+                ", status=" + status +
+                '}';
+    }
 }
