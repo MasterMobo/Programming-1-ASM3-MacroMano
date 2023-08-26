@@ -2,16 +2,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import static Utils.DateUtils.*;
+
 public class Database {
     private ArrayList<Port> ports;
     private ArrayList<Trip> trips;
     private ArrayList<Vehicle> vehicles;
 
-
-    private static LocalDate toLocalDate(String dateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return LocalDate.parse(dateString, formatter);
-    }
 
     // TODO: is the date in question the arrival or departure day?
     public ArrayList<Trip> tripsOn(String dateString) {
