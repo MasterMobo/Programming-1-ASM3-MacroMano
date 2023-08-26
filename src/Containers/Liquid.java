@@ -1,9 +1,10 @@
-package Utils.Containers;
+package Containers;
 
 public class Liquid extends Container {
+    private static String type = "Liquid";
     private static float shipFuelConsumption = 4.8F;
     private static float truckFuelConsumption = 5.3F;
-    public Liquid(String id, double weight, float shipFuelConsumption, float truckFuelConsumption) {
-        super(id, weight, truckFuelConsumption, truckFuelConsumption);
+    public Liquid(String id, double weight) {
+        super(id,weight);
     }
 }

@@ -8,15 +8,4 @@ public class DryStorage extends Container {
     public DryStorage(String id, double weight) {
         super(id,weight);
     }
-
-    @Override
-    public String toString() {
-        return "Container{" +
-                ", type='" + type + '\'' +
-                "id='" + id + '\'' +
-                ", weight= " + weight + "kg" +
-                ", shipFuelConsumption= " + shipFuelConsumption +
-                ", truckFuelConsumption= " + truckFuelConsumption +
-                '}';
-    }
 }
