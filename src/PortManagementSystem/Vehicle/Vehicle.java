@@ -18,7 +18,7 @@ public class Vehicle implements VehicleOperation {
     public ArrayList<Container> loadedContainers = new ArrayList<>();
     private int totalContainerCount = 0;
 
-    public Vehicle(String name, String id, Port portId, Double carryCapacity, Double fuelCapacity) {
+    public Vehicle(String name, String id, Port portId, Double carryCapacity, Float fuelCapacity) {
         this.name = name;
         this.id = id;
         this.portId = portId;
@@ -31,9 +31,9 @@ public class Vehicle implements VehicleOperation {
         if (this.carryCapacity < this.totalContainerCount) {
             System.out.println("Loading Capacity Exceeded please unload");
         }
-        if (totalConsumption()) {
+//        if (totalConsumption()) {
 
-        }
+//        }
     }
 
 //    TODO: add logic for special cases of truck, this method now adding every containers to all vehicle types
@@ -65,7 +65,7 @@ public class Vehicle implements VehicleOperation {
                 continue;
             }
 
-//            Note: So in here I wanna check if there is already existing container object with the input ID
+//            Note: So in here I want to check if there is already existing container object with the input ID
             Container container = getContainerObject(containerId);
             if (container == null) {
                 System.out.println("No container object associated with the provided ID.");
@@ -82,6 +82,10 @@ public class Vehicle implements VehicleOperation {
         scanner.close();
     }
 
+    public static Container getContainerObject(String containerID) {
+
+    }
+
     public void printTotalTypeCounts() {
         System.out.println("Total Type Counts:");
         for (Map.Entry<String, Integer> entry : totalTypeCounts.entrySet()) {
@@ -96,7 +100,8 @@ public class Vehicle implements VehicleOperation {
 //    This class is used to calculate the fuel consumption of all containers type
     public boolean totalConsumption(Vehicle vehicle) {
         float totalFuelConsumption = 0.0F;
-        if (vehicle instanceof Ship) {
+
+            if (vehicle instanceof Ship) {
             for (Map.Entry<String, Integer> entry : totalTypeCounts.entrySet()) {
                 String containerType = entry.getKey();
                 int totalCount = entry.getValue();
@@ -125,7 +130,7 @@ public class Vehicle implements VehicleOperation {
 
 
     private boolean isValidContainerType(String containerType) {
-        List<String> validTypes = Arrays.asList("Dry Storage", "Open Top", "Open Side", "Refridgerated", "Liquid");
+        List<String> validTypes = Arrays.asList("Dry Storage", "Open Top", "Open Side", "Refrigerated", "Liquid");
         return validTypes.contains(containerType);
     }
 
