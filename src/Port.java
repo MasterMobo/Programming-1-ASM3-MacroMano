@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 import Containers.*;
+import Vehicle.*;
 
 public class Port {
     private String name;
@@ -95,7 +96,7 @@ public class Port {
     public ArrayList<Vehicle> getShips() {
         ArrayList<Vehicle> res = new ArrayList<>();
         for (Vehicle vehicle: vehicles) {
-            if (vehicle instanceof Vehicle.Ship) res.add(vehicle);
+            if (vehicle instanceof Ship) res.add(vehicle);
         }
         return res;
     }
@@ -103,7 +104,7 @@ public class Port {
     public ArrayList<Vehicle> getTrucks() {
         ArrayList<Vehicle> res = new ArrayList<>();
         for (Vehicle vehicle: vehicles) {
-            if (vehicle instanceof Vehicle.Truck) res.add(vehicle);
+            if (vehicle instanceof Truck) res.add(vehicle);
         }
         return res;
     }

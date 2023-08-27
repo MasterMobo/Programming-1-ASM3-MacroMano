@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 
 import Utils.Status;
+import Vehicle.Vehicle;
 
 public class Trip {
     private Vehicle vehicle;

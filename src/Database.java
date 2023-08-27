@@ -1,3 +1,5 @@
+import Vehicle.Vehicle;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
