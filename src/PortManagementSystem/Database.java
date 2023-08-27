@@ -1,13 +1,16 @@
 package PortManagementSystem;
 
+import PortManagementSystem.Containers.Container;
 import PortManagementSystem.Port;
 import PortManagementSystem.User.*;
 import PortManagementSystem.Vehicle.Vehicle;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
+import static PortManagementSystem.Utils.DBUtils.*;
 import static PortManagementSystem.Utils.DateUtils.*;
 
 public class Database {
@@ -15,6 +18,32 @@ public class Database {
     private ArrayList<Port> ports;
     private ArrayList<Trip> trips;
     private ArrayList<Vehicle> vehicles;
+
+    // TODO: maybe use HashMap instead of ArrayList to store data?
+    // maps container id to container object (This is just a test)
+    private HashMap<String, Container> containers = new HashMap<>();
+    private static final int KEY_LENGTH = 5;
+
+    public Object findById (String type, String id) {
+        switch (type) {
+            case "container":
+                return containers.get(id);
+            default:
+                System.out.println("Invalid type");
+                return null;
+        }
+    }
+
+    // TODO: how the fuck do i implement unique check?
+    public String generateId (String type) {
+        switch (type) {
+            case "container":
+                return "c-" + randKey(KEY_LENGTH);
+            default:
+                System.out.println("Invalid type");
+                return null;
+        }
+    }
 
     public void refresh() {
         // Deletes all trip records that are older than 7 days

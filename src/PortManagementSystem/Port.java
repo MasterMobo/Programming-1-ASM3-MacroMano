@@ -82,7 +82,7 @@ public class Port {
     public void addContainer(Container container) {
         double containerWeight = container.getWeight();
         if (currentWeight + containerWeight > capacity) {
-            System.out.println("PortManagementSystem.Port.PortManagementSystem.Port capacity exceeded");
+            System.out.println("Port capacity exceeded");
             return;
         }
 
