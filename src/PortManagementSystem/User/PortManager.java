@@ -1,6 +1,6 @@
 package PortManagementSystem.User;
 
-class PortManager extends User {
+public class PortManager extends User {
     private String portName;
     public PortManager(String username, String password, String portName) {
         super(username, password);
