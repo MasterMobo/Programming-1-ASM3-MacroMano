@@ -1,8 +1,8 @@
-package Vehicle;
-import Utils.*;
-import Containers.*;
+package PortManagementSystem.Vehicle;
+import PortManagementSystem.Port;
+import PortManagementSystem.Utils.*;
+import PortManagementSystem.Containers.*;
 import java.util.*;
-import Port;
 
 public class Vehicle implements VehicleOperation {
 
@@ -26,7 +26,7 @@ public class Vehicle implements VehicleOperation {
         this.fuelCapacity = fuelCapacity;
     }
 
-// TODO: add logic for when actual consumption exceeded Capacity (Trip length)
+// TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
     public void allowToTravel() {
         if (this.carryCapacity < this.totalContainerCount) {
             System.out.println("Loading Capacity Exceeded please unload");
@@ -41,7 +41,7 @@ public class Vehicle implements VehicleOperation {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-//            Taking User input of the container type and to stop the loop
+//            Taking PortManagementSystem.User input of the container type and to stop the loop
             System.out.print("Enter container type (or 'exit' to stop): ");
             String containerType = scanner.nextLine();
 

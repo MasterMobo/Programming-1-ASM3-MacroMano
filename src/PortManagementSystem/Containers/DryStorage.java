@@ -1,4 +1,4 @@
-package Containers;
+package PortManagementSystem.Containers;
 
     public class DryStorage extends Container {
         private static String type = "Dry Storage";

@@ -1,7 +1,10 @@
+package PortManagementSystem;
+
 import java.time.LocalDate;
 
-import Utils.Status;
-import Vehicle.Vehicle;
+import PortManagementSystem.Port;
+import PortManagementSystem.Utils.Status;
+import PortManagementSystem.Vehicle.Vehicle;
 
 public class Trip {
     private Vehicle vehicle;
@@ -59,7 +62,7 @@ public class Trip {
 
     @Override
     public String toString() {
-        return "Trip{" +
+        return "PortManagementSystem.Trip.PortManagementSystem.Trip{" +
                 "vehicle=" + vehicle +
                 ", departDate=" + departDate +
                 ", arriveDate=" + arriveDate +

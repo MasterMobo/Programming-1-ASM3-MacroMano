@@ -1,5 +1,5 @@
-package Utils;
-import Containers.*;
+package PortManagementSystem.Utils;
+import PortManagementSystem.Containers.*;
 public class ContainerFuelUtils {
     public static float getFuelConsumptionForType(String containerType, String vehicleType) {
         switch (containerType) {

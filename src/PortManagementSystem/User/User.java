@@ -1,5 +1,6 @@
-package User;
-
+package PortManagementSystem.User;
+import PortManagementSystem.Database;
+import PortManagementSystem.Trip;
 
 import java.util.ArrayList;
 

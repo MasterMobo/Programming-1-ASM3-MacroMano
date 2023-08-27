@@ -1,4 +1,4 @@
-package User;
+package PortManagementSystem.User;
 
 class PortManager extends User {
     private String portName;

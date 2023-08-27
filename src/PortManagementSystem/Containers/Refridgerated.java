@@ -1,4 +1,4 @@
-package Containers;
+package PortManagementSystem.Containers;
 
 public class Refridgerated extends Container {
     private static String type = "Refrigerated";

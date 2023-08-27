@@ -1,9 +1,12 @@
-import Vehicle.Vehicle;
+package PortManagementSystem;
+
+import PortManagementSystem.Port;
+import PortManagementSystem.Vehicle.Vehicle;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static Utils.DateUtils.*;
+import static PortManagementSystem.Utils.DateUtils.*;
 
 public class Database {
     private ArrayList<Port> ports;

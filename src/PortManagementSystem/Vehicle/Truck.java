@@ -1,4 +1,4 @@
-package Vehicle;
+package PortManagementSystem.Vehicle;
 import
 public class Truck extends Vehicle {
     public Truck(String name, String id, Port portId, Double carryCapacity, Double fuelCapacity) {
