@@ -1,14 +1,17 @@
 package PortManagementSystem;
 
 import PortManagementSystem.Port;
+import PortManagementSystem.User.*;
 import PortManagementSystem.Vehicle.Vehicle;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static PortManagementSystem.Utils.DateUtils.*;
 
 public class Database {
+    private ArrayList<User> users;
     private ArrayList<Port> ports;
     private ArrayList<Trip> trips;
     private ArrayList<Vehicle> vehicles;
@@ -17,10 +20,29 @@ public class Database {
         // Deletes all trip records that are older than 7 days
         LocalDate now = LocalDate.now();
         for (Trip trip: trips){
-            if (trip.getDepartDate().until(now).getDays() > 7) {
+            if (daysBetween(trip.getDepartDate(), now) > 7) {
                 trips.remove(trip);
             }
         }
+    }
+
+    public void addAdmin(String username, String password) {
+        users.add(new SystemAdmin(username, password));
+    }
+
+    public void addManager(String username, String password, String portName) {
+        users.add(new PortManager(username, password, portName));
+    }
+
+    public User findByUsername(String username) {
+        for (User user: users) {
+            if (Objects.equals(user.getUsername(), username)) return user;
+        }
+        return null;
+    }
+
+    public void addPort(String name, String id, double lat, double lon, double capacity, boolean isLanding) {
+        ports.add(new Port(name, id, lat, lon, capacity, isLanding));
     }
 
     public ArrayList<Trip> tripsOn(String dateString) {
