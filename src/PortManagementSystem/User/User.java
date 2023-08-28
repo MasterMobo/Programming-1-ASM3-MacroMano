@@ -9,6 +9,8 @@ public class User {
     private String password;
     private Database database;
 
+    private ArrayList<User> users;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -16,6 +18,10 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public boolean authenticate(String password) {
@@ -38,6 +44,50 @@ public class User {
     }
 
 
+
+    public boolean register(String username, String password, String confirmPassword) {
+        //Add new user to user list
+
+        //Check if the username's already existed
+        for (User oldUser : users ) {
+            if (oldUser.getUsername() == username) {
+                System.out.println("Ivalid Username");
+                return false;
+            }
+        }
+        //Check the confirmation password
+        if (password != confirmPassword) {
+            System.out.println("Invalid confirmation password");
+            return false;
+        }
+
+        //Add user
+        User user = new User(username, password);
+        users.add(user);
+        System.out.println("successfully registered");
+        return true;
+    }
+
+    public boolean login(String username, String password) {
+        //Get the username and password, return if the account is authenticated
+
+        for (User oldUser : users ) {
+            if (oldUser.getUsername() == username) {
+                if (oldUser.getPassword() == password) {
+                    System.out.println("Login successfully");
+                    boolean authenticated = true;
+                    return authenticated;
+                } else {
+                    System.out.println("Invalid password");
+                    boolean authenticated = false;
+                    return authenticated;
+                }
+            }
+        }
+        System.out.println("Invalid Username");
+        boolean authenticated = false;
+        return authenticated;
+    }
 }
 
 
