@@ -70,8 +70,8 @@ public class Database {
         return null;
     }
 
-    public void addPort(String name, String id, double lat, double lon, double capacity, boolean isLanding) {
-        ports.add(new Port(name, id, lat, lon, capacity, isLanding));
+    public void addPort(String name, double lat, double lon, double capacity, boolean isLanding) {
+        ports.add(new Port(name, lat, lon, capacity, isLanding));
     }
 
     public ArrayList<Trip> tripsOn(String dateString) {
