@@ -10,18 +10,22 @@ public class Vehicle implements VehicleOperation {
     protected final String id;
     private Port port;
     public String portId;
-    private final Double carryCapacity;
-    private final Float fuelCapacity;
+    private Double carryCapacity;
+    private Double curfuelCapacity;
+    private final Double fuelCapacity;
     public ArrayList<Container> loadedContainers = new ArrayList<>();
 
-    public Vehicle(String name, String id, Port port, Double carryCapacity, Float fuelCapacity) {
+    public Vehicle(String name, String id, Port port, Double carryCapacity, Double fuelCapacity) {
         this.name = name;
         this.id = id;
         this.port = port;
         this.portId = port.getId();
         this.carryCapacity = carryCapacity;
+        this.curfuelCapacity = fuelCapacity;
         this.fuelCapacity = fuelCapacity;
     }
+
+
 
 // TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
     @Override public boolean allowToTravel() {
@@ -32,12 +36,20 @@ public class Vehicle implements VehicleOperation {
             canTravel = false;
         }
 
-        if (!this.totalConsumption()) {
+        if (this.totalConsumption() > this.fuelCapacity ) {
             System.out.println("Fuel Capacity Exceeded. Please refuel.");
             canTravel = false;
         }
-
         return canTravel;
+    }
+    @Override public void moveToPort() {
+        if (!this.allowToTravel()) {
+            return;
+        }
+        this.curfuelCapacity -= this.totalConsumption();
+    }
+    @Override public void refuel() {
+        this.curfuelCapacity = this.fuelCapacity;
     }
     @Override public void unloadContainer() {
         this.loadedContainers.clear();
@@ -104,7 +116,7 @@ public class Vehicle implements VehicleOperation {
         }
         return totalWeight;
     }
-    public boolean totalConsumption() {
+    public float totalConsumption() {
         float totalFuelConsumption = 0.0F;
         double portDistance = port.getDist(null);
 
@@ -118,6 +130,6 @@ public class Vehicle implements VehicleOperation {
                 totalFuelConsumption += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
             }
         }
-        return totalFuelConsumption < fuelCapacity;
+        return totalFuelConsumption;
     }
 }

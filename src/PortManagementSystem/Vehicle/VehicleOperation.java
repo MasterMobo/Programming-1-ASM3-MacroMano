@@ -8,6 +8,6 @@ public interface VehicleOperation {
     void loadContainer();
     void unloadContainer();
     boolean allowToTravel();
-//    boolean moveToPort();
-//    void refuel();
+    void moveToPort();
+    void refuel();
 }
