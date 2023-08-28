@@ -1,7 +1,13 @@
 package PortManagementSystem.Vehicle;
+
+import PortManagementSystem.Containers.Container;
+
+import java.util.ArrayList;
+
 public interface VehicleOperation {
-    void loadContainer(Vehicle vehicle);
-//    void unloadContainer();
+    void loadContainer();
+    void unloadContainer();
+    boolean allowToTravel();
 //    boolean moveToPort();
 //    void refuel();
 }

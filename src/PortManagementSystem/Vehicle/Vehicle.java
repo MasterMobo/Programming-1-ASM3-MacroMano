@@ -13,7 +13,6 @@ public class Vehicle implements VehicleOperation {
     private final Double carryCapacity;
     private final Float fuelCapacity;
     public ArrayList<Container> loadedContainers = new ArrayList<>();
-    private int totalContainerCount = 0;
 
     public Vehicle(String name, String id, Port port, Double carryCapacity, Float fuelCapacity) {
         this.name = name;
@@ -25,21 +24,28 @@ public class Vehicle implements VehicleOperation {
     }
 
 // TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
-    public void allowToTravel() {
-        if (this.carryCapacity < this.totalContainerCount) {
-            System.out.println("Loading Capacity Exceeded please unload");
+    @Override public boolean allowToTravel() {
+        boolean canTravel = true;
+
+        if (this.getTotalWeight() > this.carryCapacity) {
+            System.out.println("Loading Capacity Exceeded. Please unload.");
+            canTravel = false;
         }
-//        if (totalConsumption()) {
 
-//        }
+        if (!this.totalConsumption()) {
+            System.out.println("Fuel Capacity Exceeded. Please refuel.");
+            canTravel = false;
+        }
+
+        return canTravel;
     }
-
-//    TODO: add logic for special cases of truck, this method now adding every containers to all vehicle types
-    @Override public void loadContainer(Vehicle vehicle) {
+    @Override public void unloadContainer() {
+        this.loadedContainers.clear();
+    }
+    @Override public void loadContainer() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-//            Implemented new ways to add container, adding by ID
             System.out.print("Enter container ID (or 'exit' to stop): ");
             String containerId = scanner.nextLine();
 
@@ -53,15 +59,15 @@ public class Vehicle implements VehicleOperation {
                 continue;
             }
 
-            if (vehicle instanceof Ship) {
+            if (this instanceof Ship) {
                 loadedContainers.add(container);
-            } else if (vehicle instanceof Truck) {
-                if (vehicle instanceof Truck.ReeferTruck) {
+            } else if (this instanceof Truck) {
+                if (this instanceof Truck.ReeferTruck) {
                     if (container.getType().equals("Refridgerated") || container.getType().equals("Liquid")) {
                         System.out.println("ReeferTruck cannot carry Refridgerated or Liquid containers.");
                         continue;
                     }
-                } else if (vehicle instanceof Truck.TankerTruck) {
+                } else if (this instanceof Truck.TankerTruck) {
                     if (!container.getType().equals("Liquid")) {
                         System.out.println("TankerTruck can only carry Liquid containers.");
                         continue;
@@ -91,33 +97,27 @@ public class Vehicle implements VehicleOperation {
 
 
 //    UPDATED: Using 1D array to do calculation
-    public boolean totalConsumption(Vehicle vehicle) {
+    public double getTotalWeight() {
+        double totalWeight = 0;
+        for (Container container : loadedContainers) {
+            totalWeight += container.getWeight();
+        }
+        return totalWeight;
+    }
+    public boolean totalConsumption() {
         float totalFuelConsumption = 0.0F;
         double portDistance = port.getDist(null);
 
-        if (vehicle instanceof Ship) {
-            for (Container container : vehicle.loadedContainers) {
+        if (this instanceof Ship) {
+            for (Container container : loadedContainers) {
                 totalFuelConsumption += container.getShipFuelConsumption() * container.getWeight() * portDistance;
             }
 
-        } else if (vehicle instanceof Truck) {
-            for (Container container : vehicle.loadedContainers) {
+        } else if (this instanceof Truck) {
+            for (Container container : loadedContainers) {
                 totalFuelConsumption += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
             }
-
         }
-
-        if (totalFuelConsumption < vehicle.fuelCapacity) {
-            return true;
-        }
-         return false;
+        return totalFuelConsumption < fuelCapacity;
     }
-
-
-
-    private boolean isValidContainerType(String containerType) {
-        List<String> validTypes = Arrays.asList("Dry Storage", "Open Top", "Open Side", "Refrigerated", "Liquid");
-        return validTypes.contains(containerType);
-    }
-
 }
