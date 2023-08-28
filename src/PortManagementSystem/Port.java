@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import static java.lang.Math.*;
 
 import PortManagementSystem.Containers.*;
+import PortManagementSystem.DB.DatabaseRecord;
 import PortManagementSystem.Vehicle.*;
 
-public class Port {
+public class Port implements DatabaseRecord {
     private String name;
     private String id;
     private double lat;
@@ -21,9 +22,8 @@ public class Port {
     public Port() {
     }
 
-    public Port(String name, String id, double lat, double lon, double capacity, boolean isLanding) {
+    public Port(String name, double lat, double lon, double capacity, boolean isLanding) {
         this.name = name;
-        this.id = id;
         this.lat = lat;
         this.lon = lon;
         this.capacity = capacity;
@@ -37,6 +37,7 @@ public class Port {
     public String getId() {
         return id;
     }
+    public void setId(String id) {this.id = id;}
 
     public double getLat() {
         return lat;
@@ -109,5 +110,18 @@ public class Port {
             if (vehicle instanceof Truck) res.add(vehicle);
         }
         return res;
+    }
+
+    @Override
+    public String toString() {
+        return "Port{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                ", capacity=" + capacity +
+                ", currentWeight=" + currentWeight +
+                ", isLanding=" + isLanding +
+                '}';
     }
 }

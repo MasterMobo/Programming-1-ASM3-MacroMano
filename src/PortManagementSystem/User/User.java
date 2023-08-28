@@ -1,10 +1,11 @@
 package PortManagementSystem.User;
+import PortManagementSystem.DB.DatabaseRecord;
 import PortManagementSystem.Database;
 import PortManagementSystem.Trip;
 
 import java.util.ArrayList;
 
-public class User {
+public class User implements DatabaseRecord {
     private String username;
     private String password;
     private Database database;
@@ -22,6 +23,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getId() {
+        return username;
+    }
+
+    public void setId(String id) {
+        username = id;
     }
 
     public boolean authenticate(String password) {
@@ -87,6 +96,14 @@ public class User {
         System.out.println("Invalid Username");
         boolean authenticated = false;
         return authenticated;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
 
