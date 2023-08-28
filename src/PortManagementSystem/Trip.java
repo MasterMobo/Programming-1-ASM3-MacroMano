@@ -2,11 +2,13 @@ package PortManagementSystem;
 
 import java.time.LocalDate;
 
+import PortManagementSystem.DB.DatabaseRecord;
 import PortManagementSystem.Port;
 import PortManagementSystem.Utils.Status;
 import PortManagementSystem.Vehicle.Vehicle;
 
-public class Trip {
+public class Trip implements DatabaseRecord {
+    private String id;
     private Vehicle vehicle;
     private LocalDate departDate;
     private LocalDate arriveDate;
@@ -54,6 +56,14 @@ public class Trip {
 
     public Status getStatus() {
         return status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setStatus(Status status) {
