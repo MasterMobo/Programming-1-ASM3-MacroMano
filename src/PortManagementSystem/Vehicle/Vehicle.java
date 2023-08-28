@@ -35,7 +35,7 @@ public class Vehicle implements VehicleOperation {
     }
 
 //    TODO: add logic for special cases of truck, this method now adding every containers to all vehicle types
-    @Override public void loadContainer() {
+    @Override public void loadContainer(Vehicle vehicle) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -52,13 +52,35 @@ public class Vehicle implements VehicleOperation {
                 System.out.println("No container object associated with the provided ID.");
                 continue;
             }
-            loadedContainers.add(container);
+
+            if (vehicle instanceof Ship) {
+                loadedContainers.add(container);
+            } else if (vehicle instanceof Truck) {
+                if (vehicle instanceof Truck.ReeferTruck) {
+                    if (container.getType().equals("Refridgerated") || container.getType().equals("Liquid")) {
+                        System.out.println("ReeferTruck cannot carry Refridgerated or Liquid containers.");
+                        continue;
+                    }
+                } else if (vehicle instanceof Truck.TankerTruck) {
+                    if (!container.getType().equals("Liquid")) {
+                        System.out.println("TankerTruck can only carry Liquid containers.");
+                        continue;
+                    }
+                } else {
+                    // Truck can carry DryStorage, OpenTop, OpenSide containers
+                    if (container.getType().equals("Refridgerated") || container.getType().equals("Liquid")) {
+                        System.out.println("Truck cannot carry Refridgerated or Liquid containers.");
+                        continue;
+                    }
+                }
+                loadedContainers.add(container);
+            }
         }
         scanner.close();
     }
 
     public Container getContainerObject(String containerID) {
-        for (Container container : portId.getContainers()) {
+        for (Container container : port.getContainers()) {
             if (container.getId().equals(containerID)) {
                 return container;
             }

@@ -1,6 +1,6 @@
 package PortManagementSystem.Vehicle;
 public interface VehicleOperation {
-    void loadContainer();
+    void loadContainer(Vehicle vehicle);
 //    void unloadContainer();
 //    boolean moveToPort();
 //    void refuel();
