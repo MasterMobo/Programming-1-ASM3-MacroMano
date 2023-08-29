@@ -2,6 +2,8 @@ package PortManagementSystem.Vehicle;
 import PortManagementSystem.Port;
 import PortManagementSystem.Utils.*;
 import PortManagementSystem.Containers.*;
+
+import java.lang.foreign.StructLayout;
 import java.util.*;
 
 public class Vehicle implements VehicleOperation {
@@ -26,9 +28,9 @@ public class Vehicle implements VehicleOperation {
     }
 
 
-
-// TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
-    @Override public boolean allowToTravel() {
+    // TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
+    @Override
+    public boolean allowToTravel() {
         boolean canTravel = true;
 
         if (this.getTotalWeight() > this.carryCapacity) {
@@ -36,25 +38,33 @@ public class Vehicle implements VehicleOperation {
             canTravel = false;
         }
 
-        if (this.totalConsumption() > this.fuelCapacity ) {
+        if (this.totalConsumption() > this.fuelCapacity) {
             System.out.println("Fuel Capacity Exceeded. Please refuel.");
             canTravel = false;
         }
         return canTravel;
     }
-    @Override public void moveToPort() {
+
+    @Override
+    public void moveToPort() {
         if (!this.allowToTravel()) {
             return;
         }
         this.curfuelCapacity -= this.totalConsumption();
     }
-    @Override public void refuel() {
+
+    @Override
+    public void refuel() {
         this.curfuelCapacity = this.fuelCapacity;
     }
-    @Override public void unloadContainer() {
+
+    @Override
+    public void unloadContainer() {
         this.loadedContainers.clear();
     }
-    @Override public void loadContainer() {
+
+    @Override
+    public void loadContainer() {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -74,62 +84,51 @@ public class Vehicle implements VehicleOperation {
             if (this instanceof Ship) {
                 loadedContainers.add(container);
             } else if (this instanceof Truck) {
-                if (this instanceof Truck.ReeferTruck) {
-                    if (container.getType().equals("Refridgerated") || container.getType().equals("Liquid")) {
-                        System.out.println("ReeferTruck cannot carry Refridgerated or Liquid containers.");
-                        continue;
-                    }
-                } else if (this instanceof Truck.TankerTruck) {
-                    if (!container.getType().equals("Liquid")) {
-                        System.out.println("TankerTruck can only carry Liquid containers.");
-                        continue;
-                    }
+                if (container.getType() == "Refridgerated" && (this instanceof Truck.ReeferTruck)) {
+                    System.out.println("Only Reefer truck can carry Refridgerated");
+                } else if (container.getType() == "Liquid" && !(this instanceof Truck.TankerTruck)) {
+                    System.out.println("Only Tanker truck can carry Liquid");
                 } else {
-                    // Truck can carry DryStorage, OpenTop, OpenSide containers
-                    if (container.getType().equals("Refridgerated") || container.getType().equals("Liquid")) {
-                        System.out.println("Truck cannot carry Refridgerated or Liquid containers.");
-                        continue;
-                    }
+                    loadedContainers.add(container);
                 }
-                loadedContainers.add(container);
             }
+            scanner.close();
         }
-        scanner.close();
     }
 
-    public Container getContainerObject(String containerID) {
-        for (Container container : port.getContainers()) {
-            if (container.getId().equals(containerID)) {
-                return container;
+        public Container getContainerObject (String containerID){
+            for (Container container : port.getContainers()) {
+                if (container.getId().equals(containerID)) {
+                    return container;
+                }
             }
+            return null;
         }
-        return null;
-    }
-
 
 
 //    UPDATED: Using 1D array to do calculation
-    public double getTotalWeight() {
-        double totalWeight = 0;
-        for (Container container : loadedContainers) {
-            totalWeight += container.getWeight();
-        }
-        return totalWeight;
-    }
-    public float totalConsumption() {
-        float totalFuelConsumption = 0.0F;
-        double portDistance = port.getDist(null);
-
-        if (this instanceof Ship) {
+        public double getTotalWeight () {
+            double totalWeight = 0;
             for (Container container : loadedContainers) {
-                totalFuelConsumption += container.getShipFuelConsumption() * container.getWeight() * portDistance;
+                totalWeight += container.getWeight();
             }
-
-        } else if (this instanceof Truck) {
-            for (Container container : loadedContainers) {
-                totalFuelConsumption += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
-            }
+            return totalWeight;
         }
-        return totalFuelConsumption;
-    }
+        public float totalConsumption () {
+            float totalFuelConsumption = 0.0F;
+            double portDistance = port.getDist(null);
+
+            if (this instanceof Ship) {
+                for (Container container : loadedContainers) {
+                    totalFuelConsumption += container.getShipFuelConsumption() * container.getWeight() * portDistance;
+                }
+
+            } else if (this instanceof Truck) {
+                for (Container container : loadedContainers) {
+                    totalFuelConsumption += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
+                }
+            }
+            return totalFuelConsumption;
+        }
 }
+
