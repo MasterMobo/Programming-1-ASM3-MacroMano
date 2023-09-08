@@ -23,7 +23,7 @@ public class Vehicle implements VehicleOperation {
         this.port = port;
         this.portId = port.getId();
         this.carryCapacity = carryCapacity;
-        this.curfuelCapacity = fuelCapacity;
+        curfuelCapacity = fuelCapacity;
         this.fuelCapacity = fuelCapacity;
     }
 
