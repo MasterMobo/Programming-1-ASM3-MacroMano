@@ -1,23 +1,25 @@
 package PortManagementSystem.DB;
 
 import PortManagementSystem.Port;
-import PortManagementSystem.Trip;
 import PortManagementSystem.User.SystemAdmin;
 import PortManagementSystem.User.User;
+
 
 public class MasterDatabase {
     // Class containing all other Databases
     // The main class for User to interact with the Databases
-    private UserDatabase users;
-    private Database<Port> ports;
-    private TripDatabase trips;
-//    private Database<Container> containers;
+    public Database<Port> ports;
+    public UserDatabase users;
+    public TripDatabase trips;
+    public ContainerDatabase containers;
+    public VehicleDatabase vehicles;
 
     public MasterDatabase() {
-//        containers = new Database<Container>("c");
         ports = new Database<Port>("p");
-        trips = new TripDatabase();
         users = new UserDatabase();
+        trips = new TripDatabase();
+        containers = new ContainerDatabase();
+        vehicles = new VehicleDatabase();
     }
 
     // TODO: this is just a test, remove when done

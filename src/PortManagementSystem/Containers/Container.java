@@ -1,8 +1,12 @@
 package PortManagementSystem.Containers;
+
+import PortManagementSystem.DB.DatabaseRecord;
+
 //Parent class
-public abstract class Container {
+public abstract class Container implements DatabaseRecord {
     private String type;
     protected String id;
+    public String vehicleId;
     protected double weight;
     private float shipFuelConsumption;
     private float truckFuelConsumption;
@@ -12,8 +16,14 @@ public abstract class Container {
         this.weight = weight;
     }
 
+    @Override
     public String getId() {
         return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     public double getWeight() {

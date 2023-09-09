@@ -1,15 +1,15 @@
 package PortManagementSystem.Vehicle;
+import PortManagementSystem.DB.DatabaseRecord;
 import PortManagementSystem.Port;
 import PortManagementSystem.Utils.*;
 import PortManagementSystem.Containers.*;
 
-import java.lang.foreign.StructLayout;
 import java.util.*;
 
-public class Vehicle implements VehicleOperation {
+public class Vehicle implements VehicleOperation, DatabaseRecord {
 
     private final String name;
-    protected final String id;
+    protected String id;
     private Port port;
     public String portId;
     private Double carryCapacity;
@@ -130,5 +130,25 @@ public class Vehicle implements VehicleOperation {
             }
             return totalFuelConsumption;
         }
-}
 
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    //TODO: khoabui added toString for testing, feel free to modify
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", port=" + port +
+                ", portId='" + portId + '\'' +
+                '}';
+    }
+}
