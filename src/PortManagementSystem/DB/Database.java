@@ -10,6 +10,7 @@ public class Database<T extends DatabaseRecord> implements Serializable {
     // Each record of the database has a unique id
     // IMPORTANT: Objects to be stored in the database MUST implement the DatabaseRecord interface
 
+    // TODO: Implement 7-day refresh
     private final String ID_HEADER; // The first character(s) of the id
     protected static final int KEY_LENGTH = 6;  // Length of the random generated key (excluding the ID_HEADER and separator)
     public HashMap<String, T> data; // This is where the records are stored. The HashMap maps the id to the object reference.
@@ -76,8 +77,11 @@ public class Database<T extends DatabaseRecord> implements Serializable {
     public T delete(String id) {
         // Deletes the record of the given id.
         // Returns the deleted record, or null if no record found.
+        T record = find(id);
+        if (record == null) return null;
+        record = data.remove(id);
         mdb.save();
-        return data.remove(id);
+        return record;
     }
 
     public void display() {

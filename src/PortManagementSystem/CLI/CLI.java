@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class CLI {
-    private Map<String, Consumer<String[]>> commandMap;
-    private MasterDatabase db;
+    private final Map<String, Consumer<String[]>> commandMap;
+    private final MasterDatabase db;
 
     public CLI(MasterDatabase db) {
         this.db = db;
@@ -17,10 +17,13 @@ public class CLI {
         commandMap.put("lsv", this::listVehiclesFromPort);
         commandMap.put("lsc", this::listContainersFromVehicle);
         commandMap.put("crt", this::create);
+        commandMap.put("del", this::delete);
         commandMap.put("help", this::help);
 
         // Add more commands as needed
     }
+
+    // TODO: integrate user roles with commands
 
     public void executeCommand(String input) {
         String[] parts = input.split("\\s+", 2); // Split the input into command and arguments
@@ -39,15 +42,20 @@ public class CLI {
         ListCommand.process(args, db);
     }
 
-    public void create(String[] args) {
-        CreateCommand.process(args, db);
-    }
 
     public void listVehiclesFromPort(String[] args) {
         ListVehicleFromPortCommand.process(args, db);
     }
 
     public void listContainersFromVehicle(String[] args) {ListContainerFromVehicleCommand.process(args, db);}
+
+    public void create(String[] args) {
+        CreateCommand.process(args, db);
+    }
+
+    public void delete(String[] args) {
+        DeleteCommand.process(args, db);
+    }
 
     public void help(String[] args) {
         ListCommand ls = new ListCommand();
