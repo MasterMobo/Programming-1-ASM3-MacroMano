@@ -3,7 +3,7 @@ package PortManagementSystem.CLI;
 import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Port;
 
-public class CreateCommand extends Command{
+public class CreateCommand extends Command implements CommandInterface{
     public CreateCommand() {
         signature = "crt";
         desc = "Initiate create object sequence of given type";
