@@ -15,6 +15,7 @@ public class CLI {
         commandMap = new HashMap<>();
         commandMap.put("ls", this::list);
         commandMap.put("lsv", this::listVehiclesFromPort);
+        commandMap.put("lsc", this::listContainersFromVehicle);
         commandMap.put("crt", this::create);
         commandMap.put("help", this::help);
 
@@ -45,6 +46,8 @@ public class CLI {
     public void listVehiclesFromPort(String[] args) {
         ListVehicleFromPortCommand.process(args, db);
     }
+
+    public void listContainersFromVehicle(String[] args) {ListContainerFromVehicleCommand.process(args, db);}
 
     public void help(String[] args) {
         ListCommand ls = new ListCommand();

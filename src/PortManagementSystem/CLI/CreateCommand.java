@@ -7,7 +7,7 @@ import PortManagementSystem.Vehicle.Vehicle;
 
 import java.util.Scanner;
 
-public class CreateCommand extends Command implements CommandInterface{
+public class CreateCommand extends Command{
     public CreateCommand() {
         signature = "crt";
         desc = "Initiate create object sequence of given type";
@@ -41,7 +41,7 @@ public class CreateCommand extends Command implements CommandInterface{
                 Port p = db.ports.find(scanner.nextLine().trim());
                 if (p == null) return;
 
-                //TODO restructure port in Vehicle
+                //TODO restructure port in Vehicle (only store portId, not port obj)
                 vehicle.portId = p.getId();
                 vehicle.port = p;
                 db.vehicles.add(vehicle);
@@ -55,6 +55,7 @@ public class CreateCommand extends Command implements CommandInterface{
                 Vehicle v = db.vehicles.find(scanner.nextLine().trim());
                 if (v == null) return;
 
+                //TODO: check if container can be placed on vehicle
                 container.vehicleId = v.getId();
                 db.containers.add(container);
                 System.out.println("Successfully created container!");

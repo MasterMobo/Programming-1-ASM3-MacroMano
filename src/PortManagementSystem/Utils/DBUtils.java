@@ -1,7 +1,9 @@
 package PortManagementSystem.Utils;
 
+import PortManagementSystem.Containers.DryStorage;
 import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Port;
+import PortManagementSystem.Vehicle.Ship;
 import PortManagementSystem.Vehicle.Vehicle;
 
 import java.util.Random;
@@ -24,8 +26,14 @@ public class DBUtils {
         db.ports.add(p1);
         db.ports.add(p2);
 
-        Vehicle v1 = new Vehicle("Shit", 345.5, 12.2);
+        Ship v1 = new Ship("Shit", 345.5, 12.2);
+        v1.portId = p1.getId();
+        v1.port = p1;
         db.vehicles.add(v1);
+
+        DryStorage c = new DryStorage(12.4);
+        c.vehicleId = v1.getId();
+        db.containers.add(c);
         return db;
     }
 }
