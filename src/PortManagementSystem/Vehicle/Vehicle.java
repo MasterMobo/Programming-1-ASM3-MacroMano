@@ -142,6 +142,11 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         this.id = id;
     }
 
+//    public Vehicle createVehicle() {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Enter vehicle type ():");
+//    }
+
     //TODO: khoabui added toString for testing, feel free to modify
     @Override
     public String toString() {

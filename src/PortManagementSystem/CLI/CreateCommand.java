@@ -27,6 +27,8 @@ public class CreateCommand extends Command{
                 db.ports.add(port);
                 System.out.println("Successfully added new Port!");
                 break;
+            case "vehicle":
+
             default:
                 System.out.println("Invalid Type");
         }
