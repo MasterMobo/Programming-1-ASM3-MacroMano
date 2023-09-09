@@ -19,6 +19,7 @@ public class CLI {
         commandMap.put("crt", this::create);
         commandMap.put("del", this::delete);
         commandMap.put("help", this::help);
+        commandMap.put("register", this::register);
 
         // Add more commands as needed
     }
@@ -57,10 +58,17 @@ public class CLI {
         DeleteCommand.process(args, db);
     }
 
+    public void register(String[] args) { Register.process(args, db); }
+
+    public void login(String[] args) { Login.process(args, db); }
+
     public void help(String[] args) {
         ListCommand ls = new ListCommand();
         CreateCommand crt = new CreateCommand();
         ListVehicleFromPortCommand lsv = new ListVehicleFromPortCommand();
+        Register register = new Register();
+        Login login = new Login();
+
         // TODO: add more commands for help
         System.out.println("Available Commands:\n"
             + "help: List available commands\n"

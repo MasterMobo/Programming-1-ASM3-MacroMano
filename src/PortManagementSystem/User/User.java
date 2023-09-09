@@ -1,9 +1,11 @@
 package PortManagementSystem.User;
 import PortManagementSystem.DB.DatabaseRecord;
+import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Database;
 import PortManagementSystem.Trip;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class User implements DatabaseRecord {
     private String username;
@@ -54,49 +56,41 @@ public class User implements DatabaseRecord {
 
 
 
-    public boolean register(String username, String password, String confirmPassword) {
+    public static User register(MasterDatabase db) {
         //Add new user to user list
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Registering new User...");
+
+        System.out.print("Enter Username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Confirm Password: ");
+        String confirmPassword = scanner.nextLine();
 
         //Check if the username's already existed
-        for (User oldUser : users ) {
-            if (oldUser.getUsername() == username) {
-                System.out.println("Ivalid Username");
-                return false;
-            }
-        }
+//        for (db.users.data.get(username)) {
+//            if (oldUser.getUsername() == username) {
+//                System.out.println("Ivalid Username");
+//                return false;
+//            }
+//        }
         //Check the confirmation password
-        if (password != confirmPassword) {
-            System.out.println("Invalid confirmation password");
-            return false;
-        }
-
+//        if (password != confirmPassword) {
+//            System.out.println("Invalid confirmation password");
+//
+//        }
         //Add user
-        User user = new User(username, password);
-        users.add(user);
         System.out.println("successfully registered");
-        return true;
+        return new User(username, password);
     }
 
-    public boolean login(String username, String password) {
-        //Get the username and password, return if the account is authenticated
 
-        for (User oldUser : users ) {
-            if (oldUser.getUsername() == username) {
-                if (oldUser.getPassword() == password) {
-                    System.out.println("Login successfully");
-                    boolean authenticated = true;
-                    return authenticated;
-                } else {
-                    System.out.println("Invalid password");
-                    boolean authenticated = false;
-                    return authenticated;
-                }
-            }
-        }
-        System.out.println("Invalid Username");
-        boolean authenticated = false;
-        return authenticated;
-    }
+
+
+
 
     @Override
     public String toString() {
