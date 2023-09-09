@@ -23,6 +23,7 @@ public class ListVehicleFromPortCommand extends Command{
     public void execute(String[] args, MasterDatabase db) {
         String type = args[0];
         String portId = args[1];
+
         switch (type) {
             case "all":
                 System.out.println(db.vehicles.fromPort(portId));

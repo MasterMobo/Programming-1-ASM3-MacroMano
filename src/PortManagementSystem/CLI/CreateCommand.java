@@ -2,6 +2,9 @@ package PortManagementSystem.CLI;
 
 import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Port;
+import PortManagementSystem.Vehicle.Vehicle;
+
+import java.util.Scanner;
 
 public class CreateCommand extends Command implements CommandInterface{
     public CreateCommand() {
@@ -28,7 +31,20 @@ public class CreateCommand extends Command implements CommandInterface{
                 System.out.println("Successfully added new Port!");
                 break;
             case "vehicle":
+                Vehicle vehicle = Vehicle.createVehicle();
+                if (vehicle == null) return;
 
+                Scanner scanner = new Scanner(System.in);
+                System.out.println("Enter port ID: ");
+                Port p = db.ports.find(scanner.nextLine().trim());
+                if (p == null) return;
+                System.out.println("Successfully created vehicle!");
+
+                //TODO restructure port in Vehicle
+                vehicle.portId = p.getId();
+                vehicle.port = p;
+                db.vehicles.add(vehicle);
+                break;
             default:
                 System.out.println("Invalid Type");
         }

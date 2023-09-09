@@ -14,11 +14,16 @@ public class VehicleDatabase extends Database<Vehicle> {
         super(mdb, "v");
     }
 
+    private boolean portExists(String portId) {
+        return mdb.ports.find(portId) != null;
+    }
+
     public ArrayList<Vehicle> fromPort(String portID) {
+        if (!portExists(portID)) return null;
+
         ArrayList<Vehicle> res = new ArrayList<>();
 
         for (Map.Entry<String, Vehicle> set: data.entrySet()) {
-            String key = set.getKey();
             Vehicle vehicle = set.getValue();
             if (Objects.equals(vehicle.portId, portID)) {
                 res.add(vehicle);
@@ -28,6 +33,8 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
     public ArrayList<Vehicle> shipsFromPort(String portID) {
+        if (!portExists(portID)) return null;
+
         ArrayList<Vehicle> res = new ArrayList<>();
 
         for (Map.Entry<String, Vehicle> set: data.entrySet()) {
@@ -40,6 +47,8 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
     public ArrayList<Vehicle> trucksFromPort(String portID) {
+        if (!portExists(portID)) return null;
+
         ArrayList<Vehicle> res = new ArrayList<>();
 
         for (Map.Entry<String, Vehicle> set: data.entrySet()) {
@@ -51,24 +60,4 @@ public class VehicleDatabase extends Database<Vehicle> {
         return res;
     }
 
-// TODO: testing
-    public static void main(String[] args) {
-        MasterDatabase db = new MasterDatabase();
-        Port p1 = new Port("SGS", 122.2, 12.3, 647, true);
-        db.ports.add(p1);
-        Port p2 = new Port("SGS", 122.2, 12.3, 647, true);
-        db.ports.add(p2);
-
-        Vehicle v1 = new Vehicle("Shit", "piss", p1, 12., 23.);
-        db.vehicles.add(v1);
-
-        Vehicle v2 = new Vehicle("Shit", "cum", p1, 12., 23.);
-        db.vehicles.add(v2);
-
-        Vehicle v3 = new Vehicle("Shit", "ass", p2, 12., 23.);
-        db.vehicles.add(v3);
-        db.vehicles.display();
-        System.out.println(db.vehicles.fromPort(p1.getId()));
-
-    }
 }

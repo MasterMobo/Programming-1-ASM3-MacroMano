@@ -24,7 +24,7 @@ public class DBUtils {
         db.ports.add(p1);
         db.ports.add(p2);
 
-        Vehicle v1 = new Vehicle("Shit", "piss", p1, 12., 23.);
+        Vehicle v1 = new Vehicle("Shit", 345.5, 12.2);
         db.vehicles.add(v1);
         return db;
     }

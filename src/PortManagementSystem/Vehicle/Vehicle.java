@@ -11,18 +11,15 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
 
     private final String name;
     protected String id;
-    private Port port;
+    public Port port;
     public String portId;
     private Double carryCapacity;
     private Double curfuelCapacity;
     private final Double fuelCapacity;
     public ArrayList<Container> loadedContainers = new ArrayList<>();
 
-    public Vehicle(String name, String id, Port port, Double carryCapacity, Double fuelCapacity) {
+    public Vehicle(String name, Double carryCapacity, Double fuelCapacity) {
         this.name = name;
-        this.id = id;
-        this.port = port;
-        this.portId = port.getId();
         this.carryCapacity = carryCapacity;
         curfuelCapacity = fuelCapacity;
         this.fuelCapacity = fuelCapacity;
@@ -142,12 +139,23 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         this.id = id;
     }
 
-//    public Vehicle createVehicle() {
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Enter vehicle type ():");
-//    }
+    public static Vehicle createVehicle() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Creating vehicle...");
+        System.out.println("Enter vehicle type (ship, reefer, tanker):");
+        switch (scanner.nextLine().trim()){
+            case "ship":
+                return Ship.createShip();
+            case "tanker":
+                return TankerTruck.createTankerTruck();
+            case "reefer":
+                return ReeferTruck.createReeferTruck();
+            default:
+                System.out.println("Invalid vehicle type");
+                return null;
+        }
+    }
 
-    //TODO: khoabui added toString for testing, feel free to modify
     @Override
     public String toString() {
         return "Vehicle{" +
@@ -155,6 +163,9 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
                 ", id='" + id + '\'' +
                 ", port=" + port +
                 ", portId='" + portId + '\'' +
+                ", carryCapacity=" + carryCapacity +
+                ", curfuelCapacity=" + curfuelCapacity +
+                ", fuelCapacity=" + fuelCapacity +
                 '}';
     }
 }

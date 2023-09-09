@@ -29,6 +29,8 @@ public class ListCommand extends Command{
             case "vehicle":
                 db.vehicles.display();
                 break;
+            case "ship":
+
             default:
                 System.out.println("Invalid Type");
         }

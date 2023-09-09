@@ -54,7 +54,11 @@ public class Database<T extends DatabaseRecord> implements Serializable {
     public T find(String id) {
         // Finds the record by id
         // Returns the found record, or null if no record found
-        return data.get(id);
+        T res = data.get(id);
+        if (res == null) {
+            System.out.println("No record found for ID: " + id);
+        }
+        return res;
     }
 
     public T update(String id, T item) {
@@ -74,6 +78,10 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         // Returns the deleted record, or null if no record found.
         mdb.save();
         return data.remove(id);
+    }
+
+    public boolean exists(String id) {
+        return data.containsKey(id);
     }
 
     public void display() {
