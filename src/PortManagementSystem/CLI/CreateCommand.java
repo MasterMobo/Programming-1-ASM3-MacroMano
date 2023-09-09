@@ -3,7 +3,7 @@ package PortManagementSystem.CLI;
 import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Port;
 
-public class CreateCommand extends Command{
+public class CreateCommand extends Command implements CommandInterface{
     public CreateCommand() {
         signature = "crt";
         desc = "Initiate create object sequence of given type";
@@ -27,6 +27,8 @@ public class CreateCommand extends Command{
                 db.ports.add(port);
                 System.out.println("Successfully added new Port!");
                 break;
+            case "vehicle":
+
             default:
                 System.out.println("Invalid Type");
         }

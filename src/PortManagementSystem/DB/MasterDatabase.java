@@ -3,7 +3,7 @@ package PortManagementSystem.DB;
 import PortManagementSystem.Port;
 import PortManagementSystem.User.SystemAdmin;
 import PortManagementSystem.User.User;
-import PortManagementSystem.Utils.SampleData;
+import PortManagementSystem.Utils.DBUtils;
 
 import java.io.*;
 
@@ -54,7 +54,7 @@ public class MasterDatabase implements Serializable {
 
     public static MasterDatabase initDB() {
         if (!fileExists()) {
-            MasterDatabase db = SampleData.createSampleDatabase();
+            MasterDatabase db = DBUtils.createSampleDatabase();
             write(db);
             return db;
         }

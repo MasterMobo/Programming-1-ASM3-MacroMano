@@ -20,7 +20,6 @@ public abstract class Command {
     public abstract void execute(String[] args, MasterDatabase db);
 
 
-
     public void printArgumentError(int received) {
         System.out.println("Expected " + arguments + " argument(s), but received " + received);
     }
