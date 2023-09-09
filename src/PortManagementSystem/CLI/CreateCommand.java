@@ -1,5 +1,6 @@
 package PortManagementSystem.CLI;
 
+import PortManagementSystem.Containers.Container;
 import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Port;
 import PortManagementSystem.Vehicle.Vehicle;
@@ -24,26 +25,39 @@ public class CreateCommand extends Command implements CommandInterface{
     }
 
     public void execute(String[] args, MasterDatabase db) {
+        Scanner scanner = new Scanner(System.in);
+
         switch (args[0]) {
             case "port":
                 Port port = Port.createPort();
                 db.ports.add(port);
-                System.out.println("Successfully added new Port!");
+                System.out.println("Successfully created new Port!");
                 break;
             case "vehicle":
                 Vehicle vehicle = Vehicle.createVehicle();
                 if (vehicle == null) return;
 
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("Enter port ID: ");
+                System.out.print("Enter port ID: ");
                 Port p = db.ports.find(scanner.nextLine().trim());
                 if (p == null) return;
-                System.out.println("Successfully created vehicle!");
 
                 //TODO restructure port in Vehicle
                 vehicle.portId = p.getId();
                 vehicle.port = p;
                 db.vehicles.add(vehicle);
+                System.out.println("Successfully created vehicle!");
+                break;
+            case "container":
+                Container container = Container.createContainer();
+                if (container == null) return;
+
+                System.out.print("Enter vehicle ID: ");
+                Vehicle v = db.vehicles.find(scanner.nextLine().trim());
+                if (v == null) return;
+
+                container.vehicleId = v.getId();
+                db.containers.add(container);
+                System.out.println("Successfully created container!");
                 break;
             default:
                 System.out.println("Invalid Type");

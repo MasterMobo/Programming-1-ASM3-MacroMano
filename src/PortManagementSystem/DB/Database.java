@@ -22,7 +22,7 @@ public class Database<T extends DatabaseRecord> implements Serializable {
     }
 
     private String generateRandomId() {
-        return ID_HEADER + "-" + randKey(6);
+        return ID_HEADER + randKey(6);
     }
 
     protected boolean isValidId(String id) {

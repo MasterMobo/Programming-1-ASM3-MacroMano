@@ -11,16 +11,4 @@ public class Ship extends Vehicle {
                 fuelCapacity);
     }
 
-    public static Ship createShip() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter ship name:");
-        String name = scanner.nextLine().trim();
-
-        System.out.println("Enter carry capacity:");
-        double carryCapacity = scanner.nextDouble();
-
-        System.out.println("Enter fuel capacity:");
-        double fuelCapacity = scanner.nextDouble();
-        return new Ship(name, carryCapacity, fuelCapacity);
-    }
 }

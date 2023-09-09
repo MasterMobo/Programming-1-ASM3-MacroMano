@@ -143,13 +143,24 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Creating vehicle...");
         System.out.println("Enter vehicle type (ship, reefer, tanker):");
-        switch (scanner.nextLine().trim()){
+        String type = scanner.nextLine().trim();
+
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine().trim();
+
+        System.out.print("Enter carry capacity: ");
+        double carryCapacity = scanner.nextDouble();
+
+        System.out.print("Enter fuel capacity: ");
+        double fuelCapacity = scanner.nextDouble();
+
+        switch (type){
             case "ship":
-                return Ship.createShip();
+                return new Ship(name, carryCapacity, fuelCapacity);
             case "tanker":
-                return TankerTruck.createTankerTruck();
+                return new TankerTruck(name, carryCapacity, fuelCapacity);
             case "reefer":
-                return ReeferTruck.createReeferTruck();
+                return new ReeferTruck(name, carryCapacity, fuelCapacity);
             default:
                 System.out.println("Invalid vehicle type");
                 return null;

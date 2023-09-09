@@ -3,18 +3,18 @@ package PortManagementSystem.Containers;
 import PortManagementSystem.DB.DatabaseRecord;
 
 import java.io.Serializable;
+import java.util.Scanner;
 
 //Parent class
 public abstract class Container implements DatabaseRecord, Serializable {
-    private String type;
+    protected String type;
     protected String id;
     public String vehicleId;
     protected double weight;
-    private float shipFuelConsumption;
-    private float truckFuelConsumption;
+    protected double shipFuelConsumption;
+    protected double truckFuelConsumption;
 
-    public Container(String id, double weight) {
-        this.id = id;
+    public Container(double weight) {
         this.weight = weight;
     }
 
@@ -36,11 +36,11 @@ public abstract class Container implements DatabaseRecord, Serializable {
         this.weight = weight;
     }
 
-    public float getShipFuelConsumption() {
+    public double getShipFuelConsumption() {
         return shipFuelConsumption;
     }
 
-    public float getTruckFuelConsumption() {
+    public double getTruckFuelConsumption() {
         return truckFuelConsumption;
     }
 
@@ -48,19 +48,43 @@ public abstract class Container implements DatabaseRecord, Serializable {
         return type;
     }
 
+    public static Container createContainer() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter type (dry, liquid, openside, opentop, refridg)");
+        String type = scanner.nextLine().trim();
+
+        System.out.print("Enter weight: ");
+        double weight = scanner.nextDouble();
+
+        switch (type){
+            case "dry":
+                return new DryStorage(weight);
+            case "liquid":
+                return new Liquid(weight);
+            case "openside":
+                return new OpenSide(weight);
+            case "refridg":
+                return new Refridgerated(weight);
+            default:
+                System.out.println("Invalid type");
+                return null;
+        }
+    }
+
     @Override
     public String toString() {
-        return "Container{" + 
-                ", type='" + type + '\'' +
-                ", weight= " + weight + "kg" +
-                ", shipFuelConsumption= " + shipFuelConsumption +
-                ", truckFuelConsumption= " + truckFuelConsumption +
-                "id='" + id + '\'' +
+        return "Container{" +
+                "type='" + type + '\'' +
+                ", id='" + id + '\'' +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", weight=" + weight +
+                ", shipFuelConsumption=" + shipFuelConsumption +
+                ", truckFuelConsumption=" + truckFuelConsumption +
                 '}';
     }
 
     public static void main(String[] args) {
-        DryStorage c1 = new DryStorage("DR01", 50);
+        DryStorage c1 = new DryStorage( 50);
         System.out.println(c1);
     }
 }
