@@ -1,5 +1,56 @@
 package PortManagementSystem.CLI;
 
+import PortManagementSystem.DB.MasterDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
 public class CLI {
+    private Map<String, Consumer<String[]>> commandMap;
+    private MasterDatabase db;
+
+    public CLI(MasterDatabase db) {
+        this.db = db;
+        commandMap = new HashMap<>();
+        commandMap.put("ls", this::list);
+        commandMap.put("crt", this::create);
+        commandMap.put("help", this::help);
+
+        // Add more commands as needed
+    }
+
+    public void executeCommand(String input) {
+        String[] parts = input.split("\\s+", 2); // Split the input into command and arguments
+        String command = parts[0].trim();
+        String[] arguments = parts.length > 1 ? parts[1].trim().split("\\s+") : new String[0];
+
+        Consumer<String[]> action = commandMap.get(command);
+        if (action != null) {
+            action.accept(arguments);
+        } else {
+            System.out.println("Command not found: " + command);
+        }
+    }
+
+    public void list(String[] args) {
+        ListCommand.process(args, db);
+    }
+
+    public void create(String[] args) {
+        CreateCommand.process(args, db);
+    }
+
+    public void help(String[] args) {
+        ListCommand ls = new ListCommand();
+        CreateCommand crt = new CreateCommand();
+
+        System.out.println("Available Commands:\n"
+            + "help: List available commands\n"
+            + "!q: Quit program\n"
+            + ls.getUsage() + ": " + ls.getDesc() + "\n"
+            + crt.getUsage() + ": " + crt.getDesc()
+        );
+    }
 
 }

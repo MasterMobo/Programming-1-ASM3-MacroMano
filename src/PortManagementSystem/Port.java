@@ -2,6 +2,8 @@ package PortManagementSystem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 
 import static java.lang.Math.*;
 
@@ -111,6 +113,28 @@ public class Port implements DatabaseRecord, Serializable {
             if (vehicle instanceof Truck) res.add(vehicle);
         }
         return res;
+    }
+
+    public static Port createPort() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Creating new Port...");
+
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Latitude: ");
+        double lat = scanner.nextDouble();
+
+        System.out.print("Enter Longitude: ");
+        double lon = scanner.nextDouble();
+
+        System.out.print("Enter Capacity: ");
+        double capacity = scanner.nextDouble();
+
+        System.out.print("Is it landing (true/false): ");
+        boolean isLanding = scanner.nextBoolean();
+
+        return new Port(name, lat, lon, capacity, isLanding);
     }
 
     @Override
