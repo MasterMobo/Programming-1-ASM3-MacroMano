@@ -1,3 +1,10 @@
+/*
+THIS CLASS IS DEPRECIATED
+PLEASE INSTEAD USE PortManagementSystem.DB.MasterDatabase
+*/
+
+// TODO: Delete class
+
 package PortManagementSystem;
 
 import PortManagementSystem.Containers.Container;

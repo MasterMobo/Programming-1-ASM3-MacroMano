@@ -41,7 +41,7 @@ public class CreateCommand extends Command{
                 Port p = db.ports.find(scanner.nextLine().trim());
                 if (p == null) return;
 
-                //TODO restructure port in Vehicle (only store portId, not port obj)
+                // TODO restructure port in Vehicle (only store portId, not port obj)
                 vehicle.portId = p.getId();
                 vehicle.port = p;
                 db.vehicles.add(vehicle);
@@ -55,7 +55,7 @@ public class CreateCommand extends Command{
                 Vehicle v = db.vehicles.find(scanner.nextLine().trim());
                 if (v == null) return;
 
-                //TODO: check if container can be placed on vehicle
+                // TODO: check if container can be placed on vehicle
                 container.vehicleId = v.getId();
                 db.containers.add(container);
                 System.out.println("Successfully created container!");

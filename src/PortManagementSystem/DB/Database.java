@@ -79,7 +79,7 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         mdb.save();
         return data.remove(id);
     }
-    
+
     public void display() {
         data.forEach((key, val) -> {
             System.out.println(val);
