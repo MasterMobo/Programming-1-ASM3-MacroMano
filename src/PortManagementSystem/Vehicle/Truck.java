@@ -10,24 +10,4 @@ public class Truck extends Vehicle {
                 carryCapacity,
                 fuelCapacity);
     }
-
-    public static class ReeferTruck extends Truck {
-        public ReeferTruck(String name, String id, Port port, Double carryCapacity, Double fuelCapacity) {
-            super(name,
-                    id,
-                    port,
-                    carryCapacity,
-                    fuelCapacity);
-        }
-    }
-
-    public static class TankerTruck extends Truck {
-        public TankerTruck(String name, String id, Port port, Double carryCapacity, Double fuelCapacity) {
-            super(name,
-                    id,
-                    port,
-                    carryCapacity,
-                    fuelCapacity);
-        }
-    }
 }

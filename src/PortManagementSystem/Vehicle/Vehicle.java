@@ -85,9 +85,9 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
             if (this instanceof Ship) {
                 loadedContainers.add(container);
             } else if (this instanceof Truck) {
-                if (container.getType() == "Refridgerated" && (this instanceof Truck.ReeferTruck)) {
+                if (Objects.equals(container.getType(), "Refridgerated") && (this instanceof ReeferTruck)) {
                     System.out.println("Only Reefer truck can carry Refridgerated");
-                } else if (container.getType() == "Liquid" && !(this instanceof Truck.TankerTruck)) {
+                } else if (Objects.equals(container.getType(), "Liquid") && !(this instanceof TankerTruck)) {
                     System.out.println("Only Tanker truck can carry Liquid");
                 } else {
                     loadedContainers.add(container);
