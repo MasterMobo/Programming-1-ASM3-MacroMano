@@ -1,10 +1,11 @@
 package PortManagementSystem.DB;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import static PortManagementSystem.Utils.DBUtils.randKey;
 
-public class Database<T extends DatabaseRecord> {
+public class Database<T extends DatabaseRecord> implements Serializable {
     // Generalized class to store objects (referred to as records) of any type
     // Each record of the database has a unique id
     // IMPORTANT: Objects to be stored in the database MUST implement the DatabaseRecord interface
@@ -13,7 +14,9 @@ public class Database<T extends DatabaseRecord> {
     protected static final int KEY_LENGTH = 6;  // Length of the random generated key (excluding the ID_HEADER and separator)
     public HashMap<String, T> data; // This is where the records are stored. The HashMap maps the id to the object reference.
 
-    public Database(String idHeader) {
+    protected MasterDatabase mdb;
+    public Database(MasterDatabase mdb, String idHeader) {
+        this.mdb = mdb;
         this.data = new HashMap<>();
         ID_HEADER = idHeader;
     }
@@ -44,6 +47,7 @@ public class Database<T extends DatabaseRecord> {
         String id = generateValidId();
         item.setId(id);
         data.put(id, item);
+        mdb.save();
         return item;
     }
 
@@ -61,12 +65,14 @@ public class Database<T extends DatabaseRecord> {
 
         record = item;
         record.setId(id);
+        mdb.save();
         return record;
     }
 
     public T delete(String id) {
         // Deletes the record of the given id.
         // Returns the deleted record, or null if no record found.
+        mdb.save();
         return data.remove(id);
     }
 

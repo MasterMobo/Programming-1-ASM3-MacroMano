@@ -4,10 +4,13 @@ import PortManagementSystem.Port;
 import PortManagementSystem.User.SystemAdmin;
 import PortManagementSystem.User.User;
 
+import java.io.*;
 
-public class MasterDatabase {
+
+public class MasterDatabase implements Serializable {
     // Class containing all other Databases
     // The main class for User to interact with the Databases
+    private static final String FILE_DIR = "./src/db.obj";
     public Database<Port> ports;
     public UserDatabase users;
     public TripDatabase trips;
@@ -15,11 +18,11 @@ public class MasterDatabase {
     public VehicleDatabase vehicles;
 
     public MasterDatabase() {
-        ports = new Database<Port>("p");
-        users = new UserDatabase();
-        trips = new TripDatabase();
-        containers = new ContainerDatabase();
-        vehicles = new VehicleDatabase();
+        ports = new Database<Port>(this,"p");
+        users = new UserDatabase(this);
+        trips = new TripDatabase(this);
+        containers = new ContainerDatabase(this);
+        vehicles = new VehicleDatabase(this);
     }
 
     // TODO: this is just a test, remove when done
@@ -45,5 +48,62 @@ public class MasterDatabase {
 
         System.out.println(db.users.find("dogshit"));
         System.out.println(db.users.find("cum"));
+    }
+
+
+    public static MasterDatabase initDB() {
+        if (!fileExists()) {
+            MasterDatabase db = new MasterDatabase();
+            write(db);
+            return db;
+        }
+
+        return read();
+    }
+
+    public static boolean fileExists() {
+        try {
+            FileInputStream fi = new FileInputStream(FILE_DIR);
+            ObjectInputStream oi = new ObjectInputStream(fi);
+
+            oi.close();
+            fi.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+    public static MasterDatabase read() {
+        try {
+            FileInputStream fi = new FileInputStream(FILE_DIR);
+            ObjectInputStream oi = new ObjectInputStream(fi);
+
+            // Read object
+            MasterDatabase db = (MasterDatabase) oi.readObject();
+
+            oi.close();
+            fi.close();
+            return db;
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void write(MasterDatabase db) {
+        try {
+            FileOutputStream f = new FileOutputStream(FILE_DIR);
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            // Write object
+            o.writeObject(db);
+
+            o.close();
+            f.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void save() {
+        write(this);
     }
 }

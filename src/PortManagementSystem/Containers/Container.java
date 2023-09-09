@@ -2,8 +2,10 @@ package PortManagementSystem.Containers;
 
 import PortManagementSystem.DB.DatabaseRecord;
 
+import java.io.Serializable;
+
 //Parent class
-public abstract class Container implements DatabaseRecord {
+public abstract class Container implements DatabaseRecord, Serializable {
     private String type;
     protected String id;
     public String vehicleId;

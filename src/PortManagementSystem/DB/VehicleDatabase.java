@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class VehicleDatabase extends Database<Vehicle> {
-    public VehicleDatabase() {
-        super("v");
+    public VehicleDatabase(MasterDatabase mdb) {
+        super(mdb, "v");
     }
 
     public ArrayList<Vehicle> fromPort(String portID) {

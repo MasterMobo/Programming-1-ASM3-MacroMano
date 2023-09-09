@@ -9,8 +9,8 @@ import static PortManagementSystem.Utils.DateUtils.toLocalDate;
 
 public class TripDatabase extends Database<Trip>{
     // Specialized class to store Trip records
-    public TripDatabase() {
-        super("t");
+    public TripDatabase(MasterDatabase mdb) {
+        super(mdb, "t");
     }
 
     public ArrayList<Trip> tripsOn(String dateString) {

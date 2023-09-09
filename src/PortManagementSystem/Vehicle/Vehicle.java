@@ -4,9 +4,10 @@ import PortManagementSystem.Port;
 import PortManagementSystem.Utils.*;
 import PortManagementSystem.Containers.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Vehicle implements VehicleOperation, DatabaseRecord {
+public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
 
     private final String name;
     protected String id;

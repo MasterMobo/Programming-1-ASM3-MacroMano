@@ -4,8 +4,8 @@ import PortManagementSystem.User.User;
 
 public class UserDatabase extends Database<User>{
     // Specialized class to store User records
-    public UserDatabase() {
-        super("");
+    public UserDatabase(MasterDatabase mdb) {
+        super(mdb, "");
     }
 
     @Override
@@ -16,6 +16,7 @@ public class UserDatabase extends Database<User>{
             return null;
         }
         data.put(user.getUsername(), user);
+        mdb.save();
         return user;
     }
 

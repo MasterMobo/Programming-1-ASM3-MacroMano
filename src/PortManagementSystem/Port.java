@@ -1,5 +1,6 @@
 package PortManagementSystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static java.lang.Math.*;
@@ -8,7 +9,7 @@ import PortManagementSystem.Containers.*;
 import PortManagementSystem.DB.DatabaseRecord;
 import PortManagementSystem.Vehicle.*;
 
-public class Port implements DatabaseRecord {
+public class Port implements DatabaseRecord, Serializable {
     private String name;
     private String id;
     private double lat;

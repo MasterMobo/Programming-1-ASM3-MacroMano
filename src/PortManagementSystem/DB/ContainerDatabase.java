@@ -5,13 +5,14 @@ import PortManagementSystem.Containers.DryStorage;
 import PortManagementSystem.Port;
 import PortManagementSystem.Vehicle.Vehicle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-public class ContainerDatabase extends Database<Container> {
-    public ContainerDatabase() {
-        super("c");
+public class ContainerDatabase extends Database<Container> implements Serializable {
+    public ContainerDatabase(MasterDatabase mdb) {
+        super(mdb, "c");
     }
 
     public ArrayList<Container> fromVehicle(String vehicleId) {

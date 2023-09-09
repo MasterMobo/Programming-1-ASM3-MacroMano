@@ -1,5 +1,6 @@
 package PortManagementSystem;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import PortManagementSystem.DB.DatabaseRecord;
@@ -7,7 +8,7 @@ import PortManagementSystem.Port;
 import PortManagementSystem.Utils.Status;
 import PortManagementSystem.Vehicle.Vehicle;
 
-public class Trip implements DatabaseRecord {
+public class Trip implements DatabaseRecord, Serializable {
     private String id;
     private Vehicle vehicle;
     private LocalDate departDate;
