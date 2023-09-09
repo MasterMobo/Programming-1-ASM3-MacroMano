@@ -62,44 +62,28 @@ public class MasterDatabase implements Serializable {
     }
 
     public static boolean fileExists() {
-        try {
-            FileInputStream fi = new FileInputStream(FILE_DIR);
-            ObjectInputStream oi = new ObjectInputStream(fi);
-
-            oi.close();
-            fi.close();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+        return new File(FILE_DIR).exists();
     }
+
     public static MasterDatabase read() {
-        try {
-            FileInputStream fi = new FileInputStream(FILE_DIR);
-            ObjectInputStream oi = new ObjectInputStream(fi);
+        try (FileInputStream fi = new FileInputStream(FILE_DIR);
+             ObjectInputStream oi = new ObjectInputStream(fi)) {
 
             // Read object
-            MasterDatabase db = (MasterDatabase) oi.readObject();
-
-            oi.close();
-            fi.close();
-            return db;
+            return (MasterDatabase) oi.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error reading database from file", e);
         }
     }
+
     public static void write(MasterDatabase db) {
-        try {
-            FileOutputStream f = new FileOutputStream(FILE_DIR);
-            ObjectOutputStream o = new ObjectOutputStream(f);
+        try (FileOutputStream f = new FileOutputStream(FILE_DIR);
+             ObjectOutputStream o = new ObjectOutputStream(f)) {
 
             // Write object
             o.writeObject(db);
-
-            o.close();
-            f.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error writing database to file", e);
         }
     }
 
