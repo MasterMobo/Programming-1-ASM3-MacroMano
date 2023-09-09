@@ -35,29 +35,12 @@ public class CreateCommand extends Command{
                 break;
             case "vehicle":
                 Vehicle vehicle = Vehicle.createVehicle();
-                if (vehicle == null) return;
-
-                System.out.print("Enter port ID: ");
-                Port p = db.ports.find(scanner.nextLine().trim());
-                if (p == null) return;
-
-                // TODO restructure port in Vehicle (only store portId, not port obj)
-                vehicle.portId = p.getId();
-                vehicle.port = p;
-                db.vehicles.add(vehicle);
+                db.vehicles.createRecord(vehicle);
                 System.out.println("Successfully created vehicle!");
                 break;
             case "container":
                 Container container = Container.createContainer();
-                if (container == null) return;
-
-                System.out.print("Enter vehicle ID: ");
-                Vehicle v = db.vehicles.find(scanner.nextLine().trim());
-                if (v == null) return;
-
-                // TODO: check if container can be placed on vehicle
-                container.vehicleId = v.getId();
-                db.containers.add(container);
+                db.containers.createRecord(container);
                 System.out.println("Successfully created container!");
                 break;
             default:

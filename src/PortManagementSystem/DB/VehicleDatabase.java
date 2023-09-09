@@ -8,6 +8,7 @@ import PortManagementSystem.Vehicle.Vehicle;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class VehicleDatabase extends Database<Vehicle> {
     public VehicleDatabase(MasterDatabase mdb) {
@@ -58,6 +59,21 @@ public class VehicleDatabase extends Database<Vehicle> {
             }
         }
         return res;
+    }
+
+    @Override
+    public void createRecord(Vehicle vehicle) {
+        if (vehicle == null) return;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter port ID: ");
+        Port p = mdb.ports.find(scanner.nextLine().trim());
+        if (p == null) return;
+
+        // TODO restructure port in Vehicle (only store portId, not port obj)
+        vehicle.portId = p.getId();
+        vehicle.port = p;
+        add(vehicle);
     }
 
 }

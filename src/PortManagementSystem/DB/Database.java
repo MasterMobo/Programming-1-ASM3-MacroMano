@@ -84,6 +84,9 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         return record;
     }
 
+    // TODO: maybe make this abstract?
+    public void createRecord(T item) {}
+
     public void display() {
         data.forEach((key, val) -> {
             System.out.println(val);

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class ContainerDatabase extends Database<Container> implements Serializable {
     public ContainerDatabase(MasterDatabase mdb) {
@@ -103,4 +104,17 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         return res;
     }
 
+    @Override
+    public void createRecord(Container container) {
+        if (container == null) return;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter vehicle ID: ");
+        Vehicle v = mdb.vehicles.find(scanner.nextLine().trim());
+        if (v == null) return;
+
+        // TODO: check if container can be placed on vehicle
+        container.vehicleId = v.getId();
+        add(container);
+    }
 }
