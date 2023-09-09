@@ -21,7 +21,8 @@ public class ListCommand extends Command{
     }
 
     public void execute(String[] args, MasterDatabase db) {
-        switch (args[0]) {
+        String type = args[0];
+        switch (type) {
             case "port":
                 db.ports.display();
                 break;

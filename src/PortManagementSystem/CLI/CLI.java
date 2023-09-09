@@ -14,6 +14,7 @@ public class CLI {
         this.db = db;
         commandMap = new HashMap<>();
         commandMap.put("ls", this::list);
+        commandMap.put("lsv", this::listVehiclesFromPort);
         commandMap.put("crt", this::create);
         commandMap.put("help", this::help);
 
@@ -41,14 +42,20 @@ public class CLI {
         CreateCommand.process(args, db);
     }
 
+    public void listVehiclesFromPort(String[] args) {
+        ListVehicleFromPortCommand.process(args, db);
+    }
+
     public void help(String[] args) {
         ListCommand ls = new ListCommand();
         CreateCommand crt = new CreateCommand();
+        ListVehicleFromPortCommand lsv = new ListVehicleFromPortCommand();
 
         System.out.println("Available Commands:\n"
             + "help: List available commands\n"
             + "!q: Quit program\n"
             + ls.getUsage() + ": " + ls.getDesc() + "\n"
+            + lsv.getUsage() + ": " + lsv.getDesc() + "\n"
             + crt.getUsage() + ": " + crt.getDesc()
         );
     }
