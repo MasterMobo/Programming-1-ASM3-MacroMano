@@ -14,6 +14,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         super(mdb, "c");
     }
 
+    // TODO: Containers can be inside ports too, add portId to Container?
+
     private boolean vehicleExists(String vehicleId) {
         return mdb.vehicles.find(vehicleId) != null;
     }

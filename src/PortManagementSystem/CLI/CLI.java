@@ -61,7 +61,7 @@ public class CLI {
         ListCommand ls = new ListCommand();
         CreateCommand crt = new CreateCommand();
         ListVehicleFromPortCommand lsv = new ListVehicleFromPortCommand();
-
+        // TODO: add more commands for help
         System.out.println("Available Commands:\n"
             + "help: List available commands\n"
             + "!q: Quit program\n"
