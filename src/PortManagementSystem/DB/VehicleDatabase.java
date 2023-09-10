@@ -1,5 +1,6 @@
 package PortManagementSystem.DB;
 
+import PortManagementSystem.Containers.Container;
 import PortManagementSystem.Port;
 import PortManagementSystem.Vehicle.Ship;
 import PortManagementSystem.Vehicle.Truck;
@@ -31,6 +32,11 @@ public class VehicleDatabase extends Database<Vehicle> {
             }
         }
         return res;
+    }
+
+    public Container containerExistsInPort(String cId, String pId) {
+        // Find containers in port
+        // Check if Id exists in found container
     }
 
     public ArrayList<Vehicle> shipsFromPort(String portID) {
