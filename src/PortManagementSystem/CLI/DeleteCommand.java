@@ -28,10 +28,12 @@ public class DeleteCommand extends Command{
                 System.out.println("Successfully deleted port!");
                 break;
             case "vehicle":
+                // TODO: Does deleting vehicle affect port?
                 if (db.vehicles.delete(id) == null) return;
                 System.out.println("Successfully deleted vehicle!");
                 break;
             case "container":
+                // TODO: Does deleting container affect port and vehicle?
                 if (db.containers.delete(id) == null) return;
                 System.out.println("Successfully deleted container!");
                 break;
