@@ -33,11 +33,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
         return res;
     }
-
-    public Container containerExistsInPort(String cId, String pId) {
-        // Find containers in port
-        // Check if Id exists in found container
-    }
+    
 
     public ArrayList<Vehicle> shipsFromPort(String portID) {
         if (!portExists(portID)) return null;

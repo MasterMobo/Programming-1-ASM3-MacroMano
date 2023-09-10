@@ -23,7 +23,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
     private boolean containerExists(String containerID) {return mdb.containers.find(containerID) != null;}
 
-    public  Container getContainerFromPort (String containerID, String portId){
+    public Container getContainerFromPort (String containerID, String portId){
         if (!containerExists(containerID)) return null;
         ArrayList<Container> containers = fromPort(portId);
 
