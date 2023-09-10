@@ -4,10 +4,11 @@ import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Database;
 import PortManagementSystem.Trip;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class User implements DatabaseRecord {
+public class User implements DatabaseRecord, Serializable {
     private String username;
     private String password;
     private Database database;
@@ -53,44 +54,6 @@ public class User implements DatabaseRecord {
             System.out.println(trip.toString());
         }
     }
-
-
-
-    public static User register(MasterDatabase db) {
-        //Add new user to user list
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Registering new User...");
-
-        System.out.print("Enter Username: ");
-        String username = scanner.nextLine();
-
-        System.out.print("Enter Password: ");
-        String password = scanner.nextLine();
-
-        System.out.print("Confirm Password: ");
-        String confirmPassword = scanner.nextLine();
-
-        //Check if the username's already existed
-//        for (db.users.data.get(username)) {
-//            if (oldUser.getUsername() == username) {
-//                System.out.println("Ivalid Username");
-//                return false;
-//            }
-//        }
-        //Check the confirmation password
-//        if (password != confirmPassword) {
-//            System.out.println("Invalid confirmation password");
-//
-//        }
-        //Add user
-        System.out.println("successfully registered");
-        return new User(username, password);
-    }
-
-
-
-
-
 
     @Override
     public String toString() {

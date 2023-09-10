@@ -1,6 +1,7 @@
 package PortManagementSystem.CLI;
 
 import PortManagementSystem.DB.MasterDatabase;
+import PortManagementSystem.User.User;
 
 public abstract class Command {
     protected String signature;
@@ -17,7 +18,6 @@ public abstract class Command {
         return true;
     }
 
-    public abstract void execute(String[] args, MasterDatabase db);
 
 
     public void printArgumentError(int received) {

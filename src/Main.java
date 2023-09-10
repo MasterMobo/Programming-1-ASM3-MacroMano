@@ -11,7 +11,7 @@ public class Main {
 
 
         CLI cli = new CLI(db);
-
+        System.out.println("Welcome! Type 'login' or 'register' to begin");
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine().trim();
         while (!command.equals("!q")) {

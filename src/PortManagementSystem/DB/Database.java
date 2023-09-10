@@ -84,6 +84,10 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         return record;
     }
 
+    public boolean exists(String id) {
+        return data.containsKey(id);
+    }
+
     // TODO: maybe make this abstract?
     public void createRecord(T item) {}
 

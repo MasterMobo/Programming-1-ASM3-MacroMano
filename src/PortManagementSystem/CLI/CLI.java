@@ -1,14 +1,17 @@
 package PortManagementSystem.CLI;
 
 import PortManagementSystem.DB.MasterDatabase;
+import PortManagementSystem.User.User;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class CLI {
     private final Map<String, Consumer<String[]>> commandMap;
     private final MasterDatabase db;
+    protected User user;
 
     public CLI(MasterDatabase db) {
         this.db = db;
@@ -19,10 +22,13 @@ public class CLI {
         commandMap.put("crt", this::create);
         commandMap.put("del", this::delete);
         commandMap.put("help", this::help);
+        commandMap.put("login", this::login);
+        commandMap.put("logout", this::logout);
         commandMap.put("register", this::register);
 
         // Add more commands as needed
     }
+
 
     // TODO: integrate user roles with commands
 
@@ -39,35 +45,58 @@ public class CLI {
         }
     }
 
+    private boolean isLoggedIn() {
+        if (user == null) {
+            System.out.println("Please login before continue");
+            return false;
+        }
+        return true;
+    }
+
+
     public void list(String[] args) {
+        if (!(isLoggedIn())) return;
         ListCommand.process(args, db);
     }
 
 
     public void listVehiclesFromPort(String[] args) {
+        if (!(isLoggedIn())) return;
         ListVehicleFromPortCommand.process(args, db);
     }
 
-    public void listContainersFromVehicle(String[] args) {ListContainerFromVehicleCommand.process(args, db);}
+    public void listContainersFromVehicle(String[] args) {
+        if (!(isLoggedIn())) return;
+        ListContainerFromVehicleCommand.process(args, db);
+    }
 
     public void create(String[] args) {
+        if (!(isLoggedIn())) return;
         CreateCommand.process(args, db);
     }
 
     public void delete(String[] args) {
+        if (!(isLoggedIn())) return;
         DeleteCommand.process(args, db);
     }
 
-    public void register(String[] args) { Register.process(args, db); }
+    public void register(String[] args) {
+        RegisterCommand.process(args, db, this);
+    }
 
-    public void login(String[] args) { Login.process(args, db); }
+    public void login(String[] args) { LoginCommand.process(args, db, this); }
+
+    private void logout(String[] args) {
+        if (!(isLoggedIn())) return;
+        LogoutCommand.process(args, db, this);
+    }
 
     public void help(String[] args) {
         ListCommand ls = new ListCommand();
         CreateCommand crt = new CreateCommand();
         ListVehicleFromPortCommand lsv = new ListVehicleFromPortCommand();
-        Register register = new Register();
-        Login login = new Login();
+        RegisterCommand register = new RegisterCommand();
+        LoginCommand login = new LoginCommand();
 
         // TODO: add more commands for help
         System.out.println("Available Commands:\n"

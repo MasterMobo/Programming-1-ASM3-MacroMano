@@ -3,6 +3,7 @@ package PortManagementSystem.Utils;
 import PortManagementSystem.Containers.DryStorage;
 import PortManagementSystem.DB.MasterDatabase;
 import PortManagementSystem.Port;
+import PortManagementSystem.User.SystemAdmin;
 import PortManagementSystem.Vehicle.Ship;
 import PortManagementSystem.Vehicle.Vehicle;
 
@@ -21,6 +22,9 @@ public class DBUtils {
 
     public static MasterDatabase createSampleDatabase() {
         MasterDatabase db = new MasterDatabase();
+        SystemAdmin admin = new SystemAdmin("admin", "123");
+        db.users.add(admin);
+
         Port p1 = new Port("SGS", 122.2, 12.3, 647, true);
         Port p2 = new Port("HN", 122.2, 12.3, 647, true);
         db.ports.add(p1);
