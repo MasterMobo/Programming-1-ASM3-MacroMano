@@ -89,7 +89,13 @@ public class Database<T extends DatabaseRecord> implements Serializable {
     }
 
     // TODO: maybe make this abstract?
-    public void createRecord(T item) {}
+    public T createRecord(T item) {
+        // Adds record to DB and returns it
+        // Returns null if something went wrong
+        // Some objects needs further processing before adding to DB, override this method accordingly (see child classes for example)
+        add(item);
+        return item;
+    }
 
     public void display() {
         data.forEach((key, val) -> {

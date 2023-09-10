@@ -10,6 +10,7 @@ public abstract class Container implements DatabaseRecord, Serializable {
     protected String type;
     protected String id;
     public String vehicleId;
+    public String portId;
     protected double weight;
     protected double shipFuelConsumption;
     protected double truckFuelConsumption;
@@ -77,6 +78,7 @@ public abstract class Container implements DatabaseRecord, Serializable {
                 "type='" + type + '\'' +
                 ", id='" + id + '\'' +
                 ", vehicleId='" + vehicleId + '\'' +
+                ", portId='" + portId + '\'' +
                 ", weight=" + weight +
                 ", shipFuelConsumption=" + shipFuelConsumption +
                 ", truckFuelConsumption=" + truckFuelConsumption +

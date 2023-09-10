@@ -19,6 +19,8 @@ public class Port implements DatabaseRecord, Serializable {
     private double capacity;
     private double currentWeight;
     private boolean isLanding;
+    private int containerCount;
+    private int vehicleCount;
     private ArrayList<Container> containers;
     private ArrayList<Vehicle> vehicles;
 
@@ -31,6 +33,8 @@ public class Port implements DatabaseRecord, Serializable {
         this.lon = lon;
         this.capacity = capacity;
         this.isLanding = isLanding;
+        containerCount = 0;
+        vehicleCount = 0;
     }
 
     public String getName() {
@@ -58,6 +62,14 @@ public class Port implements DatabaseRecord, Serializable {
         return currentWeight;
     }
 
+    public int getContainerCount() {
+        return containerCount;
+    }
+
+    public int getVehicleCount() {
+        return vehicleCount;
+    }
+
     public boolean isLanding() {
         return isLanding;
     }
@@ -83,38 +95,33 @@ public class Port implements DatabaseRecord, Serializable {
         vehicles.remove(vehicle);
     }
 
-    public void addContainer(Container container) {
-        double containerWeight = container.getWeight();
-        if (currentWeight + containerWeight > capacity) {
-            System.out.println("Port capacity exceeded");
-            return;
-        }
-
-        containers.add(container);
-        currentWeight += containerWeight;
+    public void addContainer(Container c) {
+        currentWeight += c.getWeight();
+        containerCount++;
+    }
+    public boolean canAddContainer(Container c) {
+        return c.getWeight() + currentWeight <= capacity;
     }
 
-    public void removeContainer(Container container) {
-        containers.remove(container);
-        currentWeight -= container.getWeight();
+    public void addWeight(double w) {
+        currentWeight += w;
     }
 
-    public ArrayList<Vehicle> getShips() {
-        ArrayList<Vehicle> res = new ArrayList<>();
-        for (Vehicle vehicle: vehicles) {
-            if (vehicle instanceof Ship) res.add(vehicle);
-        }
-        return res;
+    public void increaseContainerCount() {
+        containerCount++;
     }
 
-    public ArrayList<Vehicle> getTrucks() {
-        ArrayList<Vehicle> res = new ArrayList<>();
-        for (Vehicle vehicle: vehicles) {
-            if (vehicle instanceof Truck) res.add(vehicle);
-        }
-        return res;
+    public void increaseVehicleCount() {
+        vehicleCount++;
     }
 
+    public void decreaseContainerCount() {
+        containerCount--;
+    }
+
+    public void decreaseVehicleCount() {
+        vehicleCount--;
+    }
     public static Port createPort() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Creating new Port...");

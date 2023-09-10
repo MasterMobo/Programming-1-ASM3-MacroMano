@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 public class CLI {
     private final Map<String, Consumer<String[]>> commandMap;
     private final MasterDatabase db;
-    protected User user;
+    protected User user = null;
 
     public CLI(MasterDatabase db) {
         this.db = db;
@@ -55,39 +55,49 @@ public class CLI {
 
 
     public void list(String[] args) {
-        if (!(isLoggedIn())) return;
+        if (!isLoggedIn()) return;
         ListCommand.process(args, db);
     }
 
 
     public void listVehiclesFromPort(String[] args) {
-        if (!(isLoggedIn())) return;
+        if (!isLoggedIn()) return;
         ListVehicleFromPortCommand.process(args, db);
     }
 
     public void listContainersFromVehicle(String[] args) {
-        if (!(isLoggedIn())) return;
+        if (!isLoggedIn()) return;
         ListContainerFromVehicleCommand.process(args, db);
     }
 
     public void create(String[] args) {
-        if (!(isLoggedIn())) return;
+        if (!isLoggedIn()) return;
         CreateCommand.process(args, db);
     }
 
     public void delete(String[] args) {
-        if (!(isLoggedIn())) return;
+        if (!isLoggedIn()) return;
         DeleteCommand.process(args, db);
     }
 
     public void register(String[] args) {
+        if (user != null) {
+            System.out.println("You are already logged in, please logout first");
+            return;
+        }
         RegisterCommand.process(args, db, this);
     }
 
-    public void login(String[] args) { LoginCommand.process(args, db, this); }
+    public void login(String[] args) {
+        if (user != null) {
+            System.out.println("You are already logged in, please logout first");
+            return;
+        }
+        LoginCommand.process(args, db, this);
+    }
 
     private void logout(String[] args) {
-        if (!(isLoggedIn())) return;
+        if (!isLoggedIn()) return;
         LogoutCommand.process(args, db, this);
     }
 

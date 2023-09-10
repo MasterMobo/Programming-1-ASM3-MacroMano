@@ -20,6 +20,22 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     private boolean vehicleExists(String vehicleId) {
         return mdb.vehicles.find(vehicleId) != null;
     }
+
+    private boolean containerExists(String containerID) {return mdb.containers.find(containerID) != null;}
+
+    public Container getContainerFromPort (String containerID, String portId){
+        if (!containerExists(containerID)) return null;
+        ArrayList<Container> containers = fromPort(portId);
+
+        for (Container container : containers) {
+            if (container.getId().equals(containerID)) {
+                return container;
+            }
+        }
+        return null;
+    }
+
+
     public ArrayList<Container> fromVehicle(String vehicleId) {
         if (!vehicleExists(vehicleId)) return null;
 
@@ -104,17 +120,39 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         return res;
     }
 
+    public ArrayList<Container> fromPort(String pId) {
+        Port port = mdb.ports.find(pId);
+        if (port == null) return null;
+
+        ArrayList<Container> res = new ArrayList<>();
+
+        for (Map.Entry<String, Container> set: data.entrySet()) {
+            Container container = set.getValue();
+            if (Objects.equals(container.portId, pId)) {
+                res.add(container);
+            }
+        }
+
+        return res;
+    }
+
     @Override
-    public void createRecord(Container container) {
-        if (container == null) return;
+    public Container createRecord(Container container) {
+        if (container == null) return null;
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter vehicle ID: ");
-        Vehicle v = mdb.vehicles.find(scanner.nextLine().trim());
-        if (v == null) return;
+        System.out.print("Enter port ID: ");
+        Port p = mdb.ports.find(scanner.nextLine().trim());
+        if (p == null) return null;
 
-        // TODO: check if container can be placed on vehicle
-        container.vehicleId = v.getId();
+        if (!p.canAddContainer(container)) {
+            System.out.println("Port weight capacity exceeded");
+            return null;
+        }
+
+        container.portId = p.getId();
+        p.addContainer(container);
         add(container);
+        return container;
     }
 }

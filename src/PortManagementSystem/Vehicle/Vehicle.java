@@ -11,7 +11,6 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
 
     private final String name;
     protected String id;
-    public Port port;
     public String portId;
     private Double carryCapacity;
     private Double curfuelCapacity;

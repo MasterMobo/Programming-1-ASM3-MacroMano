@@ -1,5 +1,6 @@
 package PortManagementSystem.DB;
 
+import PortManagementSystem.Containers.Container;
 import PortManagementSystem.Port;
 import PortManagementSystem.Vehicle.Ship;
 import PortManagementSystem.Vehicle.Truck;
@@ -32,6 +33,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
         return res;
     }
+    
 
     public ArrayList<Vehicle> shipsFromPort(String portID) {
         if (!portExists(portID)) return null;
@@ -62,18 +64,18 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
     @Override
-    public void createRecord(Vehicle vehicle) {
-        if (vehicle == null) return;
+    public Vehicle createRecord(Vehicle vehicle) {
+        if (vehicle == null) return null;
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter port ID: ");
         Port p = mdb.ports.find(scanner.nextLine().trim());
-        if (p == null) return;
+        if (p == null) return null;
 
         // TODO restructure port in Vehicle (only store portId, not port obj)
         vehicle.portId = p.getId();
-        vehicle.port = p;
         add(vehicle);
+        return vehicle;
     }
 
 }
