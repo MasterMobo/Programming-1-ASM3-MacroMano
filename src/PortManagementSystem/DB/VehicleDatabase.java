@@ -72,7 +72,6 @@ public class VehicleDatabase extends Database<Vehicle> {
 
         // TODO restructure port in Vehicle (only store portId, not port obj)
         vehicle.portId = p.getId();
-        vehicle.port = p;
         add(vehicle);
         return vehicle;
     }
