@@ -105,16 +105,22 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     @Override
-    public void createRecord(Container container) {
-        if (container == null) return;
+    public Container createRecord(Container container) {
+        if (container == null) return null;
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter vehicle ID: ");
-        Vehicle v = mdb.vehicles.find(scanner.nextLine().trim());
-        if (v == null) return;
+        System.out.print("Enter port ID: ");
+        Port p = mdb.ports.find(scanner.nextLine().trim());
+        if (p == null) return null;
 
-        // TODO: check if container can be placed on vehicle
-        container.vehicleId = v.getId();
+        if (!p.canAddContainer(container)) {
+            System.out.println("Port weight capacity exceeded");
+            return null;
+        }
+
+        container.portId = p.getId();
+        p.addContainer(container);
         add(container);
+        return container;
     }
 }

@@ -30,17 +30,17 @@ public class CreateCommand extends Command{
         switch (args[0]) {
             case "port":
                 Port port = Port.createPort();
-                db.ports.add(port);
+                db.ports.createRecord(port);
                 System.out.println("Successfully created new Port!");
                 break;
             case "vehicle":
                 Vehicle vehicle = Vehicle.createVehicle();
-                db.vehicles.createRecord(vehicle);
+                if (db.vehicles.createRecord(vehicle) == null) return;
                 System.out.println("Successfully created vehicle!");
                 break;
             case "container":
                 Container container = Container.createContainer();
-                db.containers.createRecord(container);
+                if (db.containers.createRecord(container) == null) return;
                 System.out.println("Successfully created container!");
                 break;
             default:
