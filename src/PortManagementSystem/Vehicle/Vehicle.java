@@ -64,7 +64,7 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
     @Override
     public void loadContainer() {
         Scanner scanner = new Scanner(System.in);
-
+        Double totalWeight = 0.0;
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
             String containerId = scanner.nextLine();
@@ -79,18 +79,22 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
                 continue;
             }
 
-            if (this instanceof Ship) {
-                loadedContainers.add(container);
-            } else if (this instanceof Truck) {
-                if (Objects.equals(container.getType(), "Refridgerated") && (this instanceof ReeferTruck)) {
-                    System.out.println("Only Reefer truck can carry Refridgerated");
-                } else if (Objects.equals(container.getType(), "Liquid") && !(this instanceof TankerTruck)) {
-                    System.out.println("Only Tanker truck can carry Liquid");
-                } else {
+            if (totalWeight > this.carryCapacity ) {
+                break;
+            }
+            else {
+                if (this instanceof Ship) {
                     loadedContainers.add(container);
+                } else if (this instanceof Truck) {
+                    if (Objects.equals(container.getType(), "Refridgerated") && (this instanceof ReeferTruck)) {
+                        System.out.println("Only Reefer truck can carry Refridgerated");
+                    } else if (Objects.equals(container.getType(), "Liquid") && !(this instanceof TankerTruck)) {
+                        System.out.println("Only Tanker truck can carry Liquid");
+                    } else {
+                        loadedContainers.add(container);
+                    }
                 }
             }
-            scanner.close();
         }
     }
 
