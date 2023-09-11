@@ -107,6 +107,9 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                System.out.println("Container already on this vehicle");
                continue;
            }
+           if (!(container.vehicleId == null)) {
+               continue;
+           }
 
             if (!vehicle.canAddContainer(container)) {
                 System.out.println("Weight exceeded. The vehicle can not carry the specified container");
