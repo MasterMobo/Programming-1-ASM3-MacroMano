@@ -143,6 +143,20 @@ public class Vehicle implements DatabaseRecord, Serializable {
         }
     }
 
+    public float calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
+        float result = 0;
+        double portDistance = p1.getDist(p2);
+
+        for (Container container : containers) {
+            if (this instanceof Ship) {
+                result += container.getShipFuelConsumption() * container.getWeight() * portDistance;
+            } else if (this instanceof Truck) {
+                result += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
+            }
+        }
+        return result;
+    }
+
     @Override
     public String getId() {
         return id;
