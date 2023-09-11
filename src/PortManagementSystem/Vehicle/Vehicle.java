@@ -1,13 +1,12 @@
 package PortManagementSystem.Vehicle;
 import PortManagementSystem.DB.DatabaseRecord;
-import PortManagementSystem.Port;
-import PortManagementSystem.Utils.*;
+import PortManagementSystem.Port.Port;
 import PortManagementSystem.Containers.*;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
+public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable {
 
     private String name;
     protected String id;

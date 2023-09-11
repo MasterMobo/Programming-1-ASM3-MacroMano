@@ -10,7 +10,7 @@ public class PortManager extends User {
 
 
     @Override
-    public boolean Accessibility(String type) {
+    public boolean isAccessible(String type) {
         isBannedOf.add("port");
         isBannedOf.add("vehicle");
         isBannedOf.add("user");

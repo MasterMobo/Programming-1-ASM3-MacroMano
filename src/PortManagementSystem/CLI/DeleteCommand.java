@@ -22,10 +22,11 @@ public class DeleteCommand extends Command{
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         String type = args[0];
         String id = args[1];
-        if (!cli.user.Accessibility(args[0])) {
+        if (!cli.user.isAccessible(type)) {
             System.out.println("You do not have the authority to this command");
             return;
         }
+
         switch (type) {
             case "port":
                 if (db.ports.delete(id) == null) return;

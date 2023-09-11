@@ -2,7 +2,7 @@ package PortManagementSystem.CLI;
 
 import PortManagementSystem.Containers.Container;
 import PortManagementSystem.DB.MasterDatabase;
-import PortManagementSystem.Port;
+import PortManagementSystem.Port.Port;
 import PortManagementSystem.Vehicle.Vehicle;
 
 import java.util.Scanner;
@@ -25,12 +25,11 @@ public class CreateCommand extends Command{
     }
 
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        Scanner scanner = new Scanner(System.in);
-
-        if (!cli.user.Accessibility(args[0])) {
+        if (!cli.user.isAccessible(args[0])) {
             System.out.println("You do not have the authority to this command");
             return;
         }
+
         switch (args[0]) {
             case "port":
                 Port port = Port.createPort();

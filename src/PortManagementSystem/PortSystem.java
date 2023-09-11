@@ -9,7 +9,6 @@ public class PortSystem {
     public static void start() {
         MasterDatabase db = MasterDatabase.initDB();
 
-
         CLI cli = new CLI(db);
         System.out.println("COSC2081 GROUP ASSIGNMENT\n" +
                 "CONTAINER PORT MANAGEMENT SYSTEM\n" +

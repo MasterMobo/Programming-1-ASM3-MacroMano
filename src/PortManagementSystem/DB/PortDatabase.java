@@ -1,6 +1,6 @@
 package PortManagementSystem.DB;
 
-import PortManagementSystem.Port;
+import PortManagementSystem.Port.Port;
 
 import java.util.Scanner;
 

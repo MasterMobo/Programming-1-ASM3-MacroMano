@@ -1,17 +1,14 @@
-package PortManagementSystem;
+package PortManagementSystem.Port;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static java.lang.Math.*;
 
 import PortManagementSystem.Containers.*;
 import PortManagementSystem.DB.DatabaseRecord;
-import PortManagementSystem.Vehicle.*;
 
-public class Port implements DatabaseRecord, Serializable {
+public class Port implements PortOperations, DatabaseRecord, Serializable {
     private String name;
     private String id;
     private double lat;
@@ -92,36 +89,39 @@ public class Port implements DatabaseRecord, Serializable {
         this.capacity = capacity;
     }
 
+    @Override
     public double getDist(Port other) {
         // Calculates the distance between this port and the other port (in km)
         return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lon-this.lon))*6371; // (6371 is Earth radius in km.)
     }
 
-
+    @Override
     public void addContainer(Container c) {
         currentWeight += c.getWeight();
         containerCount++;
     }
+
+    @Override
     public boolean canAddContainer(Container c) {
         return c.getWeight() + currentWeight <= capacity;
     }
 
-    public void addWeight(double w) {
-        currentWeight += w;
-    }
-
+    @Override
     public void increaseContainerCount() {
         containerCount++;
     }
 
+    @Override
     public void increaseVehicleCount() {
         vehicleCount++;
     }
 
+    @Override
     public void decreaseContainerCount() {
         containerCount--;
     }
 
+    @Override
     public void decreaseVehicleCount() {
         vehicleCount--;
     }

@@ -1,15 +1,11 @@
 package PortManagementSystem.DB;
 
-import PortManagementSystem.Port;
-import PortManagementSystem.User.SystemAdmin;
-import PortManagementSystem.User.User;
 import PortManagementSystem.Utils.DBUtils;
 
 import java.io.*;
-import java.util.Locale;
 
 
-public class MasterDatabase implements Serializable, FileStorage {
+public class MasterDatabase implements Serializable {
     // Class containing all other Databases
     // The main class for User to interact with the Databases
 //    private static final String FILE_DIR = "src/db.obj";

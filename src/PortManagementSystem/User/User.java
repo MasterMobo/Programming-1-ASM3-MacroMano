@@ -35,7 +35,7 @@ public class User implements DatabaseRecord, Serializable {
         return this.password.equals(password);
     }
 
-    public boolean Accessibility(String type) {
+    public boolean isAccessible(String type) {
         return false;
     }
 

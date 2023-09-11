@@ -1,7 +1,6 @@
 package PortManagementSystem.DB;
 
-import PortManagementSystem.Containers.Container;
-import PortManagementSystem.Port;
+import PortManagementSystem.Port.Port;
 import PortManagementSystem.Vehicle.Ship;
 import PortManagementSystem.Vehicle.Truck;
 import PortManagementSystem.Vehicle.Vehicle;

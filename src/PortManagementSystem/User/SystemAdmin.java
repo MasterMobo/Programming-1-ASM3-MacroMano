@@ -9,7 +9,7 @@ public class SystemAdmin extends User {
 
 
     @Override
-    public boolean Accessibility(String type) {
+    public boolean isAccessible(String type) {
         if (isBannedOf.contains(type)) {
             return false;
         }

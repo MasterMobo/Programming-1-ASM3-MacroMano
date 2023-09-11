@@ -1,7 +1,7 @@
 package PortManagementSystem.DB;
 
 import PortManagementSystem.Containers.*;
-import PortManagementSystem.Port;
+import PortManagementSystem.Port.Port;
 import PortManagementSystem.Vehicle.*;
 
 import java.io.Serializable;

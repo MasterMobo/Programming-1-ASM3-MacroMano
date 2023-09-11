@@ -23,7 +23,7 @@ public class UpdateCommand extends Command{
         String type = args[0];
         String id = args[1];
 
-        if (!cli.user.Accessibility(args[0])) {
+        if (!cli.user.isAccessible(type)) {
             System.out.println("You do not have the authority to this command");
             return;
         }

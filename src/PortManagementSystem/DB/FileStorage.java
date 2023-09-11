@@ -3,9 +3,9 @@ package PortManagementSystem.DB;
 import java.io.*;
 import java.util.Locale;
 
-public interface FileStorage {
-    String FILE_NAME = "db.obj";
-    String OS = System.getProperty("os.name", "unknown").toLowerCase(Locale.ENGLISH);
+public class FileStorage {
+    private static final String FILE_NAME = "db.obj";
+    private static final String OS = System.getProperty("os.name", "unknown").toLowerCase(Locale.ENGLISH);
 
     private static String getFileDir() {
         if (OS.contains("win")) {

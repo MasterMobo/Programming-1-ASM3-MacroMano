@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import PortManagementSystem.DB.DatabaseRecord;
-import PortManagementSystem.Port;
+import PortManagementSystem.Port.Port;
 import PortManagementSystem.Utils.Status;
 import PortManagementSystem.Vehicle.Vehicle;
 

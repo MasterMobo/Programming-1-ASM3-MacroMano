@@ -2,10 +2,9 @@ package PortManagementSystem.Utils;
 
 import PortManagementSystem.Containers.DryStorage;
 import PortManagementSystem.DB.MasterDatabase;
-import PortManagementSystem.Port;
+import PortManagementSystem.Port.Port;
 import PortManagementSystem.User.SystemAdmin;
 import PortManagementSystem.Vehicle.Ship;
-import PortManagementSystem.Vehicle.Vehicle;
 
 import java.util.Random;
 

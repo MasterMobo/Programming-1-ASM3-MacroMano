@@ -93,10 +93,6 @@ public abstract class Container implements DatabaseRecord, Serializable {
                 '}';
     }
 
-    public static void main(String[] args) {
-        DryStorage c1 = new DryStorage( 50);
-        System.out.println(c1);
-    }
 }
 
 

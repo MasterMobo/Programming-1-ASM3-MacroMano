@@ -1,14 +1,12 @@
 package PortManagementSystem.DB;
 
-import PortManagementSystem.Port;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Scanner;
 
 import static PortManagementSystem.Utils.DBUtils.randKey;
 
-public class Database<T extends DatabaseRecord> implements Serializable {
+public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>, Serializable {
     // Generalized class to store objects (referred to as records) of any type
     // Each record of the database has a unique id
     // IMPORTANT: Objects to be stored in the database MUST implement the DatabaseRecord interface
@@ -45,6 +43,7 @@ public class Database<T extends DatabaseRecord> implements Serializable {
 
     };
 
+    @Override
     public T add(T item) {
         // Generates a valid id, attach it to the object, then add a new record
         // Returns the newly created record
@@ -55,6 +54,7 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         return item;
     }
 
+    @Override
     public T find(String id) {
         // Finds the record by id
         // Returns the found record, or null if no record found
@@ -65,18 +65,7 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         return res;
     }
 
-//    public T update(String id, T item) {
-//        // Updates the record of the given id.
-//        // Returns the newly updated record, or null if no record found.
-//        T record = find(id);
-//        if (record == null) return null;
-//
-//        record = item;
-//        record.setId(id);
-//        mdb.save();
-//        return record;
-//    }
-
+    @Override
     public T delete(String id) {
         // Deletes the record of the given id.
         // Returns the deleted record, or null if no record found.
@@ -87,11 +76,12 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         return record;
     }
 
+    @Override
     public boolean exists(String id) {
         return data.containsKey(id);
     }
 
-    // TODO: maybe make this abstract?
+    @Override
     public T createRecord(T item) {
         // Adds record to DB and returns it
         // Returns null if something went wrong
@@ -100,6 +90,7 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         return item;
     }
 
+    @Override
     public T updateRecord(String id) {
         // Start update sequence
         // Meant to be overridden for further processing (see child class for example)
@@ -130,4 +121,5 @@ public class Database<T extends DatabaseRecord> implements Serializable {
             System.out.println(val);
         });
     }
+
 }
