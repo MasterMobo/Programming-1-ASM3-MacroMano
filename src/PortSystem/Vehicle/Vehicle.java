@@ -101,25 +101,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
         return false;
     };
 
-
-    // TODO @alakinn pls use this method instead of totalConsumption
-    //  curCarryWeight & curFuelConsumption is updated every time container is loaded/unloaded
-    //  check ContainerDatabase.loadContainerOnVehicle for more detail
-    public boolean canMove(Port p1, Port p2) {
-        return curCarryWeight * curFuelConsumption * p1.getDist(p2) <= fuelCapacity;
-    }
-    
-
-
-//    public void moveToPort() {
-//        if (!this.allowToTravel()) {
-//            return;
-//        }
-//        this.curfuelCapacity -= this.totalConsumption();
-
-
-
-
     public void refuel() {
         this.curfuelCapacity = this.fuelCapacity;
     }
@@ -161,36 +142,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
             curFuelConsumption -= c.getTruckFuelConsumption();
         }
     }
-
-
-    public void unloadContainer() {
-        this.loadedContainers.clear();
-    }
-
-
-
-    public double getTotalWeight () {
-            double totalWeight = 0;
-            for (Container container : loadedContainers) {
-                totalWeight += container.getWeight();
-            }
-            return totalWeight;
-        }
-//        public float totalConsumption () {
-//            double portDistance = port.getDist(null);
-//
-//            if (this instanceof Ship) {
-//                for (Container container : loadedContainers) {
-//                    totalFuelConsumption += container.getShipFuelConsumption() * container.getWeight() * portDistance;
-//                }
-//
-//            } else if (this instanceof Truck) {
-//                for (Container container : loadedContainers) {
-//                    totalFuelConsumption += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
-//                }
-//            }
-//            return totalFuelConsumption;
-//        }
 
     @Override
     public String getId() {
