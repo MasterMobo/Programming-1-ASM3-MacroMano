@@ -213,6 +213,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             vehicle.deductWeight(container);
             vehicle.deductFuelConsumption(container);
             vehicle.removeContainerFromList(container);
+            mdb.save();
         }
 
     }
