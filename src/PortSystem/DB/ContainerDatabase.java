@@ -163,14 +163,18 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             }
 
             if (!vehicle.allowToAdd(container)){
-                System.out.println(vehicle.getClass().getName() + "can not carry" + container.getType() + "containers");
+                System.out.println(vehicle.getType() + " can not carry " + container.getType() + " containers");
                 continue;
             }
 
             container.vehicleId = vehicle.getId();
             vehicle.addWeight(container);
             vehicle.addFuelConsumption(container);
+            mdb.save();
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
+            // TODO check if container is already on another vehicle (or on this vehicle)
+            // TODO maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
+            // TODO set portID to null when loaded on vehicle?
         }
     }
 
@@ -193,6 +197,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         p.addContainer(container);
         p.increaseContainerCount();
         add(container);
+        System.out.println("Created Record: " + container);
         return container;
     }
 

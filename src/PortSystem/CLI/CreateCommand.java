@@ -31,18 +31,15 @@ public class CreateCommand extends Command{
         switch (args[0]) {
             case "port":
                 Port port = Port.createPort();
-                db.ports.createRecord(port);
-                System.out.println("Successfully created new Port!");
+                if (db.ports.createRecord(port) == null) return;
                 break;
             case "vehicle":
                 Vehicle vehicle = Vehicle.createVehicle();
                 if (db.vehicles.createRecord(vehicle) == null) return;
-                System.out.println("Successfully created vehicle!");
                 break;
             case "container":
                 Container container = Container.createContainer();
                 if (db.containers.createRecord(container) == null) return;
-                System.out.println("Successfully created container!");
                 break;
             default:
                 System.out.println("Invalid Type");

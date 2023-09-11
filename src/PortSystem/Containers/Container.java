@@ -70,6 +70,8 @@ public abstract class Container implements DatabaseRecord, Serializable {
                 return new DryStorage(weight);
             case "liquid":
                 return new Liquid(weight);
+            case "opentop":
+                return new OpenTop(weight);
             case "openside":
                 return new OpenSide(weight);
             case "refridg":

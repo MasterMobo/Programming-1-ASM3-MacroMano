@@ -9,7 +9,10 @@ import java.util.*;
 public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable {
 
     private String name;
+
     protected String id;
+
+    protected String type;
     public String portId;
     private double carryCapacity;
     private double curfuelCapacity;
@@ -32,6 +35,10 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
 
     public String getName() {
         return name;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setName(String name) {
@@ -216,11 +223,12 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         return "Vehicle{" +
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
+                ", type='" + type + '\'' +
                 ", portId='" + portId + '\'' +
                 ", carryCapacity=" + carryCapacity +
-                ", curfuelCapacity=" + curfuelCapacity +
                 ", curCarryWeight=" + curCarryWeight +
                 ", fuelCapacity=" + fuelCapacity +
+                ", curfuelCapacity=" + curfuelCapacity +
                 ", allowedContainers=" + Arrays.toString(allowedContainers) +
                 ", curFuelConsumption=" + curFuelConsumption +
                 '}';
