@@ -89,6 +89,12 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Available containers on this port:");
+        for (Container container : mdb.containers.fromPort(vehicle.portId)) {
+            System.out.println(container.getId());
+        }
+
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
             String input = scanner.nextLine().trim();
@@ -111,6 +117,10 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                continue;
            }
 
+           if (!(container.portId == vehicle.portId)) {
+               continue;
+           }
+
             if (!vehicle.canAddContainer(container)) {
                 System.out.println("Weight exceeded. The vehicle can not carry the specified container");
                 continue;
@@ -123,11 +133,9 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
             container.vehicleId = vehicle.getId();
             vehicle.addWeight(container);
+            container.portId = null;
             mdb.save();
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
-            //  check if container is already on another vehicle (or on this vehicle)
-            //  maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
-            //  set portID to null when loaded on vehicle?
             //  using curFuelConsumption was wrong, i removed it  - khoabui
         }
     }
@@ -162,7 +170,12 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
+            if (!(container.vehicleId == null)) {
+                continue;
+            }
+
             container.vehicleId = null;
+            container.portId = vehicle.portId;
             vehicle.deductWeight(container);
             mdb.save();
         }
