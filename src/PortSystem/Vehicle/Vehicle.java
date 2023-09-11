@@ -18,8 +18,9 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
     private double curfuelCapacity;
     private double curCarryWeight;
     private double fuelCapacity;
-    protected String[] allowedContainers;
 
+    protected String[] allowedContainers;
+    private float totalFuelConsumption;
     private double curFuelConsumption = 0;
 
     public ArrayList<Container> loadedContainers = new ArrayList<>();
@@ -48,6 +49,7 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
     public double getCurfuelCapacity() {
         return curfuelCapacity;
     }
+    public float getTotalFuelConsumption() {return totalFuelConsumption;}
 
     public void setFuelCapacity(double fuelCapacity) {
         this.fuelCapacity = fuelCapacity;
@@ -164,7 +166,6 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
             return totalWeight;
         }
         public float totalConsumption () {
-            float totalFuelConsumption = 0.0F;
             double portDistance = port.getDist(null);
 
             if (this instanceof Ship) {
