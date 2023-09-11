@@ -2,6 +2,7 @@ package PortSystem.DB;
 
 import PortSystem.Containers.*;
 import PortSystem.Port.Port;
+import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.*;
 
 import java.io.Serializable;
@@ -89,20 +90,17 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
 
-        if (vehicle.getCurCarryWeight() == vehicle.getCarryCapacity()) {
+        if (vehicle.getCurCarryWeight() >= vehicle.getCarryCapacity()) {
             System.out.println("This vehicle is full, please choose a different one");
             return;
         }
 
-        System.out.println("Container available for loading:");
-        System.out.println(mdb.containers.fromPort(vehicle.portId));
-
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Available containers on this port:");
-        for (Container container : mdb.containers.fromPort(vehicle.portId)) {
-            System.out.println(container.getId());
-        }
+        System.out.println("Available containers in this port:");
+        for (Container c: fromPort(vehicle.portId)) {
+            if (c.vehicleId == null) System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
+        };
 
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
@@ -118,6 +116,11 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
+            if (!Objects.equals(container.portId, vehicle.portId)) {
+                System.out.println("Container is not within this port");
+                continue;
+            }
+
            if(Objects.equals(container.vehicleId, vehicle.getId())) {
                System.out.println("Container is already on this vehicle");
                continue;
@@ -128,9 +131,6 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                continue;
            }
 
-           if (!(container.portId == vehicle.portId)) {
-               continue;
-           }
 
             if (!vehicle.canAddContainer(container)) {
                 System.out.println("Weight exceeded. The vehicle can not carry the specified container");

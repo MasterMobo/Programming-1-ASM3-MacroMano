@@ -170,7 +170,7 @@ public class Vehicle implements DatabaseRecord, Serializable {
     public static Vehicle createVehicle() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Creating vehicle...");
-        System.out.println("Enter vehicle type (ship, reefer, tanker):");
+        System.out.println("Enter vehicle type (ship, truck, reefer, tanker):");
         String type = scanner.nextLine().trim();
 
         System.out.print("Enter name: ");
@@ -185,6 +185,8 @@ public class Vehicle implements DatabaseRecord, Serializable {
         switch (type){
             case "ship":
                 return new Ship(name, carryCapacity, fuelCapacity);
+            case "truck":
+                return new Truck(name, carryCapacity, fuelCapacity);
             case "tanker":
                 return new TankerTruck(name, carryCapacity, fuelCapacity);
             case "reefer":
