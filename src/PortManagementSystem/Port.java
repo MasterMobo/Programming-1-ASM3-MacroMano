@@ -72,6 +72,26 @@ public class Port implements DatabaseRecord, Serializable {
         return isLanding;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public void setCurrentWeight(double currentWeight) {
+        this.currentWeight = currentWeight;
+    }
+
+    public void setCapacity(double capacity) {
+        this.capacity = capacity;
+    }
+
     public double getDist(Port other) {
         // Calculates the distance between this port and the other port (in km)
         return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lon-this.lon))*6371; // (6371 is Earth radius in km.)

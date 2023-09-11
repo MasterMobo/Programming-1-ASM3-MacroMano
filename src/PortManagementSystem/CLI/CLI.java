@@ -21,6 +21,7 @@ public class CLI {
         commandMap.put("lsc", this::listContainersFromVehicle);
         commandMap.put("crt", this::create);
         commandMap.put("del", this::delete);
+        commandMap.put("upd", this::update);
         commandMap.put("help", this::help);
         commandMap.put("login", this::login);
         commandMap.put("logout", this::logout);
@@ -75,6 +76,11 @@ public class CLI {
     public void create(String[] args) {
         if (!isLoggedIn()) return;
         CreateCommand.process(args, db, this);
+    }
+
+    public void update(String[] args) {
+        if (!isLoggedIn()) return;
+        UpdateCommand.process(args, db, this);
     }
 
     public void delete(String[] args) {

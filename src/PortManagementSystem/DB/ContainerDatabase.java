@@ -134,27 +134,6 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         return res;
     }
 
-    @Override
-    public Container createRecord(Container container) {
-        if (container == null) return null;
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter port ID: ");
-        Port p = mdb.ports.find(scanner.nextLine().trim());
-        if (p == null) return null;
-
-        if (!p.canAddContainer(container)) {
-            System.out.println("Port weight capacity exceeded");
-            return null;
-        }
-
-        container.portId = p.getId();
-        p.addContainer(container);
-        p.increaseContainerCount();
-        add(container);
-        return container;
-    }
-
     public void loadContainerOnVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return;
@@ -193,5 +172,43 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             vehicle.addFuelConsumption(container);
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
         }
+    }
+
+
+    @Override
+    public Container createRecord(Container container) {
+        if (container == null) return null;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter port ID: ");
+        Port p = mdb.ports.find(scanner.nextLine().trim());
+        if (p == null) return null;
+
+        if (!p.canAddContainer(container)) {
+            System.out.println("Port weight capacity exceeded");
+            return null;
+        }
+
+        container.portId = p.getId();
+        p.addContainer(container);
+        p.increaseContainerCount();
+        add(container);
+        return container;
+    }
+
+    @Override
+    public Container updateRecord(String id) {
+        Container container = super.updateRecord(id);
+
+        Scanner scanner = new Scanner(System.in);
+        container.setWeight(getInputDouble("Weight: ", container.getWeight(), scanner));
+
+        container.setShipFuelConsumption(getInputDouble("Ship Fuel Consumption: ", container.getShipFuelConsumption(), scanner));
+
+        container.setTruckFuelConsumption(getInputDouble("Truck Fuel Consumption: ", container.getTruckFuelConsumption(), scanner));
+
+        System.out.println("Updated record: " + container);
+        mdb.save();
+        return container;
     }
 }

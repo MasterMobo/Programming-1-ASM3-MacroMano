@@ -37,6 +37,14 @@ public abstract class Container implements DatabaseRecord, Serializable {
         this.weight = weight;
     }
 
+    public void setShipFuelConsumption(double shipFuelConsumption) {
+        this.shipFuelConsumption = shipFuelConsumption;
+    }
+
+    public void setTruckFuelConsumption(double truckFuelConsumption) {
+        this.truckFuelConsumption = truckFuelConsumption;
+    }
+
     public double getShipFuelConsumption() {
         return shipFuelConsumption;
     }

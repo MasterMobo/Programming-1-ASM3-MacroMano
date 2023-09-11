@@ -78,5 +78,24 @@ public class VehicleDatabase extends Database<Vehicle> {
         return vehicle;
     }
 
+    @Override
+    public Vehicle updateRecord(String id) {
+        Vehicle vehicle = super.updateRecord(id);
 
+        Scanner scanner = new Scanner(System.in);
+
+        vehicle.setName(getInputString("Name: ", vehicle.getName(), scanner));
+
+        vehicle.setCarryCapacity(getInputDouble("Carry Weight Capacity: ", vehicle.getCarryCapacity(), scanner));
+
+        vehicle.setCurCarryWeight(getInputDouble("Current Carry Weight: ", vehicle.getCurCarryWeight(), scanner));
+
+        vehicle.setFuelCapacity(getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
+
+        vehicle.setCurFuelConsumption(getInputDouble("Current Fuel Consumption: ", vehicle.getCurFuelConsumption(), scanner));
+
+        System.out.println("Updated record: " + vehicle);
+        mdb.save();
+        return vehicle;
+    }
 }

@@ -1,0 +1,45 @@
+package PortManagementSystem.CLI;
+
+import PortManagementSystem.DB.MasterDatabase;
+
+public class UpdateCommand extends Command{
+    public UpdateCommand() {
+        signature = "upd";
+        desc = "Initiate update sequence of given type";
+        usage = "upd <type> <id>";
+        arguments = 2;
+    }
+
+    public static void process(String[] args, MasterDatabase db, CLI cli) {
+        UpdateCommand cmd = new UpdateCommand();
+        if (!cmd.validateArguments(args)) {
+            return;
+        }
+
+        cmd.execute(args, db, cli);
+    }
+
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
+        String type = args[0];
+        String id = args[1];
+
+        if (!cli.user.Accessibility(args[0])) {
+            System.out.println("You do not have the authority to this command");
+            return;
+        }
+
+        switch (type) {
+            case "port":
+                if (db.ports.updateRecord(id) == null) return;
+                break;
+            case "vehicle":
+                if (db.vehicles.updateRecord(id) == null) return;
+                break;
+            case "container":
+                if (db.containers.updateRecord(id) == null) return;
+                break;
+            default:
+                System.out.println("Invalid type. Expecting: port, vehicle, container, manager");
+        }
+    }
+}

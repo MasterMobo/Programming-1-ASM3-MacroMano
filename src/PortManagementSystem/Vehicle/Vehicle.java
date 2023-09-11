@@ -9,13 +9,13 @@ import java.util.*;
 
 public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
 
-    private final String name;
+    private String name;
     protected String id;
     public String portId;
     private double carryCapacity;
     private double curfuelCapacity;
     private double curCarryWeight;
-    private final double fuelCapacity;
+    private double fuelCapacity;
     protected String[] allowedContainers;
 
     private double curFuelConsumption = 0;
@@ -29,6 +29,46 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         this.carryCapacity = carryCapacity;
         curfuelCapacity = fuelCapacity;
         this.fuelCapacity = fuelCapacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getCurfuelCapacity() {
+        return curfuelCapacity;
+    }
+
+    public void setFuelCapacity(double fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
+    }
+
+    public double getFuelCapacity() {
+        return fuelCapacity;
+    }
+
+    public double getCurFuelConsumption() {
+        return curFuelConsumption;
+    }
+
+    public void setCarryCapacity(double carryCapacity) {
+        this.carryCapacity = carryCapacity;
+    }
+
+    public void setCurfuelCapacity(double curfuelCapacity) {
+        this.curfuelCapacity = curfuelCapacity;
+    }
+
+    public void setCurCarryWeight(double curCarryWeight) {
+        this.curCarryWeight = curCarryWeight;
+    }
+
+    public void setCurFuelConsumption(double curFuelConsumption) {
+        this.curFuelConsumption = curFuelConsumption;
     }
 
     public double getCurCarryWeight() {

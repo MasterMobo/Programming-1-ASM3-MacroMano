@@ -78,7 +78,7 @@ public class UserDatabase extends Database<User>{
             return new PortManager(username, password, portID);
         } else {
             System.out.println("Invalid role");
+            return null;
         }
-        return new User(username, password);
     }
 }

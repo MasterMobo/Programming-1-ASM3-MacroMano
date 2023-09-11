@@ -1,7 +1,10 @@
 package PortManagementSystem.DB;
 
+import PortManagementSystem.Port;
+
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import static PortManagementSystem.Utils.DBUtils.randKey;
 
@@ -62,17 +65,17 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         return res;
     }
 
-    public T update(String id, T item) {
-        // Updates the record of the given id.
-        // Returns the newly updated record, or null if no record found.
-        T record = find(id);
-        if (record == null) return null;
-
-        record = item;
-        record.setId(id);
-        mdb.save();
-        return record;
-    }
+//    public T update(String id, T item) {
+//        // Updates the record of the given id.
+//        // Returns the newly updated record, or null if no record found.
+//        T record = find(id);
+//        if (record == null) return null;
+//
+//        record = item;
+//        record.setId(id);
+//        mdb.save();
+//        return record;
+//    }
 
     public T delete(String id) {
         // Deletes the record of the given id.
@@ -95,6 +98,31 @@ public class Database<T extends DatabaseRecord> implements Serializable {
         // Some objects needs further processing before adding to DB, override this method accordingly (see child classes for example)
         add(item);
         return item;
+    }
+
+    public T updateRecord(String id) {
+        // Start update sequence
+        // Meant to be overridden for further processing (see child class for example)
+        // REMEMBER TO SAVE MASTER DB WHEN FINISHED
+        T record = find(id);
+        if (record == null) return null;
+
+        System.out.println("Updating record: " + record);
+        System.out.println("WARNING: Manually updating records could lead to data inaccuracy");
+        System.out.println("Type '.' to keep the same value");
+        return record;
+    }
+
+    protected String getInputString(String prompt, String currentVal, Scanner scanner) {
+        System.out.print(prompt);
+        String input = scanner.nextLine().trim();
+        return input.equals(".") ? currentVal : input;
+    }
+
+    protected double getInputDouble(String prompt, double currentVal, Scanner scanner) {
+        System.out.print(prompt);
+        String input = scanner.nextLine().trim();
+        return input.equals(".") ? currentVal : Double.parseDouble(input);
     }
 
     public void display() {
