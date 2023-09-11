@@ -72,12 +72,12 @@ public class CLI {
 
     public void create(String[] args) {
         if (!isLoggedIn()) return;
-        CreateCommand.process(args, db);
+        CreateCommand.process(args, db, this);
     }
 
     public void delete(String[] args) {
         if (!isLoggedIn()) return;
-        DeleteCommand.process(args, db);
+        DeleteCommand.process(args, db, this);
     }
 
     public void register(String[] args) {

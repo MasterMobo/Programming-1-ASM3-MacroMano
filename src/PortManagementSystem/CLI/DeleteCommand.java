@@ -10,18 +10,22 @@ public class DeleteCommand extends Command{
         arguments = 2;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
+    public static void process(String[] args, MasterDatabase db, CLI cli) {
         DeleteCommand cmd = new DeleteCommand();
         if (!cmd.validateArguments(args)) {
             return;
         }
 
-        cmd.execute(args, db);
+        cmd.execute(args, db, cli);
     }
 
-    public void execute(String[] args, MasterDatabase db) {
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         String type = args[0];
         String id = args[1];
+        if (!cli.user.Accessibility(args[0])) {
+            System.out.println("You do not have the authority to this command");
+            return;
+        }
         switch (type) {
             case "port":
                 if (db.ports.delete(id) == null) return;
