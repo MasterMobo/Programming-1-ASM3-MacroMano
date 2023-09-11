@@ -2,7 +2,7 @@ package PortManagementSystem.DB;
 
 import PortManagementSystem.Containers.*;
 import PortManagementSystem.Port;
-import PortManagementSystem.Vehicle.Vehicle;
+import PortManagementSystem.Vehicle.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -113,7 +113,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         for (Map.Entry<String, Container> set: data.entrySet()) {
             Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId) && container instanceof Refridgerated) {
+            if (Objects.equals(container.vehicleId, vehicleId) && container instanceof Refrigerated) {
                 res.add(container);
             }
         }
@@ -154,5 +154,45 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         p.addContainer(container);
         add(container);
         return container;
+    }
+
+    public void loadContainerOnVehicle(String vehicleId) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return;
+
+        if (vehicle.getCurCarryWeight() == vehicle.getCarryCapacity()) {
+            System.out.println("This vehicle is full, please choose a different one");
+            return;
+        }
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter container ID (or 'exit' to stop): ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            Container container = find(input);
+            if (container == null) {
+                System.out.println("No container object associated with the provided ID.");
+                continue;
+            }
+
+            if (!vehicle.canAddContainer(container)) {
+                System.out.println("Weight exceeded. The vehicle can not carry the specified container");
+                continue;
+            }
+
+            if (!vehicle.allowToAdd(container)){
+                System.out.println(vehicle.getClass().getName() + "can not carry" + container.getType() + "containers");
+                continue;
+            }
+
+            container.vehicleId = vehicle.getId();
+            vehicle.addWeight(container);
+            vehicle.addFuelConsumption(container);
+            // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
+        }
     }
 }

@@ -9,6 +9,7 @@ public class TankerTruck extends Truck {
         super(name,
                 carryCapacity,
                 fuelCapacity);
+        this.allowedContainers = new String[]{"Dry Storage", "Liquid", "Open Side", "Open Top"};
     }
 
 }

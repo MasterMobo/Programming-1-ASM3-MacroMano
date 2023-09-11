@@ -9,5 +9,6 @@ public class ReeferTruck extends Truck {
         super(name,
                 carryCapacity,
                 fuelCapacity);
+        this.allowedContainers = new String[]{"Dry Storage", "Open Side", "Open Top", "Refrigerated"};
     }
 }

@@ -12,20 +12,32 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
     private final String name;
     protected String id;
     public String portId;
-    private Double carryCapacity;
-    private Double curfuelCapacity;
-    private final Double fuelCapacity;
+    private double carryCapacity;
+    private double curfuelCapacity;
+    private double curCarryWeight;
+    private final double fuelCapacity;
+    protected String[] allowedContainers;
+
+    private double curFuelConsumption = 0;
+
     public ArrayList<Container> loadedContainers = new ArrayList<>();
 
     public Port port;
 
-    public Vehicle(String name, Double carryCapacity, Double fuelCapacity) {
+    public Vehicle(String name, double carryCapacity, double fuelCapacity) {
         this.name = name;
         this.carryCapacity = carryCapacity;
         curfuelCapacity = fuelCapacity;
         this.fuelCapacity = fuelCapacity;
     }
 
+    public double getCurCarryWeight() {
+        return curCarryWeight;
+    }
+
+    public double getCarryCapacity() {
+        return carryCapacity;
+    }
 
     // TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
     @Override
@@ -44,6 +56,14 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         return canTravel;
     }
 
+    public boolean allowToAdd(Container c){
+        for(String s: allowedContainers) {
+            if (s.equals(c.getType())){
+                return true;
+            }
+        }
+        return false;
+    };
     @Override
     public void moveToPort() {
         if (!this.allowToTravel()) {
@@ -57,46 +77,26 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         this.curfuelCapacity = this.fuelCapacity;
     }
 
-    @Override
-    public void unloadContainer() {
-        this.loadedContainers.clear();
+    public boolean canAddContainer(Container c){
+        return getCurCarryWeight() + c.getWeight() <= getCarryCapacity();
+    }
+
+    public void addWeight(Container c){
+        curCarryWeight += c.getWeight();
+    }
+
+    public void addFuelConsumption(Container c){
+        if (this instanceof Ship){
+            curFuelConsumption += c.getShipFuelConsumption();
+        }
+        else if(this instanceof Truck){
+            curFuelConsumption += c.getTruckFuelConsumption();
+        }
     }
 
     @Override
-    public void loadContainer() {
-        Scanner scanner = new Scanner(System.in);
-        Double totalWeight = 0.0;
-        while (true) {
-            System.out.print("Enter container ID (or 'exit' to stop): ");
-            String containerId = scanner.nextLine();
-
-            if (containerId.equalsIgnoreCase("exit")) {
-                break;
-            }
-
-            Container container = getContainerObject(containerId);
-            if (container == null) {
-                System.out.println("No container object associated with the provided ID.");
-                continue;
-            }
-
-            if (totalWeight > this.carryCapacity ) {
-                break;
-            }
-            else {
-                if (this instanceof Ship) {
-                    loadedContainers.add(container);
-                } else if (this instanceof Truck) {
-                    if (Objects.equals(container.getType(), "Refridgerated") && (this instanceof ReeferTruck)) {
-                        System.out.println("Only Reefer truck can carry Refridgerated");
-                    } else if (Objects.equals(container.getType(), "Liquid") && !(this instanceof TankerTruck)) {
-                        System.out.println("Only Tanker truck can carry Liquid");
-                    } else {
-                        loadedContainers.add(container);
-                    }
-                }
-            }
-        }
+    public void unloadContainer() {
+        this.loadedContainers.clear();
     }
 
         public Container getContainerObject (String containerID){
@@ -177,11 +177,13 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         return "Vehicle{" +
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
-                ", port=" + port +
                 ", portId='" + portId + '\'' +
                 ", carryCapacity=" + carryCapacity +
                 ", curfuelCapacity=" + curfuelCapacity +
+                ", curCarryWeight=" + curCarryWeight +
                 ", fuelCapacity=" + fuelCapacity +
+                ", allowedContainers=" + Arrays.toString(allowedContainers) +
+                ", curFuelConsumption=" + curFuelConsumption +
                 '}';
     }
 }

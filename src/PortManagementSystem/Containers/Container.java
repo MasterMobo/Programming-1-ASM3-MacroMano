@@ -65,7 +65,7 @@ public abstract class Container implements DatabaseRecord, Serializable {
             case "openside":
                 return new OpenSide(weight);
             case "refridg":
-                return new Refridgerated(weight);
+                return new Refrigerated(weight);
             default:
                 System.out.println("Invalid type");
                 return null;

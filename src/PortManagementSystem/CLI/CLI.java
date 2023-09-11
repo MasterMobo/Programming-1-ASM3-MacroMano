@@ -25,9 +25,11 @@ public class CLI {
         commandMap.put("login", this::login);
         commandMap.put("logout", this::logout);
         commandMap.put("register", this::register);
+        commandMap.put("loadv", this::loadContainerOnVehicle);
 
         // Add more commands as needed
     }
+
 
 
     // TODO: integrate user roles with commands
@@ -78,6 +80,11 @@ public class CLI {
     public void delete(String[] args) {
         if (!isLoggedIn()) return;
         DeleteCommand.process(args, db, this);
+    }
+
+    public void loadContainerOnVehicle(String[] args) {
+        if (!isLoggedIn()) return;
+        LoadContainerOnVehicle.process(args, db);
     }
 
     public void register(String[] args) {

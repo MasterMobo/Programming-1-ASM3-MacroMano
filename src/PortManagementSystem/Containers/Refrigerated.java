@@ -1,7 +1,7 @@
 package PortManagementSystem.Containers;
 
-public class Refridgerated extends Container {
-    public Refridgerated(double weight) {
+public class Refrigerated extends Container {
+    public Refrigerated(double weight) {
         super(weight);
         type = "Refrigerated";
         shipFuelConsumption = 4.5F;
