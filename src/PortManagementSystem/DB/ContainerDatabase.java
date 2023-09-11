@@ -20,6 +20,22 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     private boolean vehicleExists(String vehicleId) {
         return mdb.vehicles.find(vehicleId) != null;
     }
+
+    private boolean containerExists(String containerID) {return mdb.containers.find(containerID) != null;}
+
+    public Container getContainerFromPort (String containerID, String portId){
+        if (!containerExists(containerID)) return null;
+        ArrayList<Container> containers = fromPort(portId);
+
+        for (Container container : containers) {
+            if (container.getId().equals(containerID)) {
+                return container;
+            }
+        }
+        return null;
+    }
+
+
     public ArrayList<Container> fromVehicle(String vehicleId) {
         if (!vehicleExists(vehicleId)) return null;
 
@@ -101,6 +117,22 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 res.add(container);
             }
         }
+        return res;
+    }
+
+    public ArrayList<Container> fromPort(String pId) {
+        Port port = mdb.ports.find(pId);
+        if (port == null) return null;
+
+        ArrayList<Container> res = new ArrayList<>();
+
+        for (Map.Entry<String, Container> set: data.entrySet()) {
+            Container container = set.getValue();
+            if (Objects.equals(container.portId, pId)) {
+                res.add(container);
+            }
+        }
+
         return res;
     }
 

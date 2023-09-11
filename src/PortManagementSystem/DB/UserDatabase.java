@@ -57,6 +57,14 @@ public class UserDatabase extends Database<User>{
         System.out.print("Enter Password: ");
         String password = scanner.nextLine().trim();
 
+        System.out.print("Confirm Password: ");
+        String confirmPassword = scanner.nextLine().trim();
+
+        if (!password.equals(confirmPassword)) {
+            System.out.println("Invalid confirmation password");
+            return null;
+        }
+
         System.out.print("Enter role (admin, manager):");
         String role = scanner.nextLine().trim();
 
@@ -71,22 +79,6 @@ public class UserDatabase extends Database<User>{
         } else {
             System.out.println("Invalid role");
         }
-//        System.out.print("Confirm Password: ");
-//        String confirmPassword = scanner.nextLine();
-
-        //Check if the username's already existed
-//        for (db.users.data.get(username)) {
-//            if (oldUser.getUsername() == username) {
-//                System.out.println("Ivalid Username");
-//                return false;
-//            }
-//        }
-        //Check the confirmation password
-//        if (password != confirmPassword) {
-//            System.out.println("Invalid confirmation password");
-//
-//        }
-        //Add user
         return new User(username, password);
     }
 }

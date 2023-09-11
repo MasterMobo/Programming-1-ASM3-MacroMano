@@ -15,18 +15,22 @@ public class CreateCommand extends Command{
         arguments = 1;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
+    public static void process(String[] args, MasterDatabase db, CLI cli) {
         CreateCommand cmd = new CreateCommand();
         if (!cmd.validateArguments(args)) {
             return;
         }
 
-        cmd.execute(args, db);
+        cmd.execute(args, db, cli);
     }
 
-    public void execute(String[] args, MasterDatabase db) {
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         Scanner scanner = new Scanner(System.in);
 
+        if (!cli.user.Accessibility(args[0])) {
+            System.out.println("You do not have the authority to this command");
+            return;
+        }
         switch (args[0]) {
             case "port":
                 Port port = Port.createPort();
