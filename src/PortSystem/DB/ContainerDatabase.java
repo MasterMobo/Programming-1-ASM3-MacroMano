@@ -132,6 +132,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         }
 
         return res;
+
     }
 
     public void loadContainerOnVehicle(String vehicleId) {
@@ -157,6 +158,10 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
+           if(mdb.containers.fromVehicle(vehicleId).contains(container)) {
+               System.out.println("Container already on this vehicle");
+               continue;
+           }
 
             if (!vehicle.canAddContainer(container)) {
                 System.out.println("Weight exceeded. The vehicle can not carry the specified container");
@@ -170,15 +175,15 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
             container.vehicleId = vehicle.getId();
             vehicle.addWeight(container);
-            vehicle.addFuelConsumption(container);
-            vehicle.addContainerToList(container);
             mdb.save();
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
-            // TODO check if container is already on another vehicle (or on this vehicle)
-            // TODO maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
-            // TODO set portID to null when loaded on vehicle?
+            //  check if container is already on another vehicle (or on this vehicle)
+            //  maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
+            //  set portID to null when loaded on vehicle?
+            //  using curFuelConsumption was wrong, i removed it  - khoabui
         }
     }
+
 
     public void unloadFromVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
@@ -204,19 +209,18 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-            if (!vehicle.getLoadedContainers().contains(container)) {
-                System.out.println("Container not found");
+            if(!mdb.containers.fromVehicle(vehicleId).contains(container)) {
+                System.out.println("Container is not on this vehicle");
                 continue;
             }
 
             container.vehicleId = null;
             vehicle.deductWeight(container);
-            vehicle.deductFuelConsumption(container);
-            vehicle.removeContainerFromList(container);
             mdb.save();
         }
 
     }
+
 
 
     @Override
