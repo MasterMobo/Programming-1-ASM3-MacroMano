@@ -48,75 +48,20 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         return res;
     }
 
-    public ArrayList<Container> dryStorageFromVehicle(String vehicleId) {
+    public ArrayList<Container> fromVehicle(String vehicleId, String type) {
         if (!vehicleExists(vehicleId)) return null;
 
         ArrayList<Container> res = new ArrayList<>();
 
         for (Map.Entry<String, Container> set: data.entrySet()) {
             Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId) && container instanceof DryStorage) {
+            if (Objects.equals(container.vehicleId, vehicleId) && container.getType().equals(type)) {
                 res.add(container);
             }
         }
         return res;
     }
 
-    public ArrayList<Container> liquidFromVehicle(String vehicleId) {
-        if (!vehicleExists(vehicleId)) return null;
-
-        ArrayList<Container> res = new ArrayList<>();
-
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId) && container instanceof Liquid) {
-                res.add(container);
-            }
-        }
-        return res;
-    }
-
-    public ArrayList<Container> openSideFromVehicle(String vehicleId) {
-        if (!vehicleExists(vehicleId)) return null;
-
-        ArrayList<Container> res = new ArrayList<>();
-
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId) && container instanceof OpenSide) {
-                res.add(container);
-            }
-        }
-        return res;
-    }
-
-    public ArrayList<Container> openTopFromVehicle(String vehicleId) {
-        if (!vehicleExists(vehicleId)) return null;
-
-        ArrayList<Container> res = new ArrayList<>();
-
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId) && container instanceof OpenTop) {
-                res.add(container);
-            }
-        }
-        return res;
-    }
-
-    public ArrayList<Container> refridgeratedFromVehicle(String vehicleId) {
-        if (!vehicleExists(vehicleId)) return null;
-
-        ArrayList<Container> res = new ArrayList<>();
-
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId) && container instanceof Refrigerated) {
-                res.add(container);
-            }
-        }
-        return res;
-    }
 
     public ArrayList<Container> fromPort(String pId) {
         Port port = mdb.ports.find(pId);
