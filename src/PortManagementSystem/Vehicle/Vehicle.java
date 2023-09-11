@@ -17,6 +17,8 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
     private final Double fuelCapacity;
     public ArrayList<Container> loadedContainers = new ArrayList<>();
 
+    public Port port;
+
     public Vehicle(String name, Double carryCapacity, Double fuelCapacity) {
         this.name = name;
         this.carryCapacity = carryCapacity;
