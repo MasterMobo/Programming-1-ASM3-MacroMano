@@ -97,13 +97,12 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         System.out.println("Container available for loading:");
         System.out.println(mdb.containers.fromPort(vehicle.portId));
 
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Available containers on this port:");
         for (Container container : mdb.containers.fromPort(vehicle.portId)) {
             System.out.println(container.getId());
         }
-
+        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
             String input = scanner.nextLine().trim();
@@ -118,42 +117,43 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-           if(Objects.equals(container.vehicleId, vehicle.getId())) {
-               System.out.println("Container is already on this vehicle");
-               continue;
-           }
-<<<<<<< Updated upstream
-
-           if (container.vehicleId != null) {
-               System.out.println("Container already loaded on another vehicle");
-=======
-           if (container.vehicleId == null) {
->>>>>>> Stashed changes
-               continue;
-           }
-
-           if (!(container.portId == vehicle.portId)) {
-               continue;
-           }
-
-            if (!vehicle.canAddContainer(container)) {
-                System.out.println("Weight exceeded. The vehicle can not carry the specified container");
+            if (Objects.equals(container.vehicleId, vehicle.getId())) {
+                System.out.println("Container is already on this vehicle");
                 continue;
             }
 
-            if (!vehicle.allowToAdd(container)){
-                System.out.println(vehicle.getType() + " can not carry " + container.getType() + " containers");
-                continue;
-            }
 
-            container.vehicleId = vehicle.getId();
-            mdb.ports.find(container.portId).removeContainer(container);
-            container.portId = null;
-            vehicle.addWeight(container);
-            container.portId = null;
-            mdb.save();
-            // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
-            //  using curFuelConsumption was wrong, i removed it  - khoabui
+            if (container.vehicleId != null) {
+                System.out.println("Container already loaded on another vehicle");
+
+                if (container.vehicleId == null) {
+
+                    continue;
+                }
+
+                if (!(container.portId == vehicle.portId)) {
+                    continue;
+                }
+
+                if (!vehicle.canAddContainer(container)) {
+                    System.out.println("Weight exceeded. The vehicle can not carry the specified container");
+                    continue;
+                }
+
+                if (!vehicle.allowToAdd(container)) {
+                    System.out.println(vehicle.getType() + " can not carry " + container.getType() + " containers");
+                    continue;
+                }
+
+                container.vehicleId = vehicle.getId();
+                mdb.ports.find(container.portId).removeContainer(container);
+                container.portId = null;
+                vehicle.addWeight(container);
+                container.portId = null;
+                mdb.save();
+                // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
+                //  using curFuelConsumption was wrong, i removed it  - khoabui
+            }
         }
     }
 
