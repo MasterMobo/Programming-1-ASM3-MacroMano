@@ -63,27 +63,27 @@ public class VehicleDatabase extends Database<Vehicle> {
         return res;
     }
 
-    public Float totalConsumption(String vehicleId, String portID) {
-        if (!portExists(portID)) return null;
-        Vehicle vehicle = mdb.vehicles.find(vehicleId);
-        if (vehicle == null) return null;
-        Port nextPort = mdb.ports.find(portID);
-        Port currentPort = vehicle.port;
-        double travelDistance = currentPort.getDist(nextPort);
-        float totalConsumption = vehicle.getTotalFuelConsumption();
-
-        if (vehicle instanceof Ship) {
-            for (Container container : vehicle.loadedContainers) {
-                totalConsumption += (float) (vehicle.getTotalFuelConsumption() + container.getShipFuelConsumption() * container.getWeight() * travelDistance);
-            }
-
-        } else if (vehicle instanceof Truck) {
-            for (Container container : vehicle.loadedContainers) {
-                totalConsumption += container.getTruckFuelConsumption() * container.getWeight() * travelDistance;
-            }
-        }
-        return totalConsumption;
-    }
+//    public Double totalConsumption(String vehicleId, String portID) {
+//        if (!portExists(portID)) return null;
+//        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+//        if (vehicle == null) return null;
+//        Port nextPort = mdb.ports.find(portID);
+//        Port currentPort = vehicle.port;
+//        double travelDistance = currentPort.getDist(nextPort);
+//        double totalConsumption = vehicle.getCurFuelConsumption();
+//
+//        if (vehicle instanceof Ship) {
+//            for (Container container : vehicle.loadedContainers) {
+//                totalConsumption += container.getShipFuelConsumption() * container.getWeight() * travelDistance;
+//            }
+//
+//        } else if (vehicle instanceof Truck) {
+//            for (Container container : vehicle.loadedContainers) {
+//                totalConsumption += container.getTruckFuelConsumption() * container.getWeight() * travelDistance;
+//            }
+//        }
+//        return totalConsumption;
+//    }
     @Override
     public Vehicle createRecord(Vehicle vehicle) {
         if (vehicle == null) return null;

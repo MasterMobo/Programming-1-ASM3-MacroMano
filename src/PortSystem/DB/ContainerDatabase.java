@@ -157,6 +157,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
+
             if (!vehicle.canAddContainer(container)) {
                 System.out.println("Weight exceeded. The vehicle can not carry the specified container");
                 continue;
@@ -170,12 +171,50 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             container.vehicleId = vehicle.getId();
             vehicle.addWeight(container);
             vehicle.addFuelConsumption(container);
+            vehicle.addContainerToList(container);
             mdb.save();
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
             // TODO check if container is already on another vehicle (or on this vehicle)
             // TODO maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
             // TODO set portID to null when loaded on vehicle?
         }
+    }
+
+    public void unloadFromVehicle(String vehicleId) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return;
+
+        if (vehicle.getCurCarryWeight() == 0 ) {
+            System.out.println("There is no container on this vehicle");
+            return;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter container ID (or 'exit' to stop): ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            Container container = find(input);
+            if (container == null) {
+                System.out.println("No container object associated with the provided ID.");
+                continue;
+            }
+
+            if (!vehicle.getLoadedContainers().contains(container)) {
+                System.out.println("Container not found");
+                continue;
+            }
+
+            container.vehicleId = null;
+            vehicle.deductWeight(container);
+            vehicle.deductFuelConsumption(container);
+            vehicle.removeContainerFromList(container);
+        }
+
     }
 
 
