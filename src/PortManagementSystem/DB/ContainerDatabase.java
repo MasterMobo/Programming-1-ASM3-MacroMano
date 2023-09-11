@@ -152,6 +152,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         container.portId = p.getId();
         p.addContainer(container);
+        p.increaseContainerCount();
         add(container);
         return container;
     }

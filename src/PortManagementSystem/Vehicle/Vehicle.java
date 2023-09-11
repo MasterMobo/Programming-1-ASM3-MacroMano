@@ -99,14 +99,14 @@ public class Vehicle implements VehicleOperation, DatabaseRecord, Serializable {
         this.loadedContainers.clear();
     }
 
-        public Container getContainerObject (String containerID){
-            for (Container container : port.getContainers()) {
-                if (container.getId().equals(containerID)) {
-                    return container;
-                }
-            }
-            return null;
-        }
+//        public Container getContainerObject (String containerID){
+//            for (Container container : port.getContainers()) {
+//                if (container.getId().equals(containerID)) {
+//                    return container;
+//                }
+//            }
+//            return null;
+//        }
 
 
 //    UPDATED: Using 1D array to do calculation

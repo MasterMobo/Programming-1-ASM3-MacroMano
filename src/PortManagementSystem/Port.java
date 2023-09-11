@@ -21,8 +21,6 @@ public class Port implements DatabaseRecord, Serializable {
     private boolean isLanding;
     private int containerCount;
     private int vehicleCount;
-    private ArrayList<Container> containers;
-    private ArrayList<Vehicle> vehicles;
 
     public Port() {
     }
@@ -74,26 +72,11 @@ public class Port implements DatabaseRecord, Serializable {
         return isLanding;
     }
 
-    public ArrayList<Container> getContainers() {
-        return containers;
-    }
-
-    public ArrayList<Vehicle> getVehicles() {
-        return vehicles;
-    }
-
     public double getDist(Port other) {
         // Calculates the distance between this port and the other port (in km)
         return acos(sin(this.lat)*sin(other.lat)+cos(this.lat)*cos(other.lat)*cos(other.lon-this.lon))*6371; // (6371 is Earth radius in km.)
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        vehicles.add(vehicle);
-    }
-
-    public void removeVehicle(Vehicle vehicle) {
-        vehicles.remove(vehicle);
-    }
 
     public void addContainer(Container c) {
         currentWeight += c.getWeight();
@@ -122,6 +105,7 @@ public class Port implements DatabaseRecord, Serializable {
     public void decreaseVehicleCount() {
         vehicleCount--;
     }
+
     public static Port createPort() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Creating new Port...");
