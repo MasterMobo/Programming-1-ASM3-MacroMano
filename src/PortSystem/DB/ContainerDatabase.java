@@ -84,10 +84,19 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return;
 
+        if (vehicle.portId == null) {
+            System.out.println("Vehicle is currently not in a port. Unable to load containers");
+            return;
+        }
+
         if (vehicle.getCurCarryWeight() == vehicle.getCarryCapacity()) {
             System.out.println("This vehicle is full, please choose a different one");
             return;
         }
+
+        System.out.println("Container available for loading:");
+        System.out.println(mdb.containers.fromPort(vehicle.portId));
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
@@ -103,11 +112,13 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-           if(mdb.containers.fromVehicle(vehicleId).contains(container)) {
-               System.out.println("Container already on this vehicle");
+           if(Objects.equals(container.vehicleId, vehicle.getId())) {
+               System.out.println("Container is already on this vehicle");
                continue;
            }
-           if (!(container.vehicleId == null)) {
+
+           if (container.vehicleId != null) {
+               System.out.println("Container already loaded on another vehicle");
                continue;
            }
 
@@ -122,12 +133,11 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             }
 
             container.vehicleId = vehicle.getId();
+            mdb.ports.find(container.portId).removeContainer(container);
+            container.portId = null;
             vehicle.addWeight(container);
             mdb.save();
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
-            //  check if container is already on another vehicle (or on this vehicle)
-            //  maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
-            //  set portID to null when loaded on vehicle?
             //  using curFuelConsumption was wrong, i removed it  - khoabui
         }
     }

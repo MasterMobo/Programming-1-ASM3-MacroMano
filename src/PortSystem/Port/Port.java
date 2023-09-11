@@ -102,29 +102,16 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
     }
 
     @Override
-    public boolean canAddContainer(Container c) {
-        return c.getWeight() + currentWeight <= capacity;
-    }
-
-    @Override
-    public void increaseContainerCount() {
-        containerCount++;
-    }
-
-    @Override
-    public void increaseVehicleCount() {
-        vehicleCount++;
-    }
-
-    @Override
-    public void decreaseContainerCount() {
+    public void removeContainer(Container c) {
+        currentWeight -= c.getWeight();
         containerCount--;
     }
 
     @Override
-    public void decreaseVehicleCount() {
-        vehicleCount--;
+    public boolean canAddContainer(Container c) {
+        return c.getWeight() + currentWeight <= capacity;
     }
+
 
     public static Port createPort() {
         Scanner scanner = new Scanner(System.in);

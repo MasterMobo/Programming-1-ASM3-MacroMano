@@ -6,11 +6,6 @@ public interface PortOperations {
     double getDist(Port other);
     boolean canAddContainer(Container c);
     void addContainer(Container c);
-    void increaseContainerCount();
+    void removeContainer(Container c);
 
-    void increaseVehicleCount();
-
-    void decreaseContainerCount();
-
-    void decreaseVehicleCount();
 }
