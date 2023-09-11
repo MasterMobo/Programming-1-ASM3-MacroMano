@@ -1,24 +1,7 @@
-import PortManagementSystem.CLI.CLI;
-import PortManagementSystem.DB.MasterDatabase;
-import PortManagementSystem.Port;
-import PortManagementSystem.Vehicle.Vehicle;
-
-import java.util.Scanner;
+import PortManagementSystem.PortSystem;
 
 public class Main {
     public static void main(String[] args) {
-        MasterDatabase db = MasterDatabase.initDB();
-
-
-        CLI cli = new CLI(db);
-        System.out.println("Welcome! Type 'login' or 'register' to begin");
-        Scanner scanner = new Scanner(System.in);
-        String command = scanner.nextLine().trim();
-        while (!command.equals("!q")) {
-            cli.executeCommand(command);
-
-            command = scanner.nextLine().trim();
-
-        }
+        PortSystem.start();
     }
 }
