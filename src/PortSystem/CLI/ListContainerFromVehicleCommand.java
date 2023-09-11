@@ -27,16 +27,18 @@ public class ListContainerFromVehicleCommand extends Command{
                 System.out.println(db.containers.fromVehicle(vehicleId));
                 break;
             case "liquid":
-                System.out.println(db.containers.liquidFromVehicle(vehicleId));
+                System.out.println(db.containers.fromVehicle(vehicleId, "Liquid"));
                 break;
             case "dry":
-                System.out.println(db.containers.dryStorageFromVehicle(vehicleId));
+                System.out.println(db.containers.fromVehicle(vehicleId, "Dry Storage"));
                 break;
             case "openside":
-                System.out.println(db.containers.openSideFromVehicle(vehicleId));
+                System.out.println(db.containers.fromVehicle(vehicleId, "Open Side"));
                 break;
             case "opentop":
-                System.out.println(db.containers.openTopFromVehicle(vehicleId));
+                System.out.println(db.containers.fromVehicle(vehicleId, "Open Top"));
+            case "refridg":
+                System.out.println(db.containers.fromVehicle(vehicleId,"Refrigerated"));
             default:
                 System.out.println("Invalid Type");
         }
