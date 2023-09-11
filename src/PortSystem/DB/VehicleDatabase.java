@@ -85,6 +85,26 @@ public class VehicleDatabase extends Database<Vehicle> {
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
+    public void move(String vehicleId, String portID) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return;
+
+        Port nextPort = mdb.ports.find(portID);
+        if (nextPort == null) return;
+
+        if (!mdb.ports.exists(vehicle.portId)) {   
+            System.out.println("Vehicle not currently in a port");
+            return;
+        }
+        Port currentPort = mdb.ports.find(vehicle.portId);
+
+        if (!(mdb.vehicles.totalConsumption(vehicleId, currentPort.getId()) < vehicle.getFuelCapacity())) {
+            return;
+        }
+        System.out.println("Vehicle allowed to move");
+        vehicle.portId = nextPort.getId();
+    }
+
     @Override
     public Vehicle createRecord(Vehicle vehicle) {
         if (vehicle == null) return null;

@@ -23,8 +23,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     private double curFuelConsumption = 0.0;
 
-    private ArrayList<Container> loadedContainers;
-
     public Port port;
 
     public Vehicle(String name, double carryCapacity, double fuelCapacity) {
@@ -48,10 +46,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     public double getCurfuelCapacity() {
         return curfuelCapacity;
-    }
-
-    public ArrayList<Container> getLoadedContainers() {
-        return loadedContainers;
     }
 
     public void setFuelCapacity(double fuelCapacity) {
@@ -117,31 +111,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
         curCarryWeight -= c.getWeight();
     }
 
-    public void addContainerToList(Container c) {
-        loadedContainers.add(c);
-    }
-
-    public void removeContainerFromList(Container c) {
-        loadedContainers.remove(c);
-    }
-
-    public void addFuelConsumption(Container c){
-        if (this instanceof Ship){
-            curFuelConsumption += c.getShipFuelConsumption();
-        }
-        else if(this instanceof Truck){
-            curFuelConsumption += c.getTruckFuelConsumption();
-        }
-    }
-
-    public void deductFuelConsumption(Container c){
-        if (this instanceof Ship){
-            curFuelConsumption -= c.getShipFuelConsumption();
-        }
-        else if(this instanceof Truck){
-            curFuelConsumption -= c.getTruckFuelConsumption();
-        }
-    }
 
     public float calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
         float result = 0;
