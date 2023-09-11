@@ -122,9 +122,13 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                System.out.println("Container is already on this vehicle");
                continue;
            }
+<<<<<<< Updated upstream
 
            if (container.vehicleId != null) {
                System.out.println("Container already loaded on another vehicle");
+=======
+           if (container.vehicleId == null) {
+>>>>>>> Stashed changes
                continue;
            }
 
@@ -183,9 +187,14 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-            if (!(container.vehicleId == null)) {
+            if (container.vehicleId == null) {
                 continue;
             }
+
+            if (!(container.portId == vehicle.portId)) {
+                continue;
+            }
+
 
             container.vehicleId = null;
             container.portId = vehicle.portId;
