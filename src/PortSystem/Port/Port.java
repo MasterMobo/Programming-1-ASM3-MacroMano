@@ -102,6 +102,12 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
     }
 
     @Override
+    public void removeContainer(Container c) {
+        currentWeight -= c.getWeight();
+        containerCount--;
+    }
+
+    @Override
     public boolean canAddContainer(Container c) {
         return c.getWeight() + currentWeight <= capacity;
     }

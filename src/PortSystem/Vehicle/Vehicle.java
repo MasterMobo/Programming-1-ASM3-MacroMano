@@ -6,20 +6,22 @@ import PortSystem.Containers.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable {
+public class Vehicle implements DatabaseRecord, Serializable {
 
     private String name;
+
     protected String id;
+
+    protected String type;
     public String portId;
     private double carryCapacity;
     private double curfuelCapacity;
     private double curCarryWeight;
     private double fuelCapacity;
+
     protected String[] allowedContainers;
 
-    private double curFuelConsumption = 0;
-
-    public ArrayList<Container> loadedContainers = new ArrayList<>();
+    private double curFuelConsumption = 0.0;
 
     public Port port;
 
@@ -32,6 +34,10 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
 
     public String getName() {
         return name;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setName(String name) {
@@ -78,22 +84,7 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         return carryCapacity;
     }
 
-    // TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
-    @Override
-    public boolean allowToTravel() {
-        boolean canTravel = true;
 
-        if (this.getTotalWeight() > this.carryCapacity) {
-            System.out.println("Loading Capacity Exceeded. Please unload.");
-            canTravel = false;
-        }
-
-        if (this.totalConsumption() > this.fuelCapacity) {
-            System.out.println("Fuel Capacity Exceeded. Please refuel.");
-            canTravel = false;
-        }
-        return canTravel;
-    }
 
     public boolean allowToAdd(Container c){
         for(String s: allowedContainers) {
@@ -103,15 +94,7 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         }
         return false;
     };
-    @Override
-    public void moveToPort() {
-        if (!this.allowToTravel()) {
-            return;
-        }
-        this.curfuelCapacity -= this.totalConsumption();
-    }
 
-    @Override
     public void refuel() {
         this.curfuelCapacity = this.fuelCapacity;
     }
@@ -124,54 +107,24 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         curCarryWeight += c.getWeight();
     }
 
-    public void addFuelConsumption(Container c){
-        if (this instanceof Ship){
-            curFuelConsumption += c.getShipFuelConsumption();
-        }
-        else if(this instanceof Truck){
-            curFuelConsumption += c.getTruckFuelConsumption();
-        }
+    public void deductWeight(Container c){
+        curCarryWeight -= c.getWeight();
     }
 
-    @Override
-    public void unloadContainer() {
-        this.loadedContainers.clear();
-    }
 
-//        public Container getContainerObject (String containerID){
-//            for (Container container : port.getContainers()) {
-//                if (container.getId().equals(containerID)) {
-//                    return container;
-//                }
-//            }
-//            return null;
-//        }
+    public float calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
+        float result = 0;
+        double portDistance = p1.getDist(p2);
 
-
-//    UPDATED: Using 1D array to do calculation
-        public double getTotalWeight () {
-            double totalWeight = 0;
-            for (Container container : loadedContainers) {
-                totalWeight += container.getWeight();
-            }
-            return totalWeight;
-        }
-        public float totalConsumption () {
-            float totalFuelConsumption = 0.0F;
-            double portDistance = port.getDist(null);
-
+        for (Container container : containers) {
             if (this instanceof Ship) {
-                for (Container container : loadedContainers) {
-                    totalFuelConsumption += container.getShipFuelConsumption() * container.getWeight() * portDistance;
-                }
-
+                result += container.getShipFuelConsumption() * container.getWeight() * portDistance;
             } else if (this instanceof Truck) {
-                for (Container container : loadedContainers) {
-                    totalFuelConsumption += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
-                }
+                result += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
             }
-            return totalFuelConsumption;
         }
+        return result;
+    }
 
     @Override
     public String getId() {
@@ -186,7 +139,7 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
     public static Vehicle createVehicle() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Creating vehicle...");
-        System.out.println("Enter vehicle type (ship, reefer, tanker):");
+        System.out.println("Enter vehicle type (ship, truck, reefer, tanker):");
         String type = scanner.nextLine().trim();
 
         System.out.print("Enter name: ");
@@ -201,6 +154,8 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         switch (type){
             case "ship":
                 return new Ship(name, carryCapacity, fuelCapacity);
+            case "truck":
+                return new Truck(name, carryCapacity, fuelCapacity);
             case "tanker":
                 return new TankerTruck(name, carryCapacity, fuelCapacity);
             case "reefer":
@@ -216,11 +171,12 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         return "Vehicle{" +
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
+                ", type='" + type + '\'' +
                 ", portId='" + portId + '\'' +
                 ", carryCapacity=" + carryCapacity +
-                ", curfuelCapacity=" + curfuelCapacity +
                 ", curCarryWeight=" + curCarryWeight +
                 ", fuelCapacity=" + fuelCapacity +
+                ", curfuelCapacity=" + curfuelCapacity +
                 ", allowedContainers=" + Arrays.toString(allowedContainers) +
                 ", curFuelConsumption=" + curFuelConsumption +
                 '}';

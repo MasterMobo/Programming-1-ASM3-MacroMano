@@ -73,6 +73,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         if (record == null) return null;
         record = data.remove(id);
         mdb.save();
+        System.out.println("Deleted record: " + record);
         return record;
     }
 
@@ -87,6 +88,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         // Returns null if something went wrong
         // Some objects needs further processing before adding to DB, override this method accordingly (see child classes for example)
         add(item);
+        System.out.println("Created record: " + item);
         return item;
     }
 

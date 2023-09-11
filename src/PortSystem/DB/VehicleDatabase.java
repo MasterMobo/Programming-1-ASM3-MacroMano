@@ -1,5 +1,6 @@
 package PortSystem.DB;
 
+import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
 import PortSystem.Trip;
 import PortSystem.Vehicle.Ship;
@@ -66,6 +67,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         return res;
     }
 
+
     public void showInfo(String vehicleID) {
         if (!vehicleExists(vehicleID)) {
             System.out.println("Invalid Vehicle ID");
@@ -73,6 +75,47 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
         Vehicle foundVehicle = find(vehicleID);
         System.out.println(foundVehicle.toString());
+    }
+
+    // TODO I refactored this and some other methods in Vehicle, hopefully it makes sense
+    //  also, Vehicle should not keep track of loadedContainers, only containers have vehicleId,
+    //  if you need to know what containers is in this vehicle, use ContainerDatabase.fromVehicle   -khoabui
+    public Float totalConsumption(String vehicleId, String portID) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return null;
+
+        Port nextPort = mdb.ports.find(portID);
+        if (nextPort == null) return null;
+
+        if (!mdb.ports.exists(vehicle.portId)) {    // Using exists instead of find b/c find() could print not found message
+            System.out.println("Vehicle not currently in a port");
+            return null;
+        }
+
+        Port currentPort = mdb.ports.find(vehicle.portId);
+        ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicleId);
+
+        return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
+    }
+
+    public void move(String vehicleId, String portID) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return;
+
+        Port nextPort = mdb.ports.find(portID);
+        if (nextPort == null) return;
+
+        if (!mdb.ports.exists(vehicle.portId)) {   
+            System.out.println("Vehicle not currently in a port");
+            return;
+        }
+        Port currentPort = mdb.ports.find(vehicle.portId);
+
+        if (!(mdb.vehicles.totalConsumption(vehicleId, currentPort.getId()) < vehicle.getFuelCapacity())) {
+            return;
+        }
+        System.out.println("Vehicle allowed to move");
+        vehicle.portId = nextPort.getId();
     }
 
     @Override
@@ -87,6 +130,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         // TODO restructure port in Vehicle (only store portId, not port obj)
         vehicle.portId = p.getId();
         add(vehicle);
+        System.out.println("Created Record: " + vehicle);
         return vehicle;
     }
 
@@ -103,8 +147,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         vehicle.setCurCarryWeight(getInputDouble("Current Carry Weight: ", vehicle.getCurCarryWeight(), scanner));
 
         vehicle.setFuelCapacity(getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
-
-        vehicle.setCurFuelConsumption(getInputDouble("Current Fuel Consumption: ", vehicle.getCurFuelConsumption(), scanner));
 
         System.out.println("Updated record: " + vehicle);
         mdb.save();

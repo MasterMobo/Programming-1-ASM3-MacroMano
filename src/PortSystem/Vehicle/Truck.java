@@ -6,5 +6,6 @@ public class Truck extends Vehicle {
                 carryCapacity,
                 fuelCapacity);
         this.allowedContainers = new String[]{"Dry Storage", "Open Side", "Open Top"};
+        this.type = "Truck";
     }
 }
