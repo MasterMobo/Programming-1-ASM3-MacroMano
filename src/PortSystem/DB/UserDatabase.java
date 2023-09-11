@@ -25,6 +25,17 @@ public class UserDatabase extends Database<User>{
         return user;
     }
 
+    public void showInfo(User user) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+        if (!user.getPassword().equals(password)) {
+            System.out.println("Invalid password");
+            return;
+        }
+        System.out.println(user.toString());
+    }
+
     public User login() {
         //Get the username and password, return if the account is authenticated
         Scanner scanner = new Scanner(System.in);

@@ -21,6 +21,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
     private boolean containerExists(String containerID) {return mdb.containers.find(containerID) != null;}
 
+
     public Container getContainerFromPort (String containerID, String portId){
         if (!containerExists(containerID)) return null;
         ArrayList<Container> containers = fromPort(portId);
@@ -32,6 +33,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         }
         return null;
     }
+
 
 
     public ArrayList<Container> fromVehicle(String vehicleId) {
@@ -174,6 +176,14 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         }
     }
 
+    public void showInfo(String containerID) {
+        if (!containerExists(containerID)) {
+            System.out.println("Invalid Container ID");
+            return;
+        }
+        Container foundContainer = find(containerID);
+        System.out.println(foundContainer.toString());
+    }
 
     @Override
     public Container createRecord(Container container) {

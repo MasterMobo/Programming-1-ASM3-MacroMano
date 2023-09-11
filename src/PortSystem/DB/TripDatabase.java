@@ -1,5 +1,6 @@
 package PortSystem.DB;
 
+import PortSystem.Port.Port;
 import PortSystem.Trip;
 
 import java.time.LocalDate;
@@ -11,6 +12,9 @@ public class TripDatabase extends Database<Trip>{
     // Specialized class to store Trip records
     public TripDatabase(MasterDatabase mdb) {
         super(mdb, "t");
+    }
+    private boolean tripExists(String tripId) {
+        return mdb.trips.find(tripId) != null;
     }
 
     public ArrayList<Trip> tripsOn(String dateString) {
@@ -51,4 +55,14 @@ public class TripDatabase extends Database<Trip>{
             currentDate = currentDate.plusDays(1);
         }
         return res;
-    }}
+    }
+
+    public void showInfo(String tripID) {
+        if (!tripExists(tripID)) {
+            System.out.println("Invalid Trip ID");
+            return;
+        }
+        Trip foundTrip = find(tripID);
+        System.out.println(foundTrip.toString());
+    }
+}

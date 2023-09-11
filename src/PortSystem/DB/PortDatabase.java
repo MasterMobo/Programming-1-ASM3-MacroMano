@@ -1,6 +1,7 @@
 package PortSystem.DB;
 
 import PortSystem.Port.Port;
+import PortSystem.User.User;
 
 import java.util.Scanner;
 
@@ -8,6 +9,18 @@ public class PortDatabase extends Database<Port> {
 
     public PortDatabase(MasterDatabase mdb) {
         super(mdb, "p");
+    }
+    private boolean portExists(String portId) {
+        return mdb.ports.find(portId) != null;
+    }
+
+    public void showInfo(String portID) {
+        if (!portExists(portID)) {
+            System.out.println("Invalid Port ID");
+            return;
+        }
+        Port foundPort = find(portID);
+        System.out.println(foundPort.toString());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package PortSystem.DB;
 
 import PortSystem.Port.Port;
+import PortSystem.Trip;
 import PortSystem.Vehicle.Ship;
 import PortSystem.Vehicle.Truck;
 import PortSystem.Vehicle.Vehicle;
@@ -17,6 +18,9 @@ public class VehicleDatabase extends Database<Vehicle> {
 
     private boolean portExists(String portId) {
         return mdb.ports.find(portId) != null;
+    }
+    private boolean vehicleExists(String vehicleId) {
+        return mdb.vehicles.find(vehicleId) != null;
     }
 
     public ArrayList<Vehicle> fromPort(String portID) {
@@ -60,6 +64,15 @@ public class VehicleDatabase extends Database<Vehicle> {
             }
         }
         return res;
+    }
+
+    public void showInfo(String vehicleID) {
+        if (!vehicleExists(vehicleID)) {
+            System.out.println("Invalid Vehicle ID");
+            return;
+        }
+        Vehicle foundVehicle = find(vehicleID);
+        System.out.println(foundVehicle.toString());
     }
 
     @Override

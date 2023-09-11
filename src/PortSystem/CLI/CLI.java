@@ -26,6 +26,8 @@ public class CLI {
         commandMap.put("logout", this::logout);
         commandMap.put("register", this::register);
         commandMap.put("loadv", this::loadContainerOnVehicle);
+        commandMap.put("info", this::showUserInfo);
+        commandMap.put("find", this::findObject);
 
         // Add more commands as needed
     }
@@ -90,6 +92,16 @@ public class CLI {
     public void loadContainerOnVehicle(String[] args) {
         if (!isLoggedIn()) return;
         LoadContainerOnVehicle.process(args, db);
+    }
+
+    public void showUserInfo(String[] args) {
+        if (!isLoggedIn()) return;
+        ShowUserInfoCommand.process(args, db, this);
+    }
+
+    public void findObject(String[] args) {
+        if (!isLoggedIn()) return;
+        FindCommand.process(args, db, this);
     }
 
     public void register(String[] args) {
