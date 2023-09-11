@@ -6,7 +6,7 @@ import PortSystem.Containers.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable {
+public class Vehicle implements DatabaseRecord, Serializable {
 
     private String name;
 
@@ -20,10 +20,10 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
     private double fuelCapacity;
 
     protected String[] allowedContainers;
-    private float totalFuelConsumption;
 
-    // TODO pls do not use loadedContainers, use ContainerDatabase.fromVehicle instead
-    public ArrayList<Container> loadedContainers = new ArrayList<>();
+    private double curFuelConsumption = 0.0;
+
+    private ArrayList<Container> loadedContainers;
 
     public Port port;
 
@@ -49,7 +49,10 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
     public double getCurfuelCapacity() {
         return curfuelCapacity;
     }
-    public float getTotalFuelConsumption() {return totalFuelConsumption;}
+
+    public ArrayList<Container> getLoadedContainers() {
+        return loadedContainers;
+    }
 
     public void setFuelCapacity(double fuelCapacity) {
         this.fuelCapacity = fuelCapacity;
@@ -59,6 +62,9 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         return fuelCapacity;
     }
 
+    public double getCurFuelConsumption() {
+        return curFuelConsumption;
+    }
 
     public void setCarryCapacity(double carryCapacity) {
         this.carryCapacity = carryCapacity;
@@ -72,6 +78,10 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         this.curCarryWeight = curCarryWeight;
     }
 
+    public void setCurFuelConsumption(double curFuelConsumption) {
+        this.curFuelConsumption = curFuelConsumption;
+    }
+
     public double getCurCarryWeight() {
         return curCarryWeight;
     }
@@ -79,6 +89,8 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
     public double getCarryCapacity() {
         return carryCapacity;
     }
+
+
 
     public boolean allowToAdd(Container c){
         for(String s: allowedContainers) {
@@ -89,35 +101,6 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         return false;
     };
 
-    // TODO: add logic for when actual consumption exceeded Capacity (PortManagementSystem.Trip.PortManagementSystem.Trip length)
-    @Override
-    public boolean allowToTravel(float totalConsumption) {
-        boolean canTravel = true;
-
-        if (curCarryWeight > carryCapacity) {
-            System.out.println("Loading Capacity Exceeded. Please unload.");
-            canTravel = false;
-        }
-
-        if (totalConsumption > fuelCapacity) {
-            System.out.println("Fuel Capacity Exceeded. Please refuel.");
-            canTravel = false;
-        }
-
-        return canTravel;
-    }
-
-
-    @Override
-    public void moveToPort(Port p1, Port p2, ArrayList<Container> containers) {
-        float totalConsumption = calculateTotalConsumption(p1, p2, containers);
-        if (!allowToTravel(totalConsumption)) {
-            return;
-        }
-        curfuelCapacity -= totalConsumption;
-    }
-
-    @Override
     public void refuel() {
         this.curfuelCapacity = this.fuelCapacity;
     }
@@ -130,43 +113,34 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         curCarryWeight += c.getWeight();
     }
 
-
-    @Override
-    public void unloadContainer() {
-        this.loadedContainers.clear();
+    public void deductWeight(Container c){
+        curCarryWeight -= c.getWeight();
     }
 
-//        public Container getContainerObject (String containerID){
-//            for (Container container : port.getContainers()) {
-//                if (container.getId().equals(containerID)) {
-//                    return container;
-//                }
-//            }
-//            return null;
-//        }
-
-
-//    UPDATED: Using 1D array to do calculation
-    public double getTotalWeight() {
-        double totalWeight = 0;
-        for (Container container : loadedContainers) {
-            totalWeight += container.getWeight();
-        }
-        return totalWeight;
+    public void addContainerToList(Container c) {
+        loadedContainers.add(c);
     }
 
-    public float calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
-        float result = 0;
-        double portDistance = p1.getDist(p2);
+    public void removeContainerFromList(Container c) {
+        loadedContainers.remove(c);
+    }
 
-        for (Container container : containers) {
-            if (this instanceof Ship) {
-                result += container.getShipFuelConsumption() * container.getWeight() * portDistance;
-            } else if (this instanceof Truck) {
-                result += container.getTruckFuelConsumption() * container.getWeight() * portDistance;
-            }
+    public void addFuelConsumption(Container c){
+        if (this instanceof Ship){
+            curFuelConsumption += c.getShipFuelConsumption();
         }
-        return result;
+        else if(this instanceof Truck){
+            curFuelConsumption += c.getTruckFuelConsumption();
+        }
+    }
+
+    public void deductFuelConsumption(Container c){
+        if (this instanceof Ship){
+            curFuelConsumption -= c.getShipFuelConsumption();
+        }
+        else if(this instanceof Truck){
+            curFuelConsumption -= c.getTruckFuelConsumption();
+        }
     }
 
     @Override
@@ -219,6 +193,7 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
                 ", fuelCapacity=" + fuelCapacity +
                 ", curfuelCapacity=" + curfuelCapacity +
                 ", allowedContainers=" + Arrays.toString(allowedContainers) +
+                ", curFuelConsumption=" + curFuelConsumption +
                 '}';
     }
 }
