@@ -63,27 +63,28 @@ public class VehicleDatabase extends Database<Vehicle> {
         return res;
     }
 
+
+    // TODO I refactored this and some other methods in Vehicle, hopefully it makes sense
+    //  also, Vehicle should not keep track of loadedContainers, only containers have vehicleId,
+    //  if you need to know what containers is in this vehicle, use ContainerDatabase.fromVehicle   -khoabui
     public Float totalConsumption(String vehicleId, String portID) {
-        if (!portExists(portID)) return null;
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return null;
+
         Port nextPort = mdb.ports.find(portID);
-        Port currentPort = vehicle.port;
-        double travelDistance = currentPort.getDist(nextPort);
-        float totalConsumption = vehicle.getTotalFuelConsumption();
+        if (nextPort == null) return null;
 
-        if (vehicle instanceof Ship) {
-            for (Container container : vehicle.loadedContainers) {
-                totalConsumption += (float) (vehicle.getTotalFuelConsumption() + container.getShipFuelConsumption() * container.getWeight() * travelDistance);
-            }
-
-        } else if (vehicle instanceof Truck) {
-            for (Container container : vehicle.loadedContainers) {
-                totalConsumption += container.getTruckFuelConsumption() * container.getWeight() * travelDistance;
-            }
+        if (!mdb.ports.exists(vehicle.portId)) {    // Using exists instead of find b/c find() could print not found message
+            System.out.println("Vehicle not currently in a port");
+            return null;
         }
-        return totalConsumption;
+
+        Port currentPort = mdb.ports.find(vehicle.portId);
+        ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicleId);
+
+        return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
+
     @Override
     public Vehicle createRecord(Vehicle vehicle) {
         if (vehicle == null) return null;
@@ -113,8 +114,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         vehicle.setCurCarryWeight(getInputDouble("Current Carry Weight: ", vehicle.getCurCarryWeight(), scanner));
 
         vehicle.setFuelCapacity(getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
-
-        vehicle.setCurFuelConsumption(getInputDouble("Current Fuel Consumption: ", vehicle.getCurFuelConsumption(), scanner));
 
         System.out.println("Updated record: " + vehicle);
         mdb.save();

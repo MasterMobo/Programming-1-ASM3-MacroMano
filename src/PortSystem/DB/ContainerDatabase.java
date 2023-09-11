@@ -169,12 +169,12 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
             container.vehicleId = vehicle.getId();
             vehicle.addWeight(container);
-            vehicle.addFuelConsumption(container);
             mdb.save();
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
-            // TODO check if container is already on another vehicle (or on this vehicle)
-            // TODO maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
-            // TODO set portID to null when loaded on vehicle?
+            //  check if container is already on another vehicle (or on this vehicle)
+            //  maybe print all the containers from the port of the vehicle. Only allow users to choose from those containers?
+            //  set portID to null when loaded on vehicle?
+            //  using curFuelConsumption was wrong, i removed it        - khoabui
         }
     }
 
