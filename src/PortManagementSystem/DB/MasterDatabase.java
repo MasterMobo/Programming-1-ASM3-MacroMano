@@ -36,9 +36,7 @@ public class MasterDatabase implements Serializable, FileStorage {
 
     public static MasterDatabase initDB() {
         if (!FileStorage.fileExists()) {
-            MasterDatabase db = new MasterDatabase();
-            FileStorage.write(db);
-            db = DBUtils.createSampleDatabase();
+            MasterDatabase db = DBUtils.createSampleDatabase();
             FileStorage.write(db);
             return db;
         }
