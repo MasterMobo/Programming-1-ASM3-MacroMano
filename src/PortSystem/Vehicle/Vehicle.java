@@ -112,14 +112,6 @@ public class Vehicle implements VehicleOperations, DatabaseRecord, Serializable 
         }
         return false;
     };
-
-    // TODO @alakinn pls use this method instead of totalConsumption
-    //  curCarryWeight & curFuelConsumption is updated every time container is loaded/unloaded
-    //  check ContainerDatabase.loadContainerOnVehicle for more detail
-    public boolean canMove(Port p1, Port p2) {
-        return curCarryWeight * curFuelConsumption * p1.getDist(p2) <= fuelCapacity;
-    }
-    
     @Override
     public void moveToPort() {
         if (!this.allowToTravel()) {
