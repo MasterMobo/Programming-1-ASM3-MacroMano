@@ -77,9 +77,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         System.out.println(foundVehicle.toString());
     }
 
-    // TODO I refactored this and some other methods in Vehicle, hopefully it makes sense
-    //  also, Vehicle should not keep track of loadedContainers, only containers have vehicleId,
-    //  if you need to know what containers is in this vehicle, use ContainerDatabase.fromVehicle   -khoabui
     public Float totalConsumption(String vehicleId, String portID) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return null;

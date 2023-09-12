@@ -97,12 +97,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
 
+        mdb.containers.showAllContainerInPort(vehicleId);
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Available containers in this port:");
-        for (Container c: fromPort(vehicle.portId)) {
-            if (c.vehicleId == null) System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
-        };
 
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
@@ -202,8 +198,23 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             System.out.println("Invalid Container ID");
             return;
         }
-        Container foundContainer = find(containerID);
-        System.out.println(foundContainer.toString());
+        Container c = find(containerID);
+        System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
+    }
+
+    public void showAllContainerInPort (String vehicleId) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return;
+
+        if (vehicle.portId == null) {
+            System.out.println("Vehicle is currently not in a port. Unable to load containers");
+            return;
+        }
+
+        System.out.println("Available containers in this port: ");
+        for (Container c: fromPort(vehicle.portId)) {
+            if (c.vehicleId == null) System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
+        };
     }
 
 
