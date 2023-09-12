@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PortManager extends User {
-    private String portName;
+    private String portID;
     ArrayList<String> isBannedOf = new ArrayList<>( Arrays.asList("port", "vehicle", "user"));
 
 
@@ -19,8 +19,12 @@ public class PortManager extends User {
         return true;
     }
 
-    public PortManager(String username, String password, String portName) {
+    public PortManager(String username, String password, String portID) {
         super(username, password);
-        this.portName = portName;
+        this.portID = portID;
+    }
+
+    public String getPortID() {
+        return portID;
     }
 }

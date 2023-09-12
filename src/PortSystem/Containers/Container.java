@@ -1,6 +1,7 @@
 package PortSystem.Containers;
 
 import PortSystem.DB.DatabaseRecord;
+import PortSystem.User.PortManager;
 
 import java.io.Serializable;
 import java.util.Scanner;
@@ -57,6 +58,14 @@ public abstract class Container implements DatabaseRecord, Serializable {
         return type;
     }
 
+
+    public boolean validatePortID(PortManager user, String portId) {
+        if (!user.getPortID().equals(portId)) {
+            System.out.println("You do not have the authority to this port");
+            return false;
+        }
+        return true;
+    }
     public static Container createContainer() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter type (dry, liquid, openside, opentop, refridg)");
