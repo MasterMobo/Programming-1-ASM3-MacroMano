@@ -85,7 +85,10 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
     public void loadContainerOnVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
-        if (vehicle == null) return;
+        if (vehicle == null) {
+            System.out.println("There is no vehicle with the entered ID");
+            return;
+        }
 
         if (vehicle.portId == null) {
             System.out.println("Vehicle is currently not in a port. Unable to load containers");
@@ -145,6 +148,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             container.portId = null;
             vehicle.addWeight(container);
             container.portId = null;
+            System.out.println("Successfully loaded to vehicle.");
             mdb.save();
             // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
             //  using curFuelConsumption was wrong, i removed it  - khoabui
@@ -154,13 +158,17 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
     public void unloadFromVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
-        if (vehicle == null) return;
+        if (vehicle == null) {
+            System.out.println("There is no vehicle with the provided ID");
+            return;
+        }
 
         if (vehicle.getCurCarryWeight() == 0 ) {
             System.out.println("There is no container on this vehicle");
             return;
         }
 
+        mdb.containers.showAllContainerInVehicle(vehicleId);
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
@@ -184,10 +192,10 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             if (!(container.vehicleId == null)) {
                 continue;
             }
-
-            container.vehicleId = null;
             container.portId = vehicle.portId;
             vehicle.deductWeight(container);
+            container.vehicleId = null;
+            System.out.println("Successfully unloaded from vehicle");
             mdb.save();
         }
 
@@ -217,6 +225,15 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         };
     }
 
+    public void showAllContainerInVehicle (String vehicleId) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return;
+
+        System.out.println("Containers currently on this vehicle: ");
+        for (Container c: fromVehicle(vehicleId)) {
+            System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
+        };
+    }
 
     @Override
     public Container createRecord(Container container) {
