@@ -32,6 +32,9 @@ public class ListCommand extends Command{
             case "container":
                 db.containers.display();
                 break;
+            case "trip":
+                db.trips.display();
+                break;
             default:
                 System.out.println("Invalid Type");
         }

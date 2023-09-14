@@ -101,8 +101,10 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         if (record == null) return null;
 
         System.out.println("Updating record: " + record);
-        System.out.println("WARNING: Manually updating records could lead to data inaccuracy");
-        System.out.println("Type '.' to keep the same value");
+        System.out.println();
+        System.out.println("**WARNING**: Manually updating records could lead to data inaccuracy");
+        System.out.println();
+        System.out.println("Type '.' to keep the same value for each field");
         return record;
     }
 
@@ -110,6 +112,19 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         System.out.print(prompt);
         String input = scanner.nextLine().trim();
         return input.equals(".") ? currentVal : input;
+    }
+
+    protected String getInputId(String prompt, String currentId, Scanner scanner, Database db) {
+        System.out.print(prompt);
+        String input = scanner.nextLine().trim();
+        if (input.equals(".")) return currentId;
+
+        if (input.equals("null")) return null;
+
+        Object record = db.find(input);
+        if (record == null) return currentId;
+
+        return input;
     }
 
     protected double getInputDouble(String prompt, double currentVal, Scanner scanner) {

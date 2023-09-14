@@ -2,7 +2,6 @@ package PortSystem.DB;
 
 import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
-import PortSystem.Trip;
 import PortSystem.Vehicle.Ship;
 import PortSystem.Vehicle.Truck;
 import PortSystem.Vehicle.Vehicle;
@@ -68,14 +67,6 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
 
-    public void showInfo(String vehicleID) {
-        if (!vehicleExists(vehicleID)) {
-            System.out.println("Invalid Vehicle ID");
-            return;
-        }
-        Vehicle foundVehicle = find(vehicleID);
-        System.out.println(foundVehicle.toString());
-    }
 
     public Float totalConsumption(String vehicleId, String portID) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
@@ -158,9 +149,21 @@ public class VehicleDatabase extends Database<Vehicle> {
 
         vehicle.setFuelCapacity(getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
 
+        vehicle.portId = getInputId("Port ID: ", vehicle.portId, scanner, mdb.ports);
+
         vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
         System.out.println("Updated record: " + vehicle);
         mdb.save();
         return vehicle;
     }
+
+    public void showInfo(String vehicleID) {
+        if (!vehicleExists(vehicleID)) {
+            System.out.println("Invalid Vehicle ID");
+            return;
+        }
+        Vehicle foundVehicle = find(vehicleID);
+        System.out.println(foundVehicle.toString());
+    }
+
 }

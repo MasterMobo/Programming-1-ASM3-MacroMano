@@ -282,6 +282,10 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         container.setTruckFuelConsumption(getInputDouble("Truck Fuel Consumption: ", container.getTruckFuelConsumption(), scanner));
 
+        container.portId = getInputId("Port ID: ", container.portId, scanner, mdb.ports);
+
+        container.vehicleId = getInputId("Vehicle ID: ", container.vehicleId, scanner, mdb.vehicles);
+
         System.out.println("Updated record: " + container);
         mdb.save();
         return container;

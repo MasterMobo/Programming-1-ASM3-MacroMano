@@ -1,10 +1,13 @@
 package PortSystem.DB;
 
+import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
-import PortSystem.Trip;
+import PortSystem.Trip.Trip;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
 
 import static PortSystem.Utils.DateUtils.toLocalDate;
 
@@ -57,6 +60,23 @@ public class TripDatabase extends Database<Trip>{
         return res;
     }
 
+    public ArrayList<Trip> fromPort(String portId) {
+        Port port = mdb.ports.find(portId);
+        if (port == null) return null;
+
+        ArrayList<Trip> res = new ArrayList<>();
+
+        for (Map.Entry<String, Trip> set: data.entrySet()) {
+            Trip trip = set.getValue();
+            if (trip.departPortId.equals(portId) || trip.arrivePortId.equals(portId)) {
+                res.add(trip);
+            }
+        }
+
+        return res;
+
+    }
+
     public void showInfo(String tripID) {
         if (!tripExists(tripID)) {
             System.out.println("Invalid Trip ID");
@@ -65,4 +85,6 @@ public class TripDatabase extends Database<Trip>{
         Trip foundTrip = find(tripID);
         System.out.println(foundTrip.toString());
     }
+
+
 }

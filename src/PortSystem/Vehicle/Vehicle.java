@@ -24,7 +24,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     private double curFuelConsumption = 0.0;
 
-    public Port port;
 
     public Vehicle(String name, double carryCapacity, double fuelCapacity) {
         this.name = name;

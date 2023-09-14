@@ -1,38 +1,36 @@
-package PortSystem;
+package PortSystem.Trip;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 import PortSystem.DB.DatabaseRecord;
 import PortSystem.Port.Port;
-import PortSystem.Utils.Status;
 import PortSystem.Vehicle.Vehicle;
 
 public class Trip implements DatabaseRecord, Serializable {
     private String id;
-    private Vehicle vehicle;
+    public String vehicleId;
+    public String departPortId;
+    public String arrivePortId;
     private LocalDate departDate;
     private LocalDate arriveDate;
-    private Port departPort;
-    private Port arrivePort;
     private double length;
-    private Status status;
+    private double fuelConsumed;
+    private TripStatus status;
 
-    public Trip() {
-    }
 
     // TODO: Do you need to initialize status?
-    public Trip(Vehicle vehicle, LocalDate departDate, LocalDate arriveDate, Port departPort, Port arrivePort) {
-        this.vehicle = vehicle;
+
+
+    public Trip(String vehicleId, String departPortId, String arrivePortId, LocalDate departDate, LocalDate arriveDate, double length, double fuelConsumed, TripStatus status) {
+        this.vehicleId = vehicleId;
+        this.departPortId = departPortId;
+        this.arrivePortId = arrivePortId;
         this.departDate = departDate;
         this.arriveDate = arriveDate;
-        this.departPort = departPort;
-        this.arrivePort = arrivePort;
-        this.status = Status.PROCESSING;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
+        this.length = length;
+        this.fuelConsumed = fuelConsumed;
+        this.status = status;
     }
 
     public LocalDate getArriveDate() {
@@ -43,19 +41,12 @@ public class Trip implements DatabaseRecord, Serializable {
         return departDate;
     }
 
-    public Port getDepartPort() {
-        return departPort;
-    }
-
-    public Port getArrivePort() {
-        return arrivePort;
-    }
 
     public double getLength() {
         return length;
     }
 
-    public Status getStatus() {
+    public TripStatus getStatus() {
         return status;
     }
 
@@ -67,19 +58,21 @@ public class Trip implements DatabaseRecord, Serializable {
         this.id = id;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TripStatus status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return "PortManagementSystem.Trip.PortManagementSystem.Trip{" +
-                "vehicle=" + vehicle +
+        return "Trip{" +
+                "id='" + id + '\'' +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", departPortId='" + departPortId + '\'' +
+                ", arrivePortId='" + arrivePortId + '\'' +
                 ", departDate=" + departDate +
                 ", arriveDate=" + arriveDate +
-                ", departPort=" + departPort.getName() +
-                ", arrivePort=" + arrivePort.getName() +
                 ", length=" + length +
+                ", fuelConsumed=" + fuelConsumed +
                 ", status=" + status +
                 '}';
     }
