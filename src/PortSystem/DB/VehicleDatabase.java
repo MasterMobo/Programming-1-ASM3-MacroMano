@@ -85,7 +85,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         if (nextPort == null) return null;
 
         if (!mdb.ports.exists(vehicle.portId)) {    // Using exists instead of find b/c find() could print not found message
-            System.out.println("Vehicle not currently in a port");
+            System.out.println("Vehicle port can't be found");
             return null;
         }
 
@@ -103,26 +103,29 @@ public class VehicleDatabase extends Database<Vehicle> {
         if (nextPort == null) return;
 
         if (!mdb.ports.exists(vehicle.portId)) {   
-            System.out.println("Vehicle not currently in a port");
+            System.out.println("Vehicle's port can't be found");
             return;
         }
-        Port currentPort = mdb.ports.find(vehicle.portId);
 
         Double totalConsumption = Double.valueOf(mdb.vehicles.totalConsumption(vehicleId, nextPort.getId()));
 
-        if (!(totalConsumption < vehicle.getFuelCapacity()) || !(totalConsumption < vehicle.getCurfuelCapacity())) {
+        if (!(totalConsumption < vehicle.getCurfuelCapacity())) {
             System.out.println("Vehicle not allowed to move due to fuel capacity exceeding");
             return;
         }
+//        Changing fuel for refuel method to work
+        vehicle.setCurfuelCapacity(vehicle.deductFuel(vehicle));
 
-        
-
+//        new port
         vehicle.portId = nextPort.getId();
+    }
 
-        Double curFuel = vehicle.getFuelCapacity() - mdb.vehicles.totalConsumption(vehicleId, nextPort.getId());
-        vehicle.setFuelCapacity(curFuel);
+//    Assuming vehicle is always at a port
+    public void refuelVehicle(String vehicleId) {
+        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        if (vehicle == null) return;
 
-
+        vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
     }
 
     @Override

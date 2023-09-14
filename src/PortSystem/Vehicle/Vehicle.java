@@ -89,9 +89,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
         return false;
     };
 
-    public void refuel() {
-        this.curfuelCapacity = this.fuelCapacity;
-    }
 
     public boolean canAddContainer(Container c){
         return getCurCarryWeight() + c.getWeight() <= getCarryCapacity();
@@ -104,8 +101,8 @@ public class Vehicle implements DatabaseRecord, Serializable {
     public void deductWeight(Container c){
         curCarryWeight -= c.getWeight();
     }
-    public void deductFuel(Vehicle v) {
-        v.getFuelCapacity() -= v.getCurfuelCapacity();
+    public double deductFuel(Vehicle v) {
+       return v.getFuelCapacity() - v.getCurfuelCapacity();
     };
 
 
