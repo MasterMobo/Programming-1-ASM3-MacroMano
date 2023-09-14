@@ -41,7 +41,6 @@ public class Trip implements DatabaseRecord, Serializable {
         return departDate;
     }
 
-
     public double getLength() {
         return length;
     }
@@ -49,6 +48,9 @@ public class Trip implements DatabaseRecord, Serializable {
     public TripStatus getStatus() {
         return status;
     }
+    public double getFuelConsumed () { return fuelConsumed;}
+    public void setFuelConsumed(double fuelConsumption) {this.fuelConsumed += fuelConsumption;};
+
 
     public String getId() {
         return id;

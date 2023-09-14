@@ -2,6 +2,8 @@ package PortSystem.DB;
 
 import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
+import PortSystem.Trip.Trip;
+import PortSystem.Trip.TripStatus;
 import PortSystem.Vehicle.Ship;
 import PortSystem.Vehicle.Truck;
 import PortSystem.Vehicle.Vehicle;
@@ -21,6 +23,9 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
     private boolean vehicleExists(String vehicleId) {
         return mdb.vehicles.find(vehicleId) != null;
+    }
+    private boolean tripExists(String tripId) {
+        return mdb.trips.find(tripId) != null;
     }
 
     public ArrayList<Vehicle> fromPort(String portID) {
@@ -68,53 +73,78 @@ public class VehicleDatabase extends Database<Vehicle> {
 
 
 
-    public Float totalConsumption(String vehicleId, String portID) {
+    public Float totalConsumption(String vehicleId, String tripId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return null;
 
-        Port nextPort = mdb.ports.find(portID);
-        if (nextPort == null) return null;
+        Trip trip = mdb.trips.find(tripId);
+        if (trip == null) return null;
 
-        if (!mdb.ports.exists(vehicle.portId)) {    // Using exists instead of find b/c find() could print not found message
-            System.out.println("Vehicle port can't be found");
+        if (!mdb.ports.exists(vehicle.portId)) {
+            System.out.println("Vehicle's port can't be found");
             return null;
         }
 
-        Port currentPort = mdb.ports.find(vehicle.portId);
-        ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicleId);
+        if(!(trip.vehicleId == vehicleId)) {
+            System.out.println("This vehicle does not belong to this trip!");
+            return null;
+        }
 
+        Port currentPort = mdb.ports.find(trip.departPortId);
+        Port nextPort = mdb.ports.find(trip.arrivePortId);
+
+        ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicleId);
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
-    public void move(String vehicleId, String portID) {
+
+    public void move(String vehicleId) {
+//        Checking if object exists
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return;
 
-        Port nextPort = mdb.ports.find(portID);
-        if (nextPort == null) return;
+        Trip trip = mdb.trips.find(vehicleId);
 
         if (!mdb.ports.exists(vehicle.portId)) {   
             System.out.println("Vehicle's port can't be found");
             return;
         }
 
-        Double totalConsumption = Double.valueOf(mdb.vehicles.totalConsumption(vehicleId, nextPort.getId()));
-
+        if(!(trip.vehicleId == vehicleId)) {
+            System.out.println("This vehicle does not belong to this trip!");
+            return ;
+        }
+//        Default status for trip
+        trip.setStatus(TripStatus.PROCESSING);
+        System.out.println("Trip is being processed to check if vehicle is capable");
+        Double totalConsumption = Double.valueOf(mdb.vehicles.totalConsumption(vehicleId, trip.arrivePortId));
         if (!(totalConsumption < vehicle.getCurfuelCapacity())) {
             System.out.println("Vehicle not allowed to move due to fuel capacity exceeding");
             return;
         }
-//        Changing fuel for refuel method to work
-        vehicle.setCurfuelCapacity(vehicle.deductFuel(vehicle));
+        vehicle.setCurfuelCapacity(vehicle.getCurfuelCapacity() - totalConsumption);
 
-//        new port
-        vehicle.portId = nextPort.getId();
+//        Next Status
+        trip.setStatus(TripStatus.EN_ROUTE);
+        System.out.println("Vehicle is en route!");
+        vehicle.portId = null;
+
+//        Fulfilled Status
+        trip.setStatus(TripStatus.FULFILLED);
+        vehicle.portId = trip.arrivePortId;
+        trip.setFuelConsumed(totalConsumption);
     }
 
-//    Assuming vehicle is always at a port
+
     public void refuelVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return;
+        Trip trip = mdb.trips.find(vehicleId);
+
+        if (trip.getStatus() == TripStatus.EN_ROUTE) {
+            System.out.println("Can't pump what's can't pump");
+            return;
+        }
 
         vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
     }
@@ -127,7 +157,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         System.out.print("Enter port ID: ");
         Port p = mdb.ports.find(scanner.nextLine().trim());
         if (p == null) return null;
-
         // TODO restructure port in Vehicle (only store portId, not port obj)
         vehicle.portId = p.getId();
         add(vehicle);

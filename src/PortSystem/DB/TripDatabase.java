@@ -89,5 +89,14 @@ public class TripDatabase extends Database<Trip>{
         System.out.println(foundTrip.toString());
     }
 
+    public double dayFuelConsumption(String date) {
+        Double dayfuelConsumption = 0.0;
+
+        for (Trip trip : mdb.trips.tripsOn(date)) {
+            dayfuelConsumption += trip.getFuelConsumed();
+        }
+
+        return dayfuelConsumption;
+    }
 
 }
