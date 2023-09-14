@@ -25,6 +25,7 @@ public class TripDatabase extends Database<Trip>{
         // Returns all the trips departed on the given date
         ArrayList<Trip> res = new ArrayList<>();
         LocalDate date = toLocalDate(dateString);
+        if (date == null) return null;
 
         for (Trip trip: data.values()) {
             if (trip.getDepartDate().isEqual(date)) res.add(trip);
@@ -51,6 +52,8 @@ public class TripDatabase extends Database<Trip>{
         ArrayList<Trip> res = new ArrayList<>();
         LocalDate date1 = toLocalDate(dateString1);
         LocalDate date2 = toLocalDate(dateString2);
+        if (date1 == null || date2 == null) return null;
+
         LocalDate currentDate = date1;
 
         while (!currentDate.isAfter(date2)) {

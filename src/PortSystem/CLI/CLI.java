@@ -18,6 +18,8 @@ public class CLI {
         commandMap.put("ls", this::list);
         commandMap.put("lsv", this::listVehiclesFromPort);
         commandMap.put("lsc", this::listContainersFromVehicle);
+        commandMap.put("lstp", this::listTripsFromPort);
+        commandMap.put("lstd", this::listTripsOnDays);
         commandMap.put("crt", this::create);
         commandMap.put("del", this::delete);
         commandMap.put("upd", this::update);
@@ -29,9 +31,9 @@ public class CLI {
         commandMap.put("unloadv", this::unloadFromVehicle);
         commandMap.put("info", this::showUserInfo);
         commandMap.put("find", this::findObject);
-
         // Add more commands as needed
     }
+
 
 
 
@@ -73,6 +75,16 @@ public class CLI {
     public void listContainersFromVehicle(String[] args) {
         if (!isLoggedIn()) return;
         ListContainerFromVehicleCommand.process(args, db);
+    }
+
+    public void listTripsFromPort(String[] args) {
+        if (!isLoggedIn()) return;
+        ListTripsFromPortCommand.process(args, db);
+    }
+
+    public void listTripsOnDays(String[] args) {
+        if (!isLoggedIn()) return;
+        ListTripsOnDaysCommand.process(args, db);
     }
 
     public void create(String[] args) {

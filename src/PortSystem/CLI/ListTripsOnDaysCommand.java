@@ -1,6 +1,8 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.DBUtils;
+import PortSystem.Utils.DisplayUtils;
 
 public class ListTripsOnDaysCommand extends Command{
     public ListTripsOnDaysCommand() {
@@ -22,12 +24,12 @@ public class ListTripsOnDaysCommand extends Command{
     public void execute(String[] args, MasterDatabase db) {
         String fromDay = args[0];
         String toDay = args[1];
-        
+
         if (toDay.equals(".")) {
-            System.out.println(db.trips.tripsOn(fromDay));
+            DisplayUtils.print(db.trips.tripsOn(fromDay));
             return;
         }
 
-        System.out.println(db.trips.tripsBetween(fromDay, toDay));
+        DisplayUtils.print(db.trips.tripsBetween(fromDay, toDay));
     }
 }

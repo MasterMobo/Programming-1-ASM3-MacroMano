@@ -1,6 +1,7 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.DisplayUtils;
 
 public class ListTripsFromPortCommand extends Command {
     public ListTripsFromPortCommand() {
@@ -20,6 +21,6 @@ public class ListTripsFromPortCommand extends Command {
     }
 
     public void execute(String[] args, MasterDatabase db) {
-        System.out.println(db.trips.fromPort(args[0]));
+        DisplayUtils.print(db.trips.fromPort(args[0]));
     }
 }
