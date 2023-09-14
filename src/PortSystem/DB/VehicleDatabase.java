@@ -108,11 +108,21 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
         Port currentPort = mdb.ports.find(vehicle.portId);
 
-        if (!(mdb.vehicles.totalConsumption(vehicleId, currentPort.getId()) < vehicle.getFuelCapacity())) {
+        Double totalConsumption = Double.valueOf(mdb.vehicles.totalConsumption(vehicleId, nextPort.getId()));
+
+        if (!(totalConsumption < vehicle.getFuelCapacity()) || !(totalConsumption < vehicle.getCurfuelCapacity())) {
+            System.out.println("Vehicle not allowed to move due to fuel capacity exceeding");
             return;
         }
-        System.out.println("Vehicle allowed to move");
+
+        
+
         vehicle.portId = nextPort.getId();
+
+        Double curFuel = vehicle.getFuelCapacity() - mdb.vehicles.totalConsumption(vehicleId, nextPort.getId());
+        vehicle.setFuelCapacity(curFuel);
+
+
     }
 
     @Override
@@ -145,6 +155,7 @@ public class VehicleDatabase extends Database<Vehicle> {
 
         vehicle.setFuelCapacity(getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
 
+        vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
         System.out.println("Updated record: " + vehicle);
         mdb.save();
         return vehicle;

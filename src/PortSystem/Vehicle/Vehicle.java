@@ -15,9 +15,10 @@ public class Vehicle implements DatabaseRecord, Serializable {
     protected String type;
     public String portId;
     private double carryCapacity;
-    private double curfuelCapacity;
+
     private double curCarryWeight;
     private double fuelCapacity;
+    private double curfuelCapacity = fuelCapacity;
 
     protected String[] allowedContainers;
 
@@ -56,10 +57,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
         return fuelCapacity;
     }
 
-    public double getCurFuelConsumption() {
-        return curFuelConsumption;
-    }
-
     public void setCarryCapacity(double carryCapacity) {
         this.carryCapacity = carryCapacity;
     }
@@ -72,9 +69,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
         this.curCarryWeight = curCarryWeight;
     }
 
-    public void setCurFuelConsumption(double curFuelConsumption) {
-        this.curFuelConsumption = curFuelConsumption;
-    }
 
     public double getCurCarryWeight() {
         return curCarryWeight;
@@ -110,6 +104,9 @@ public class Vehicle implements DatabaseRecord, Serializable {
     public void deductWeight(Container c){
         curCarryWeight -= c.getWeight();
     }
+    public void deductFuel(Vehicle v) {
+        v.getFuelCapacity() -= v.getCurfuelCapacity();
+    };
 
 
     public float calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
