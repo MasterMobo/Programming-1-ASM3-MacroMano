@@ -168,6 +168,12 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
 
+        Port port = mdb.ports.find(vehicle.portId);
+        if (port == null) {
+            System.out.println("Vehicle not currently in a port");
+            return;
+        }
+
         mdb.containers.showAllContainerInVehicle(vehicleId);
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -189,11 +195,19 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-            if (!(container.vehicleId == null)) {
+            if (container.vehicleId == null) {
+                System.out.println("Container currently not on a vehicle");
                 continue;
             }
-            container.portId = vehicle.portId;
+
+            if (!port.canAddContainer(container)) {
+                System.out.println("Port weight capacity exceeded, can not add this container");
+                continue;
+            }
+
+            port.addContainer(container);
             vehicle.deductWeight(container);
+            container.portId = vehicle.portId;
             container.vehicleId = null;
             System.out.println("Successfully unloaded from vehicle");
             mdb.save();

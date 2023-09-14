@@ -92,12 +92,12 @@ public class CLI {
 
     public void loadContainerOnVehicle(String[] args) {
         if (!isLoggedIn()) return;
-        LoadContainerOnVehicle.process(args, db);
+        LoadContainerCommand.process(args, db);
     }
 
     public void unloadFromVehicle(String[] args) {
         if (!isLoggedIn()) return;
-        UnloadContainerOnVehicleCommand.process(args, db);
+        UnloadContainerCommand.process(args, db);
     }
 
     public void showUserInfo(String[] args) {
