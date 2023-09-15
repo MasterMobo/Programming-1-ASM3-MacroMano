@@ -134,7 +134,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         vehicle.portId = trip.arrivePortId;
         trip.setFuelConsumed(totalConsumption);
         
-        mdb.trips.dayFuelConsumption(trip.getDepartDate().toString());
     }
 
 
