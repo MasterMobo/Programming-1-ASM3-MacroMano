@@ -133,7 +133,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         trip.setStatus(TripStatus.FULFILLED);
         vehicle.portId = trip.arrivePortId;
         trip.setFuelConsumed(totalConsumption);
-        
+
     }
 
 
