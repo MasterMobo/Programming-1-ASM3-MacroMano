@@ -4,10 +4,10 @@ import PortSystem.DB.MasterDatabase;
 
 public class RefuelCommand extends Command{
     public RefuelCommand() {
-        signature ="";
-        desc = "";
-        usage ="";
-        arguments = 2;
+        signature ="refuel";
+        desc = "Refuel the given vehicle";
+        usage ="refuel <vehicleId>";
+        arguments = 1;
     }
 
     public static void process(String[] args, MasterDatabase db) {

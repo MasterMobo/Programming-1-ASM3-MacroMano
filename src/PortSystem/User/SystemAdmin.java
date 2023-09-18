@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 public class SystemAdmin extends User {
 
-    ArrayList<String> isBannedOf = new ArrayList<>();
+    public SystemAdmin(String username, String password) {
+        super(username, password);
+        role = "Port Manager";
+        isBannedOf = new ArrayList<>();
+    }
 
 
     @Override
@@ -13,9 +17,6 @@ public class SystemAdmin extends User {
             return false;
         }
         return true;
-    }
-    public SystemAdmin(String username, String password) {
-        super(username, password);
     }
 
 }

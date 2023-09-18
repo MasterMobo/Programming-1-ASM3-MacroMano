@@ -7,8 +7,10 @@ import java.util.ArrayList;
 public class User implements DatabaseRecord, Serializable {
     private String username;
     private String password;
-
     private ArrayList<User> users;
+    protected String role;
+
+    protected ArrayList<String> isBannedOf;
 
     public User(String username, String password) {
         this.username = username;

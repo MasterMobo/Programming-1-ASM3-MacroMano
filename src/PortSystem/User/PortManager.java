@@ -5,8 +5,12 @@ import java.util.Arrays;
 
 public class PortManager extends User {
     private String portID;
-    ArrayList<String> isBannedOf = new ArrayList<>( Arrays.asList("port", "vehicle", "user"));
-
+    public PortManager(String username, String password, String portID) {
+        super(username, password);
+        role = "Port Manager";
+        this.portID = portID;
+        isBannedOf = new ArrayList<>( Arrays.asList("port", "vehicle", "user"));
+    }
 
     @Override
     public boolean isAccessible(String type) {
@@ -19,10 +23,6 @@ public class PortManager extends User {
         return true;
     }
 
-    public PortManager(String username, String password, String portID) {
-        super(username, password);
-        this.portID = portID;
-    }
 
     public String getPortID() {
         return portID;

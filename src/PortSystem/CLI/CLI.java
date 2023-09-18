@@ -17,7 +17,8 @@ public class CLI {
         commandMap = new HashMap<>();
         commandMap.put("ls", this::list);
         commandMap.put("lsv", this::listVehiclesFromPort);
-        commandMap.put("lsc", this::listContainersFromVehicle);
+        commandMap.put("lscv", this::listContainersFromVehicle);
+        commandMap.put("lscp", this::listContainersFromPort);
         commandMap.put("lstp", this::listTripsFromPort);
         commandMap.put("lstd", this::listTripsOnDays);
         commandMap.put("crt", this::create);
@@ -77,6 +78,11 @@ public class CLI {
     public void listContainersFromVehicle(String[] args) {
         if (!isLoggedIn()) return;
         ListContainerFromVehicleCommand.process(args, db);
+    }
+
+    public void listContainersFromPort(String[] args) {
+        if (!isLoggedIn()) return;
+        ListContainerFromPortCommand.process(args, db);
     }
 
     public void listTripsFromPort(String[] args) {
@@ -157,19 +163,32 @@ public class CLI {
     }
 
     public void help(String[] args) {
-        ListCommand ls = new ListCommand();
-        CreateCommand crt = new CreateCommand();
-        ListVehicleFromPortCommand lsv = new ListVehicleFromPortCommand();
-        RegisterCommand register = new RegisterCommand();
-        LoginCommand login = new LoginCommand();
 
         // TODO: add more commands for help
         System.out.println("Available Commands:\n"
             + "help: List available commands\n"
             + "!q: Quit program\n"
-            + ls.getUsage() + ": " + ls.getDesc() + "\n"
-            + lsv.getUsage() + ": " + lsv.getDesc() + "\n"
-            + crt.getUsage() + ": " + crt.getDesc()
+            + new LoginCommand().getInfo() + "\n"
+            + new RegisterCommand().getInfo() + "\n"
+            + new LogoutCommand().getInfo() + "\n"
+            + new ShowUserInfoCommand().getInfo() + "\n"
+            + new ListCommand().getInfo() + "\n"
+            + new ListContainerFromVehicleCommand().getInfo() + "\n"
+            + new ListContainerFromPortCommand().getInfo() + "\n"
+            + new ListVehicleFromPortCommand().getInfo() + "\n"
+            + new ListTripsFromPortCommand().getInfo() + "\n"
+            + new ListTripsOnDaysCommand().getInfo() + "\n"
+            + new FindCommand().getInfo() + "\n"
+            + new CreateCommand().getInfo() + "\n"
+            + new DeleteCommand().getInfo() + "\n"
+            + new UpdateCommand().getInfo() + "\n"
+            + new LoadContainerCommand().getInfo() + "\n"
+            + new UnloadContainerCommand().getInfo() + "\n"
+            + new VehicleMoveCommand().getInfo() + "\n"
+            + new RefuelCommand().getInfo() + "\n"
+            + new StatContainerCommand().getInfo() + "\n"
+            + new StatContainerCommand().getInfo() + "\n"
+
         );
     }
 

@@ -1,6 +1,6 @@
 package PortSystem.CLI;
 
-public abstract class Command {
+public class Command {
     protected String signature;
     protected String desc;
     protected String usage;
@@ -19,6 +19,10 @@ public abstract class Command {
 
     public void printArgumentError(int received) {
         System.out.println("Expected " + arguments + " argument(s), but received " + received);
+    }
+
+    public String getInfo() {
+        return usage + ": " + desc;
     }
 
     public void printUsage() {

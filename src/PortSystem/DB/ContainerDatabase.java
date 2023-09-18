@@ -80,6 +80,23 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
     }
 
+    public ArrayList<Container> fromPort(String pId, String type) {
+        Port port = mdb.ports.find(pId);
+        if (port == null) return null;
+
+        ArrayList<Container> res = new ArrayList<>();
+
+        for (Map.Entry<String, Container> set: data.entrySet()) {
+            Container container = set.getValue();
+            if (Objects.equals(container.portId, pId)  && container.getType().equals(type)) {
+                res.add(container);
+            }
+        }
+
+        return res;
+
+    }
+
     public void loadContainerOnVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) {
