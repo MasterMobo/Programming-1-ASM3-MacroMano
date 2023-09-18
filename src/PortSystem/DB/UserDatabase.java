@@ -3,6 +3,7 @@ package PortSystem.DB;
 import PortSystem.User.PortManager;
 import PortSystem.User.SystemAdmin;
 import PortSystem.User.User;
+import PortSystem.Utils.DisplayUtils;
 
 import java.util.Objects;
 import java.util.Scanner;
@@ -39,7 +40,6 @@ public class UserDatabase extends Database<User>{
     public User login() {
         //Get the username and password, return if the account is authenticated
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Login...");
 
         System.out.print("Enter Username: ");
         String username = scanner.nextLine();
@@ -61,7 +61,7 @@ public class UserDatabase extends Database<User>{
         String username = scanner.nextLine().trim();
 
         if (mdb.users.exists(username)) {
-            System.out.println("Username already exists");
+            DisplayUtils.printErrorMessage("Username already exists");
             return null;
         }
 
@@ -72,24 +72,28 @@ public class UserDatabase extends Database<User>{
         String confirmPassword = scanner.nextLine().trim();
 
         if (!password.equals(confirmPassword)) {
-            System.out.println("Invalid confirmation password");
+            DisplayUtils.printErrorMessage("Invalid confirmation password");
             return null;
         }
 
         System.out.print("Enter role (admin, manager):");
         String role = scanner.nextLine().trim();
 
+        User newUser = null;
+
         if (role.equals("admin")) {
-            return new SystemAdmin(username, password);
+            newUser =  new SystemAdmin(username, password);
         } else if (role.equals("manager")) {
             System.out.print("Enter port ID: ");
             String portID = scanner.nextLine().trim();
             if (mdb.ports.find(portID) == null) return null;
 
-            return new PortManager(username, password, portID);
-        } else {
-            System.out.println("Invalid role");
-            return null;
+            newUser = new PortManager(username, password, portID);
         }
+
+        if (newUser == null) return null;
+
+        add(newUser);
+        return newUser;
     }
 }

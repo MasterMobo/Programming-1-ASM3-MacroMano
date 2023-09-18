@@ -10,7 +10,7 @@ public abstract class DateUtils {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             return LocalDate.parse(dateString, formatter);
         } catch (DateTimeParseException e) {
-            System.out.println("Could not process date: " +dateString + ". Expected date format: dd/MM/yyyy");
+            System.out.println(ConsoleColors.YELLOW + "Could not process date: " +dateString + ". Expected date format: dd/MM/yyyy" + ConsoleColors.RESET);
             return null;
         }
     }

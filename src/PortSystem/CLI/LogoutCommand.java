@@ -1,6 +1,7 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.DisplayUtils;
 
 public class LogoutCommand extends Command{
     public LogoutCommand() {
@@ -20,6 +21,6 @@ public class LogoutCommand extends Command{
 
     public static void execute(String[] args, MasterDatabase db, CLI cli) {
         cli.user = null;    // Detach current user
-        System.out.println("Successfully logged out");
+        DisplayUtils.printSystemMessage("Successfully logged out");
     }
 }

@@ -2,6 +2,8 @@ package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
 import PortSystem.User.User;
+import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DisplayUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +30,8 @@ public class CLI {
         commandMap.put("login", this::login);
         commandMap.put("logout", this::logout);
         commandMap.put("register", this::register);
-        commandMap.put("loadv", this::loadContainerOnVehicle);
-        commandMap.put("unloadv", this::unloadFromVehicle);
+        commandMap.put("load", this::loadContainerOnVehicle);
+        commandMap.put("unload", this::unloadFromVehicle);
         commandMap.put("info", this::showUserInfo);
         commandMap.put("find", this::findObject);
         commandMap.put("statfuel", this::statFuel);
@@ -51,7 +53,7 @@ public class CLI {
         if (action != null) {
             action.accept(arguments);
         } else {
-            System.out.println("Command not found: " + command);
+            DisplayUtils.printErrorMessage("Command not found: " + command);
         }
     }
 
@@ -165,9 +167,9 @@ public class CLI {
     public void help(String[] args) {
 
         // TODO: add more commands for help
-        System.out.println("Available Commands:\n"
-            + "help: List available commands\n"
-            + "!q: Quit program\n"
+        System.out.println(ConsoleColors.CYAN_UNDERLINED + "Available Commands:\n" + ConsoleColors.RESET
+            + new HelpCommand().getInfo() + "\n"
+            + new QuitCommand().getInfo() + "\n"
             + new LoginCommand().getInfo() + "\n"
             + new RegisterCommand().getInfo() + "\n"
             + new LogoutCommand().getInfo() + "\n"
@@ -187,8 +189,7 @@ public class CLI {
             + new VehicleMoveCommand().getInfo() + "\n"
             + new RefuelCommand().getInfo() + "\n"
             + new StatContainerCommand().getInfo() + "\n"
-            + new StatContainerCommand().getInfo() + "\n"
-
+            + new StatFuelCommand().getInfo() + "\n"
         );
     }
 

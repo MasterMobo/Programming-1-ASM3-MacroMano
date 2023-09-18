@@ -3,10 +3,25 @@ package PortSystem.Utils;
 import java.util.ArrayList;
 
 public class DisplayUtils {
-    public static void print(ArrayList arr) {
+    public static void printArray(ArrayList arr) {
         if (arr == null) return;
         for (int i = 0; i < arr.size(); i++) {
             System.out.println(arr.get(i));
         }
     }
+
+    public static void printInvalidTypeError(String expectedTypes) {
+        System.out.println(ConsoleColors.YELLOW + "Invalid Type. Expecting: " + expectedTypes + ConsoleColors.RESET);
+    }
+
+    public static void printSystemMessage(String msg) {
+        System.out.println(ConsoleColors.BLUE + msg + ConsoleColors.RESET);
+    }
+
+    public static void printErrorMessage(String msg) {
+        System.out.println(ConsoleColors.YELLOW + msg + ConsoleColors.RESET);
+    }
+
+
+
 }

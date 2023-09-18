@@ -4,6 +4,7 @@ import PortSystem.Containers.Container;
 import PortSystem.DB.MasterDatabase;
 import PortSystem.Port.Port;
 import PortSystem.User.User;
+import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Vehicle;
 
 public class FindCommand extends Command{
@@ -27,19 +28,19 @@ public class FindCommand extends Command{
         String id = args[1];
         switch (type) {
             case "port":
-                db.ports.showInfo(id);
+                db.ports.find(id);
                 break;
             case "vehicle":
-                db.vehicles.showInfo(id);
+                db.vehicles.find(id);
                 break;
             case "container":
-                db.containers.showInfo(id);
+                db.containers.find(id);
                 break;
             case  "trip":
-                db.trips.showInfo(id);
+                db.trips.find(id);
                 break;
             default:
-                System.out.println("Invalid Type");
+                DisplayUtils.printInvalidTypeError("port, vehicle, container, trip");
         }
     }
 }

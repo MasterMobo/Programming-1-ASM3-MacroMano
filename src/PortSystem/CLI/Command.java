@@ -1,5 +1,8 @@
 package PortSystem.CLI;
 
+import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DisplayUtils;
+
 public class Command {
     protected String signature;
     protected String desc;
@@ -8,8 +11,8 @@ public class Command {
 
     protected boolean validateArguments(String[] args) {
         if (args.length != arguments) {
-            printArgumentError(args.length);
-            printUsage();
+            DisplayUtils.printErrorMessage("Expected " + arguments + " argument(s), but received " + args.length);
+            DisplayUtils.printErrorMessage("Usage: " + usage);
             return false;
         }
         return true;
@@ -18,15 +21,10 @@ public class Command {
 
 
     public void printArgumentError(int received) {
-        System.out.println("Expected " + arguments + " argument(s), but received " + received);
     }
 
     public String getInfo() {
-        return usage + ": " + desc;
-    }
-
-    public void printUsage() {
-        System.out.println("Usage: " + usage);
+        return ConsoleColors.BLUE_BOLD + usage + ": " + ConsoleColors.RESET +  desc;
     }
 
     public String getDesc() {

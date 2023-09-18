@@ -1,6 +1,7 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.DisplayUtils;
 
 public class DeleteCommand extends Command{
     public DeleteCommand() {
@@ -32,15 +33,18 @@ public class DeleteCommand extends Command{
                 if (db.ports.delete(id) == null) return;
                 break;
             case "vehicle":
-                // TODO: Does deleting vehicle affect port?
+                // TODO Does deleting vehicle affect port?
                 if (db.vehicles.delete(id) == null) return;
                 break;
             case "container":
-                // TODO: Does deleting container affect port and vehicle?
+                // TODO Does deleting container affect port and vehicle?
                 if (db.containers.delete(id) == null) return;
                 break;
+            case "trip":
+                if (db.trips.delete(id) == null) return;
+                break;
             default:
-                System.out.println("Invalid Type");
+                DisplayUtils.printInvalidTypeError("port, vehicle, container, trip");
         }
     }
 }

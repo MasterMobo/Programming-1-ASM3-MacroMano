@@ -5,9 +5,9 @@ import PortSystem.DB.MasterDatabase;
 public class LoadContainerCommand extends Command {
 
     public LoadContainerCommand() {
-        signature = "loadv";
+        signature = "load";
         desc = "Load containers onto a vehicle";
-        usage = "loadv <vehicleID>";
+        usage = "load <vehicleID>";
         arguments = 1;
     }
 

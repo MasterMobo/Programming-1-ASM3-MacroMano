@@ -2,6 +2,7 @@ package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
 import PortSystem.User.User;
+import PortSystem.Utils.DisplayUtils;
 
 public class LoginCommand extends Command{
 
@@ -23,11 +24,11 @@ public class LoginCommand extends Command{
     public static void execute(String[] args, MasterDatabase db, CLI cli) {
         User user =  db.users.login();
         if (user == null) {
-            System.out.println("Login Failed");
+            DisplayUtils.printErrorMessage("Login Failed");
             return;
         };
         cli.user = user;    // Set current user
-        System.out.println("Successfully Logged in!");
+        DisplayUtils.printSystemMessage("Successfully Logged in!");
         System.out.println("Type 'help' for command instructions");
     }
 

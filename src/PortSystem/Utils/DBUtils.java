@@ -36,19 +36,23 @@ public class DBUtils {
 
         Ship v1 = new Ship("Dakota-102", 1000.0, 500.0);
         v1.portId = p1.getId();
+        p1.increaseVehicleCount();
         db.vehicles.add(v1);
 
 
         Truck v2 = new Truck("Princeton-556", 340.0, 45.0);
         v2.portId = p1.getId();
+        p1.increaseVehicleCount();
         db.vehicles.add(v2);
 
         TankerTruck v3 = new TankerTruck("Hulk-014", 300.0, 50.0);
         v3.portId = p2.getId();
+        p2.increaseVehicleCount();
         db.vehicles.add(v3);
 
         ReeferTruck v4 = new ReeferTruck("Johnson-504", 270.0, 70.0);
         v4.portId = p2.getId();
+        p2.increaseVehicleCount();
         db.vehicles.add(v4);
 
         DryStorage c = new DryStorage(12.4);

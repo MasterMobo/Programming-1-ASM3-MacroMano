@@ -1,11 +1,12 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.DisplayUtils;
 
 public class ListContainerFromPortCommand extends Command{
     public ListContainerFromPortCommand() {
         signature = "lscp";
-        desc = "List containers (of given type) of a port";
+        desc = "List containers (of given type) of a port. Type 'all' for <containerType> to get all types";
         usage = "lscp <containerType> <portId>";
         arguments = 2;
     }
@@ -24,25 +25,25 @@ public class ListContainerFromPortCommand extends Command{
         String vehicleId = args[1];
         switch (type) {
             case "all":
-                System.out.println(db.containers.fromPort(vehicleId));
+                DisplayUtils.printArray(db.containers.fromPort(vehicleId));
                 break;
             case "liquid":
-                System.out.println(db.containers.fromPort(vehicleId, "Liquid"));
+                DisplayUtils.printArray(db.containers.fromPort(vehicleId, "Liquid"));
                 break;
             case "dry":
-                System.out.println(db.containers.fromPort(vehicleId, "Dry Storage"));
+                DisplayUtils.printArray(db.containers.fromPort(vehicleId, "Dry Storage"));
                 break;
             case "openside":
-                System.out.println(db.containers.fromPort(vehicleId, "Open Side"));
+                DisplayUtils.printArray(db.containers.fromPort(vehicleId, "Open Side"));
                 break;
             case "opentop":
-                System.out.println(db.containers.fromPort(vehicleId, "Open Top"));
+                DisplayUtils.printArray(db.containers.fromPort(vehicleId, "Open Top"));
                 break;
             case "refridg":
-                System.out.println(db.containers.fromPort(vehicleId,"Refrigerated"));
+                DisplayUtils.printArray(db.containers.fromPort(vehicleId,"Refrigerated"));
                 break;
             default:
-                System.out.println("Invalid Type. Expecting: all, liquid, dry, openside, opentop, refridg");
+                DisplayUtils.printInvalidTypeError("all, liquid, dry, openside, opentop, refridg");
         }
     }
 }

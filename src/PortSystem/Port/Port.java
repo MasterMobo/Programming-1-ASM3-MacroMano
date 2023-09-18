@@ -164,6 +164,8 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
                 ", capacity=" + capacity +
                 ", currentWeight=" + currentWeight +
                 ", isLanding=" + isLanding +
+                ", containerCount=" + containerCount +
+                ", vehicleCount=" + vehicleCount +
                 '}';
     }
 }

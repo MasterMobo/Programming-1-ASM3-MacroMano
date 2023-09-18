@@ -1,6 +1,7 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.DisplayUtils;
 
 public class UpdateCommand extends Command{
     public UpdateCommand() {
@@ -39,7 +40,7 @@ public class UpdateCommand extends Command{
                 if (db.containers.updateRecord(id) == null) return;
                 break;
             default:
-                System.out.println("Invalid type. Expecting: port, vehicle, container, manager");
+                DisplayUtils.printInvalidTypeError("port, vehicle, container");
         }
     }
 }

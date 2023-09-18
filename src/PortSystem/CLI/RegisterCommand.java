@@ -3,6 +3,7 @@ package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
 import PortSystem.User.User;
+import PortSystem.Utils.DisplayUtils;
 
 public class RegisterCommand extends Command{
     public RegisterCommand() {
@@ -23,10 +24,10 @@ public class RegisterCommand extends Command{
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         User user = db.users.register();
         if (user == null) return;
-        db.users.add(user);
         cli.user = user;       // Set current user
-        System.out.println("Successfully created new Account!");
-        System.out.println("Logged into new account");
+        DisplayUtils.printSystemMessage("Successfully created new Account!");
+        DisplayUtils.printSystemMessage("Logged into new account");
+        System.out.println("Type 'help' for command instructions");
     }
 }
 

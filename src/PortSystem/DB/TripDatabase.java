@@ -94,14 +94,16 @@ public class TripDatabase extends Database<Trip>{
         return res;
     }
 
-    public void showInfo(String tripID) {
-        if (!tripExists(tripID)) {
-            System.out.println("Invalid Trip ID");
-            return;
-        }
-        Trip foundTrip = find(tripID);
-        System.out.println(foundTrip.toString());
-    }
+// TODO do you even need this? just use find()
+
+//    public void showInfo(String tripID) {
+//        if (!tripExists(tripID)) {
+//            System.out.println("Invalid Trip ID");
+//            return;
+//        }
+//        Trip foundTrip = find(tripID);
+//        System.out.println(foundTrip.toString());
+//    }
 
     public Double getDayFuelConsumption(String date) {
         Double dayfuelConsumption = 0.0;

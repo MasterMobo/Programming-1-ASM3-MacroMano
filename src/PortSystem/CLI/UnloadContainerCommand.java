@@ -5,9 +5,9 @@ import PortSystem.DB.MasterDatabase;
 public class UnloadContainerCommand extends Command {
 
     public UnloadContainerCommand() {
-        signature = "unloadv";
+        signature = "unload";
         desc = "Unload containers onto a vehicle";
-        usage = "unloadv <vehicleID>";
+        usage = "unload <vehicleID>";
         arguments = 1;
     }
 

@@ -1,6 +1,8 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DisplayUtils;
 
 public class ListCommand extends Command{
 
@@ -36,7 +38,7 @@ public class ListCommand extends Command{
                 db.trips.display();
                 break;
             default:
-                System.out.println("Invalid Type");
+                DisplayUtils.printInvalidTypeError("port, vehicle, container, trip");
         }
     }
 

@@ -4,6 +4,7 @@ import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
 import PortSystem.Trip.Trip;
 import PortSystem.Trip.TripStatus;
+import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Ship;
 import PortSystem.Vehicle.Truck;
 import PortSystem.Vehicle.Vehicle;
@@ -133,7 +134,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         trip.setStatus(TripStatus.FULFILLED);
         vehicle.portId = trip.arrivePortId;
         trip.setFuelConsumed(totalConsumption);
-
+        mdb.save();
     }
 
 
@@ -148,6 +149,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
 
         vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
+        mdb.save();
     }
 
     @Override
@@ -158,10 +160,11 @@ public class VehicleDatabase extends Database<Vehicle> {
         System.out.print("Enter port ID: ");
         Port p = mdb.ports.find(scanner.nextLine().trim());
         if (p == null) return null;
-        // TODO restructure port in Vehicle (only store portId, not port obj)
+
         vehicle.portId = p.getId();
+        p.increaseVehicleCount();
         add(vehicle);
-        System.out.println("Created Record: " + vehicle);
+        DisplayUtils.printSystemMessage("Created Record: " + vehicle);
         return vehicle;
     }
 
@@ -182,18 +185,31 @@ public class VehicleDatabase extends Database<Vehicle> {
         vehicle.portId = getInputId("Port ID: ", vehicle.portId, scanner, mdb.ports);
 
         vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
-        System.out.println("Updated record: " + vehicle);
         mdb.save();
+        DisplayUtils.printSystemMessage("Updated record: " + vehicle);
         return vehicle;
     }
 
-    public void showInfo(String vehicleID) {
-        if (!vehicleExists(vehicleID)) {
-            System.out.println("Invalid Vehicle ID");
-            return;
+    @Override
+    public Vehicle delete(String id) {
+        Vehicle deletedVehicle = super.delete(id);
+
+        if (mdb.ports.exists(deletedVehicle.portId)) {
+            mdb.ports.find(deletedVehicle.portId).decreaseVehicleCount();
         }
-        Vehicle foundVehicle = find(vehicleID);
-        System.out.println(foundVehicle.toString());
+
+        return deletedVehicle;
     }
+
+// TODO do you even need this? just use find()
+
+//    public void showInfo(String vehicleID) {
+//        if (!vehicleExists(vehicleID)) {
+//            System.out.println("Invalid Vehicle ID");
+//            return;
+//        }
+//        Vehicle foundVehicle = find(vehicleID);
+//        System.out.println(foundVehicle.toString());
+//    }
 
 }

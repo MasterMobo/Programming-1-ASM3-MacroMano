@@ -1,5 +1,8 @@
 package PortSystem.DB;
 
+import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DisplayUtils;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -60,7 +63,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         // Returns the found record, or null if no record found
         T res = data.get(id);
         if (res == null) {
-            System.out.println("No record found for ID: " + id);
+            DisplayUtils.printErrorMessage("No record found for ID: " + id);
         }
         return res;
     }
@@ -72,8 +75,8 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         T record = find(id);
         if (record == null) return null;
         record = data.remove(id);
+        DisplayUtils.printSystemMessage("Deleted record: " + record + ConsoleColors.RESET);
         mdb.save();
-        System.out.println("Deleted record: " + record);
         return record;
     }
 
@@ -88,7 +91,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         // Returns null if something went wrong
         // Some objects needs further processing before adding to DB, override this method accordingly (see child classes for example)
         add(item);
-        System.out.println("Created record: " + item);
+        DisplayUtils.printSystemMessage("Created record: " + item);
         return item;
     }
 
@@ -100,11 +103,9 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         T record = find(id);
         if (record == null) return null;
 
-        System.out.println("Updating record: " + record);
-        System.out.println();
-        System.out.println("**WARNING**: Manually updating records could lead to data inaccuracy");
-        System.out.println();
-        System.out.println("Type '.' to keep the same value for each field");
+        DisplayUtils.printSystemMessage("Updating record: " + record );
+        System.out.println(ConsoleColors.RED_BOLD_BRIGHT + "**WARNING**: Manually updating records could lead to data inaccuracy" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.YELLOW + "Type '.' to keep the same value for each field" + ConsoleColors.RESET);
         return record;
     }
 

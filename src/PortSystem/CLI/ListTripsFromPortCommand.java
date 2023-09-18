@@ -21,6 +21,6 @@ public class ListTripsFromPortCommand extends Command {
     }
 
     public void execute(String[] args, MasterDatabase db) {
-        DisplayUtils.print(db.trips.fromPort(args[0]));
+        DisplayUtils.printArray(db.trips.fromPort(args[0]));
     }
 }

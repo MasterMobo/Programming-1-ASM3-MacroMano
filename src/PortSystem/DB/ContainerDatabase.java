@@ -2,6 +2,7 @@ package PortSystem.DB;
 
 import PortSystem.Containers.*;
 import PortSystem.Port.Port;
+import PortSystem.Utils.ConsoleColors;
 import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.*;
 
@@ -100,17 +101,16 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     public void loadContainerOnVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) {
-            System.out.println("There is no vehicle with the entered ID");
             return;
         }
 
         if (vehicle.portId == null) {
-            System.out.println("Vehicle is currently not in a port. Unable to load containers");
+            DisplayUtils.printErrorMessage("Vehicle is currently not in a port. Unable to load containers");
             return;
         }
 
         if (vehicle.getCurCarryWeight() >= vehicle.getCarryCapacity()) {
-            System.out.println("This vehicle is full, please choose a different one");
+            DisplayUtils.printErrorMessage("This vehicle is full, please choose a different one");
             return;
         }
 
@@ -127,33 +127,32 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
             Container container = find(input);
             if (container == null) {
-                System.out.println("No container object associated with the provided ID.");
                 continue;
             }
 
             if (!Objects.equals(container.portId, vehicle.portId)) {
-                System.out.println("Container is not within this port");
+                DisplayUtils.printErrorMessage("Container is not within this port");
                 continue;
             }
 
            if(Objects.equals(container.vehicleId, vehicle.getId())) {
-               System.out.println("Container is already on this vehicle");
+               DisplayUtils.printErrorMessage("Container is already on this vehicle");
                continue;
            }
 
            if (container.vehicleId != null) {
-               System.out.println("Container already loaded on another vehicle");
+               DisplayUtils.printErrorMessage("Container already loaded on another vehicle");
                continue;
            }
 
 
             if (!vehicle.canAddContainer(container)) {
-                System.out.println("Weight exceeded. The vehicle can not carry the specified container");
+                DisplayUtils.printErrorMessage("Weight exceeded. The vehicle can not carry the specified container");
                 continue;
             }
 
             if (!vehicle.allowToAdd(container)){
-                System.out.println(vehicle.getType() + " can not carry " + container.getType() + " containers");
+                DisplayUtils.printErrorMessage(vehicle.getType() + " can not carry " + container.getType() + " containers");
                 continue;
             }
 
@@ -173,18 +172,18 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     public void unloadFromVehicle(String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) {
-            System.out.println("There is no vehicle with the provided ID");
+            DisplayUtils.printErrorMessage("There is no vehicle with the provided ID");
             return;
         }
 
         if (vehicle.getCurCarryWeight() == 0 ) {
-            System.out.println("There is no container on this vehicle");
+            DisplayUtils.printErrorMessage("There is no container on this vehicle");
             return;
         }
 
         Port port = mdb.ports.find(vehicle.portId);
         if (port == null) {
-            System.out.println("Vehicle not currently in a port");
+            DisplayUtils.printErrorMessage("Vehicle not currently in a port");
             return;
         }
 
@@ -200,22 +199,21 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
             Container container = find(input);
             if (container == null) {
-                System.out.println("No container object associated with the provided ID.");
                 continue;
             }
 
             if(!mdb.containers.fromVehicle(vehicleId).contains(container)) {
-                System.out.println("Container is not on this vehicle");
+                DisplayUtils.printErrorMessage("Container is not on this vehicle");
                 continue;
             }
 
             if (container.vehicleId == null) {
-                System.out.println("Container currently not on a vehicle");
+                DisplayUtils.printErrorMessage("Container currently not on a vehicle");
                 continue;
             }
 
             if (!port.canAddContainer(container)) {
-                System.out.println("Port weight capacity exceeded, can not add this container");
+                DisplayUtils.printErrorMessage("Port weight capacity exceeded, can not add this container");
                 continue;
             }
 
@@ -223,20 +221,21 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             vehicle.deductWeight(container);
             container.portId = vehicle.portId;
             container.vehicleId = null;
-            System.out.println("Successfully unloaded from vehicle");
+            DisplayUtils.printSystemMessage("Successfully unloaded from vehicle");
             mdb.save();
         }
 
     }
+// TODO do you even need this? just use find()
 
-    public void showInfo(String containerID) {
-        if (!containerExists(containerID)) {
-            System.out.println("Invalid Container ID");
-            return;
-        }
-        Container c = find(containerID);
-        System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
-    }
+//    public void showInfo(String containerID) {
+//        if (!containerExists(containerID)) {
+//            System.out.println("Invalid Container ID");
+//            return;
+//        }
+//        Container c = find(containerID);
+//        System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
+//    }
 
     public void showAllContainerInPort (String vehicleId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
@@ -307,9 +306,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         container.portId = p.getId();
         p.addContainer(container);
-        p.increaseContainerCount();
         add(container);
-        System.out.println("Created Record: " + container);
+        DisplayUtils.printSystemMessage("Created Record: " + container);
         return container;
     }
 
@@ -328,7 +326,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         container.vehicleId = getInputId("Vehicle ID: ", container.vehicleId, scanner, mdb.vehicles);
 
-        System.out.println("Updated record: " + container);
+        DisplayUtils.printSystemMessage("Updated record: " + container);
         mdb.save();
         return container;
     }

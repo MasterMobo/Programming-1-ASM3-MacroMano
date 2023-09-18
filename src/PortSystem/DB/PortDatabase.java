@@ -2,6 +2,8 @@ package PortSystem.DB;
 
 import PortSystem.Port.Port;
 import PortSystem.User.User;
+import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DisplayUtils;
 
 import java.util.Scanner;
 
@@ -14,14 +16,16 @@ public class PortDatabase extends Database<Port> {
         return mdb.ports.find(portId) != null;
     }
 
-    public void showInfo(String portID) {
-        if (!portExists(portID)) {
-            System.out.println("Invalid Port ID");
-            return;
-        }
-        Port foundPort = find(portID);
-        System.out.println(foundPort.toString());
-    }
+    // TODO do you even need this? just use find()
+
+//    public void showInfo(String portID) {
+//        if (!portExists(portID)) {
+//            System.out.println("Invalid Port ID");
+//            return;
+//        }
+//        Port foundPort = find(portID);
+//        System.out.println(foundPort.toString());
+//    }
 
     @Override
     public Port updateRecord(String id) {
@@ -39,7 +43,7 @@ public class PortDatabase extends Database<Port> {
 
         port.setCurrentWeight(getInputDouble("Current Weight: ", port.getCurrentWeight(), scanner));
 
-        System.out.println("Updated record: " + port);
+        DisplayUtils.printSystemMessage("Updated record: " + port);
 
         mdb.save();
         return port;

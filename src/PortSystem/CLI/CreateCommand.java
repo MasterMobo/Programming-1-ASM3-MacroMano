@@ -3,6 +3,7 @@ package PortSystem.CLI;
 import PortSystem.Containers.Container;
 import PortSystem.DB.MasterDatabase;
 import PortSystem.Port.Port;
+import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Vehicle;
 
 public class CreateCommand extends Command{
@@ -42,7 +43,7 @@ public class CreateCommand extends Command{
                 if (db.containers.createRecord(container) == null) return;
                 break;
             default:
-                System.out.println("Invalid Type");
+                DisplayUtils.printInvalidTypeError("port, vehicle, container");
         }
     }
 }

@@ -1,12 +1,13 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Utils.DisplayUtils;
 
 public class ListVehicleFromPortCommand extends Command{
 
     public ListVehicleFromPortCommand() {
         signature = "lsv";
-        desc = "List all vehicle (of given type) in a port";
+        desc = "List all vehicle (of given type) in a port. Type 'all' for <vehicleType> to get all types";
         usage = "lsv <vehicleType> <portId>";
         arguments = 2;
     }
@@ -26,16 +27,16 @@ public class ListVehicleFromPortCommand extends Command{
 
         switch (type) {
             case "all":
-                System.out.println(db.vehicles.fromPort(portId));
+                DisplayUtils.printArray(db.vehicles.fromPort(portId));
                 break;
             case "truck":
-                System.out.println(db.vehicles.trucksFromPort(portId));
+                DisplayUtils.printArray(db.vehicles.trucksFromPort(portId));
                 break;
             case "ship":
-                System.out.println(db.vehicles.shipsFromPort(portId));
+                DisplayUtils.printArray(db.vehicles.shipsFromPort(portId));
                 break;
             default:
-                System.out.println("Invalid type");
+                DisplayUtils.printInvalidTypeError("all, truck, ship");
         }
     }
 }

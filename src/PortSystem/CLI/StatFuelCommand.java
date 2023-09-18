@@ -6,7 +6,7 @@ public class StatFuelCommand extends Command{
     public StatFuelCommand() {
         signature = "statfuel";
         desc = "Calculate total fuel consumed for given day";
-        usage = "statfuel <day>";
+        usage = "statfuel <day>. Expecting dd/mm/yyy format";
         arguments = 1;
     }
 
