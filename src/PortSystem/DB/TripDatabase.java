@@ -104,18 +104,6 @@ public class TripDatabase extends Database<Trip>{
 //        Trip foundTrip = find(tripID);
 //        System.out.println(foundTrip.toString());
 //    }
-
-    public Double getDayFuelConsumption(String date) {
-        Double dayfuelConsumption = 0.0;
-
-        for (Trip trip : mdb.trips.tripsOn(date)) {
-            if (!(trip.getDepartDate().toString().equals(date))) {
-                return null;
-            }
-            dayfuelConsumption += trip.getFuelConsumed();
-        }
-
-        return dayfuelConsumption;
-    }
+    
 
 }
