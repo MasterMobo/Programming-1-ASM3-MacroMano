@@ -163,8 +163,6 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             container.portId = null;
             System.out.println("Successfully loaded to vehicle.");
             mdb.save();
-            // TODO message for successful add, delete loadedContainer + port attribute, consider if vehicle is in the port
-            //  using curFuelConsumption was wrong, i removed it  - khoabui
         }
     }
 

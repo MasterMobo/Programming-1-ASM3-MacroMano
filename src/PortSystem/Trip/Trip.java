@@ -19,9 +19,6 @@ public class Trip implements DatabaseRecord, Serializable {
     private TripStatus status;
 
 
-    // TODO: Do you need to initialize status?
-
-
     public Trip(String vehicleId, String departPortId, String arrivePortId, LocalDate departDate, LocalDate arriveDate, double length, double fuelConsumed, TripStatus status) {
         this.vehicleId = vehicleId;
         this.departPortId = departPortId;
