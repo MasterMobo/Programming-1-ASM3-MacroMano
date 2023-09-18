@@ -6,10 +6,7 @@ import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class ContainerDatabase extends Database<Container> implements Serializable {
     public ContainerDatabase(MasterDatabase mdb) {
@@ -247,6 +244,34 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         for (Container c: fromVehicle(vehicleId)) {
             System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
         };
+    }
+
+
+
+    public void listContainerTypeByWeight() {
+        HashMap<String, Double> typeCount = Container.countContainerWeight(new ArrayList<>(data.values()));
+        for (Map.Entry<String, Double> set: typeCount.entrySet()) {
+            String containerType = set.getKey();
+            double weight = set.getValue();
+
+            System.out.println(containerType + ": " + weight + " (kg)");
+        }
+
+    }
+
+    public void listContainerTypeByWeight(String portId) {
+
+        ArrayList<Container> containers = fromPort(portId);
+
+        if (containers == null) return;
+
+        HashMap<String, Double> typeCount = Container.countContainerWeight(containers);
+        for (Map.Entry<String, Double> set: typeCount.entrySet()) {
+            String containerType = set.getKey();
+            double weight = set.getValue();
+
+            System.out.println(containerType + ": " + weight + " (kg)");
+        }
     }
 
     @Override

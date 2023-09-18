@@ -3,6 +3,7 @@ package PortSystem.DB;
 import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
 import PortSystem.Trip.Trip;
+import PortSystem.Utils.DateUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -78,6 +79,19 @@ public class TripDatabase extends Database<Trip>{
 
         return res;
 
+    }
+
+    public double fuelConsumed(String dayString) {
+        double res = 0;
+
+        ArrayList<Trip> trips = tripsOn(dayString);
+        if (trips == null) return -1;
+
+        for (Trip trip: trips) {
+            res += trip.getFuelConsumed();
+        }
+
+        return res;
     }
 
     public void showInfo(String tripID) {

@@ -64,6 +64,7 @@ public class Trip implements DatabaseRecord, Serializable {
         this.status = status;
     }
 
+
     @Override
     public String toString() {
         return "Trip{" +

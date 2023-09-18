@@ -31,6 +31,8 @@ public class CLI {
         commandMap.put("unloadv", this::unloadFromVehicle);
         commandMap.put("info", this::showUserInfo);
         commandMap.put("find", this::findObject);
+        commandMap.put("statfuel", this::statFuel);
+        commandMap.put("statcon", this::statContainer);
         // Add more commands as needed
     }
 
@@ -121,6 +123,17 @@ public class CLI {
         if (!isLoggedIn()) return;
         FindCommand.process(args, db, this);
     }
+
+    public void statFuel(String[] args) {
+        if (!isLoggedIn()) return;
+        StatFuelCommand.process(args, db);
+    }
+
+    public void statContainer(String[] args) {
+        if (!isLoggedIn()) return;
+        StatContainerCommand.process(args, db);
+    }
+
 
     public void register(String[] args) {
         if (user != null) {

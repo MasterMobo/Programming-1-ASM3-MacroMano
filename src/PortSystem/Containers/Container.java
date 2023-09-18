@@ -4,7 +4,7 @@ import PortSystem.DB.DatabaseRecord;
 import PortSystem.User.PortManager;
 
 import java.io.Serializable;
-import java.util.Scanner;
+import java.util.*;
 
 //Parent class
 public abstract class Container implements DatabaseRecord, Serializable {
@@ -66,6 +66,27 @@ public abstract class Container implements DatabaseRecord, Serializable {
         }
         return true;
     }
+
+    public static HashMap<String, Double> countContainerWeight(ArrayList<Container> containers) {
+        HashMap<String, Double> res = new HashMap<>();
+        double totalWeight = 0.0;
+
+        for (Container container: containers) {
+            String containerType = container.getType();
+
+            if (!res.containsKey(containerType)) {
+                res.put(containerType, 0.0);
+            }
+
+            res.put(containerType, res.get(containerType) + container.getWeight());
+            totalWeight += container.getWeight();
+        }
+
+        res.put("Total Weight", totalWeight);
+
+        return res;
+    }
+
     public static Container createContainer() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter type (dry, liquid, openside, opentop, refridg)");
