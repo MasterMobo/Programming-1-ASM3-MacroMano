@@ -30,6 +30,7 @@ public class PortDatabase extends Database<Port> {
     @Override
     public Port updateRecord(String id) {
         Port port = super.updateRecord(id);
+        if (port == null) return null;
 
         Scanner scanner = new Scanner(System.in);
 

@@ -314,6 +314,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     @Override
     public Container updateRecord(String id) {
         Container container = super.updateRecord(id);
+        if (container == null) return null;
 
         Scanner scanner = new Scanner(System.in);
         container.setWeight(getInputDouble("Weight: ", container.getWeight(), scanner));

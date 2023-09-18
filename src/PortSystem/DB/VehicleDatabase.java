@@ -171,6 +171,7 @@ public class VehicleDatabase extends Database<Vehicle> {
     @Override
     public Vehicle updateRecord(String id) {
         Vehicle vehicle = super.updateRecord(id);
+        if (vehicle == null) return null;
 
         Scanner scanner = new Scanner(System.in);
 
