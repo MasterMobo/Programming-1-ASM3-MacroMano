@@ -12,17 +12,6 @@ public class PortManager extends User {
         isBannedOf = new ArrayList<>( Arrays.asList("port", "vehicle", "user"));
     }
 
-    @Override
-    public boolean isAccessible(String type) {
-        isBannedOf.add("port");
-        isBannedOf.add("vehicle");
-        isBannedOf.add("user");
-        if (isBannedOf.contains(type)) {
-            return false;
-        }
-        return true;
-    }
-
 
     public String getPortID() {
         return portID;

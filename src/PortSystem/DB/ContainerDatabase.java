@@ -1,5 +1,6 @@
 package PortSystem.DB;
 
+import PortSystem.CLI.CLI;
 import PortSystem.Containers.*;
 import PortSystem.Port.Port;
 import PortSystem.Utils.ConsoleColors;
@@ -288,14 +289,19 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         }
     }
 
-    @Override
-    public Container createRecord(Container container) {
+    public Container createRecord(Container container, String portId) {
         if (container == null) return null;
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter port ID: ");
-        Port p = mdb.ports.find(scanner.nextLine().trim());
-        if (p == null) return null;
+        Port p = null;
+
+        if (portId == null) {
+            System.out.print("Enter port ID: ");
+            p = mdb.ports.find(scanner.nextLine().trim());
+            if (p == null) return null;
+        } else {
+            p = mdb.ports.find(portId);
+        }
 
         if (!p.canAddContainer(container)) {
             System.out.println("Port weight capacity exceeded");

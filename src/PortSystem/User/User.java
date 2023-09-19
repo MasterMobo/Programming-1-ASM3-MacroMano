@@ -38,7 +38,7 @@ public class User implements DatabaseRecord, Serializable {
     }
 
     public boolean isAccessible(String type) {
-        return false;
+        return !isBannedOf.contains(type);
     }
 
     @Override

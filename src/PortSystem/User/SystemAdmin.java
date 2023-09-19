@@ -10,13 +10,4 @@ public class SystemAdmin extends User {
         isBannedOf = new ArrayList<>();
     }
 
-
-    @Override
-    public boolean isAccessible(String type) {
-        if (isBannedOf.contains(type)) {
-            return false;
-        }
-        return true;
-    }
-
 }

@@ -3,6 +3,8 @@ package PortSystem.CLI;
 import PortSystem.Containers.Container;
 import PortSystem.DB.MasterDatabase;
 import PortSystem.Port.Port;
+import PortSystem.User.PortManager;
+import PortSystem.User.SystemAdmin;
 import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Vehicle;
 
@@ -29,6 +31,11 @@ public class CreateCommand extends Command{
             return;
         }
 
+        String portId = null;
+        if (cli.user instanceof PortManager) {
+            portId = ((PortManager) cli.user).getPortID();
+        }
+
         switch (args[0]) {
             case "port":
                 Port port = Port.createPort();
@@ -40,7 +47,7 @@ public class CreateCommand extends Command{
                 break;
             case "container":
                 Container container = Container.createContainer();
-                if (db.containers.createRecord(container) == null) return;
+                if (db.containers.createRecord(container, portId) == null) return;
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("port, vehicle, container");
