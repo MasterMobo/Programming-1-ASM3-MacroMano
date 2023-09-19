@@ -67,8 +67,6 @@ public class DBUtils {
 
         Trip trip3 = new Trip(v3.getId(), p2.getId(), p1.getId(), DateUtils.toLocalDate("24/04/2022"), DateUtils.toLocalDate("30/04/2022"), 1300, 564.4, TripStatus.FULFILLED);
         db.trips.add(trip3);
-
-
         return db;
     }
 }

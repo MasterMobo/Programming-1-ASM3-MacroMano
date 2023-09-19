@@ -7,7 +7,7 @@ import PortSystem.DB.DatabaseRecord;
 import PortSystem.Port.Port;
 import PortSystem.Vehicle.Vehicle;
 
-public class Trip implements DatabaseRecord, Serializable {
+public class    Trip implements DatabaseRecord, Serializable {
     private String id;
     public String vehicleId;
     public String departPortId;
