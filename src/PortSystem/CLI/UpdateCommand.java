@@ -1,7 +1,11 @@
 package PortSystem.CLI;
 
+import PortSystem.Containers.Container;
 import PortSystem.DB.MasterDatabase;
+import PortSystem.User.PortManager;
 import PortSystem.Utils.DisplayUtils;
+
+import java.util.Objects;
 
 public class UpdateCommand extends Command{
     public UpdateCommand() {
@@ -25,7 +29,7 @@ public class UpdateCommand extends Command{
         String id = args[1];
 
         if (!cli.user.isAccessible(type)) {
-            System.out.println("You do not have the authority to this command");
+            DisplayUtils.printErrorMessage("You do not have the authority to this command");
             return;
         }
 
@@ -37,6 +41,14 @@ public class UpdateCommand extends Command{
                 if (db.vehicles.updateRecord(id) == null) return;
                 break;
             case "container":
+                Container container = db.containers.find(id);
+                if (container == null) return;
+
+                if (cli.user instanceof PortManager && !Objects.equals(container.portId, ((PortManager) cli.user).getPortID())) {
+                    DisplayUtils.printErrorMessage("You do not have permission to this container");
+                    return;
+                }
+
                 if (db.containers.updateRecord(id) == null) return;
                 break;
             default:

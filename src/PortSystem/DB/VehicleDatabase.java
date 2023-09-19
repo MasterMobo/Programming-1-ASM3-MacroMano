@@ -138,9 +138,15 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
 
-    public void refuelVehicle(String vehicleId) {
+    public void refuelVehicle(String vehicleId, String userPortId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) return;
+
+        if (!Objects.equals(vehicle.portId, userPortId)) {
+            DisplayUtils.printErrorMessage("You do not have permission to this vehicle because it is not in your port");
+            return;
+        }
+
         Trip trip = mdb.trips.find(vehicleId);
 
         if (trip.getStatus() == TripStatus.EN_ROUTE) {

@@ -1,5 +1,6 @@
 package PortSystem.DB;
 
+import PortSystem.User.User;
 import PortSystem.Utils.ConsoleColors;
 import PortSystem.Utils.DisplayUtils;
 

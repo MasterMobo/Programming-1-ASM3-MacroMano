@@ -99,9 +99,14 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
     }
 
-    public void loadContainerOnVehicle(String vehicleId) {
+    public void loadContainerOnVehicle(String vehicleId, String userPortId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) {
+            return;
+        }
+
+        if (!Objects.equals(vehicle.portId, userPortId)) {
+            DisplayUtils.printErrorMessage("You do not have permission to this vehicle because it is not in your port");
             return;
         }
 
@@ -168,10 +173,15 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
 
-    public void unloadFromVehicle(String vehicleId) {
+    public void unloadFromVehicle(String vehicleId, String userPortId) {
         Vehicle vehicle = mdb.vehicles.find(vehicleId);
         if (vehicle == null) {
             DisplayUtils.printErrorMessage("There is no vehicle with the provided ID");
+            return;
+        }
+
+        if (!Objects.equals(vehicle.portId, userPortId)) {
+            DisplayUtils.printErrorMessage("You do not have permission to this vehicle because it is not in your port");
             return;
         }
 

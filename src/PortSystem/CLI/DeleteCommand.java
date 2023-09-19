@@ -1,7 +1,11 @@
 package PortSystem.CLI;
 
+import PortSystem.Containers.Container;
 import PortSystem.DB.MasterDatabase;
+import PortSystem.User.PortManager;
 import PortSystem.Utils.DisplayUtils;
+
+import java.util.Objects;
 
 public class DeleteCommand extends Command{
     public DeleteCommand() {
@@ -36,8 +40,16 @@ public class DeleteCommand extends Command{
                 if (db.vehicles.delete(id) == null) return;
                 break;
             case "container":
-                // TODO Does deleting container affect port and vehicle?
-                if (db.containers.delete(id) == null) return;
+                // TODO does deleting container affect port and vehicle?
+                Container container = db.containers.find(id);
+                if (container == null) return;
+
+                if (cli.user instanceof PortManager && !Objects.equals(container.portId, ((PortManager) cli.user).getPortID())) {
+                    DisplayUtils.printErrorMessage("You do not have permission to delete this container");
+                    return;
+                }
+
+                db.containers.delete(id);
                 break;
             case "trip":
                 if (db.trips.delete(id) == null) return;

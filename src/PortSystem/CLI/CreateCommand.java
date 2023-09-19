@@ -31,10 +31,7 @@ public class CreateCommand extends Command{
             return;
         }
 
-        String portId = null;
-        if (cli.user instanceof PortManager) {
-            portId = ((PortManager) cli.user).getPortID();
-        }
+
 
         switch (args[0]) {
             case "port":
@@ -46,6 +43,11 @@ public class CreateCommand extends Command{
                 if (db.vehicles.createRecord(vehicle) == null) return;
                 break;
             case "container":
+                String portId = null;
+                if (cli.user instanceof PortManager) {
+                    portId = ((PortManager) cli.user).getPortID();
+                }
+
                 Container container = Container.createContainer();
                 if (db.containers.createRecord(container, portId) == null) return;
                 break;
