@@ -151,7 +151,36 @@ public class VehicleDatabase extends Database<Vehicle> {
         mdb.trips.add(trip);
     }
 
+    public void updateStatus(String tripId) {
+        if (!mdb.trips.exists(tripId)) {
+            return;
+        }
 
+        Trip trip = mdb.trips.find(tripId);
+        Vehicle v = mdb.vehicles.find(trip.vehicleId);
+//        Show current status
+        System.out.println("The current trip status is: " + trip.getStatus());
+        System.out.println("Do you want to update trip status? Press Yes or No to proceed");
+        Scanner scanner = new Scanner(System.in);
+        String prompt = scanner.nextLine();
+        if (prompt == "Yes") {
+            if (Objects.equals(trip.getStatus(), TripStatus.PROCESSING)) {
+                System.out.println("Trip is initiated!");
+                trip.setStatus(TripStatus.EN_ROUTE);
+                v.portId = null;
+                v.setCurfuelCapacity(v.getFuelCapacity() - trip.getFuelConsumed());
+            }
+            if (Objects.equals(trip.getStatus(), TripStatus.EN_ROUTE)) {
+                System.out.println("Trip is fulfilled!");
+                trip.setStatus(TripStatus.FULFILLED);
+                v.portId = trip.arrivePortId;
+            }
+        }
+        else {
+            return;
+        }
+
+    }
 
 
     public void refuelVehicle(String vehicleId, String userPortId) {
@@ -163,10 +192,8 @@ public class VehicleDatabase extends Database<Vehicle> {
             return;
         }
 
-        Trip trip = mdb.trips.find(vehicleId);
-
-        if (trip.getStatus() == TripStatus.EN_ROUTE) {
-            DisplayUtils.printErrorMessage("Vehicle is currently en route. Can not refuel");
+        if (vehicle.portId == null) {
+            System.out.println("Can't refuel because vehicle is not on a trip");
             return;
         }
 
