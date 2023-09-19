@@ -28,7 +28,7 @@ public class DeleteCommand extends Command{
         String type = args[0];
         String id = args[1];
         if (!cli.user.isAccessible(type)) {
-            System.out.println("You do not have the authority to this command");
+            DisplayUtils.printErrorMessage("You do not have the authority to this command");
             return;
         }
 
@@ -50,6 +50,9 @@ public class DeleteCommand extends Command{
                 }
 
                 db.containers.delete(id);
+                break;
+            case "manager":
+                if (db.users.deleteManager(id) == null) return;
                 break;
             case "trip":
                 if (db.trips.delete(id) == null) return;

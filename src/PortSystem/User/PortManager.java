@@ -9,7 +9,7 @@ public class PortManager extends User {
         super(username, password);
         role = "Port Manager";
         this.portID = portID;
-        isBannedOf = new ArrayList<>( Arrays.asList("port", "vehicle", "user"));
+        isBannedOf = new ArrayList<>( Arrays.asList("port", "vehicle", "user", "manager"));
     }
 
 

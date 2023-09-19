@@ -27,7 +27,7 @@ public class CreateCommand extends Command{
 
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         if (!cli.user.isAccessible(args[0])) {
-            System.out.println("You do not have the authority to this command");
+            DisplayUtils.printErrorMessage("You do not have the authority to this command");
             return;
         }
 

@@ -150,7 +150,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         Trip trip = mdb.trips.find(vehicleId);
 
         if (trip.getStatus() == TripStatus.EN_ROUTE) {
-            System.out.println("Can't pump what's can't pump");
+            DisplayUtils.printErrorMessage("Vehicle is currently en route. Can not refuel");
             return;
         }
 

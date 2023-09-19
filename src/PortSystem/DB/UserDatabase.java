@@ -37,6 +37,18 @@ public class UserDatabase extends Database<User>{
         System.out.println(user.toString());
     }
 
+    public User deleteManager(String id) {
+        User user = find(id);
+        if (user == null) return null;
+
+        if (user instanceof SystemAdmin) {
+            DisplayUtils.printErrorMessage("Can not delete System Admin account");
+            return null;
+        }
+
+        return delete(id);
+    }
+
     public User login() {
         //Get the username and password, return if the account is authenticated
         Scanner scanner = new Scanner(System.in);
