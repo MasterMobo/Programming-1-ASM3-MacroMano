@@ -6,8 +6,8 @@ public class VehicleMoveCommand extends Command{
     public VehicleMoveCommand() {
         signature = "vmc";
         desc = "Command to make vehicle embark the assigned trip";
-        usage = "vmc <vId> <tId>";
-        arguments = 2;
+        usage = "vmc <vId>";
+        arguments = 1;
     }
 
     public static void process(String[] args, MasterDatabase db) {

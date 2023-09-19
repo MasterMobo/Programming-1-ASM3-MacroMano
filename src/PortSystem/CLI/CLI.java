@@ -36,7 +36,9 @@ public class CLI {
         commandMap.put("find", this::findObject);
         commandMap.put("statfuel", this::statFuel);
         commandMap.put("statcon", this::statContainer);
+        commandMap.put("vmc", this::moveVehicle);
         // Add more commands as needed
+
     }
 
 
@@ -122,6 +124,10 @@ public class CLI {
         UnloadContainerCommand.process(args, db, this);
     }
 
+    public void moveVehicle(String[] args) {
+        if (!isLoggedIn()) return;
+        VehicleMoveCommand.process(args, db);
+    }
     public void showUserInfo(String[] args) {
         if (!isLoggedIn()) return;
         ShowUserInfoCommand.process(args, db, this);

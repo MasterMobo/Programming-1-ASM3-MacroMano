@@ -111,10 +111,7 @@ public class VehicleDatabase extends Database<Vehicle> {
             return;
         }
 
-        if(!(trip.vehicleId == vehicleId)) {
-            System.out.println("This vehicle does not belong to this trip!");
-            return ;
-        }
+
 //        Default status for trip
         trip.setStatus(TripStatus.PROCESSING);
         System.out.println("Trip is being processed to check if vehicle is capable");
