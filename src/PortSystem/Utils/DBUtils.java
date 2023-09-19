@@ -25,6 +25,8 @@ public class DBUtils {
     }
 
     public static MasterDatabase createSampleDatabase() {
+        // TODO records can only be kept for 7 days, should sample data consider this?
+
         MasterDatabase db = new MasterDatabase();
         SystemAdmin admin = new SystemAdmin("admin", "123");
         db.users.add(admin);

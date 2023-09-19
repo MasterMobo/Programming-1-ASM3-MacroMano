@@ -1,14 +1,18 @@
 package PortSystem.DB;
 
+import PortSystem.Trip.Trip;
 import PortSystem.Utils.DBUtils;
+import PortSystem.Utils.DateUtils;
 
 import java.io.*;
+import java.time.LocalDate;
 
 
 public class MasterDatabase implements Serializable {
     // Class containing all other Databases
     // The main class for User to interact with the Databases
-//    private static final String FILE_DIR = "src/db.obj";
+
+    private static final int RECORD_LIFETIME = 7;
 
     public PortDatabase ports;
     public UserDatabase users;
@@ -26,16 +30,29 @@ public class MasterDatabase implements Serializable {
 
     public static MasterDatabase initDB() {
         if (!FileStorage.fileExists()) {
+            // TODO records can only be kept for 7 days, should sample data consider this?
             MasterDatabase db = DBUtils.createSampleDatabase();
             FileStorage.write(db);
             return db;
         }
 
-        return FileStorage.read();
+        MasterDatabase db = FileStorage.read();
+        db.refresh();
+        return db;
     }
 
     public void save() {
         FileStorage.write(this);
     }
 
+    private void refresh() {
+        // Deletes expired records
+        LocalDate now = LocalDate.now();
+
+        for (Trip trip: trips.data.values()) {
+            if (DateUtils.daysBetween(trip.getDepartDate(), now) > RECORD_LIFETIME) {
+                trips.delete(trip.getId());
+            }
+        }
+    }
 }

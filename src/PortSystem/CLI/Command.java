@@ -20,9 +20,6 @@ public class Command {
 
 
 
-    public void printArgumentError(int received) {
-    }
-
     public String getInfo() {
         return ConsoleColors.BLUE_BOLD + usage + ": " + ConsoleColors.RESET +  desc;
     }
