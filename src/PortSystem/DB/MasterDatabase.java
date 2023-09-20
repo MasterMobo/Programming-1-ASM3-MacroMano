@@ -37,7 +37,8 @@ public class MasterDatabase implements Serializable {
         }
 
         MasterDatabase db = FileStorage.read();
-        db.refresh();
+        // TODO this is still bugged
+//        db.refresh();
         return db;
     }
 

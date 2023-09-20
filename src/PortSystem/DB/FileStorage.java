@@ -10,13 +10,13 @@ public class FileStorage {
     private static String getFileDir() {
         if (OS.contains("win")) {
             // Running on Windows, use a different path
-            return "src" + File.separator + File.separator + FILE_NAME;
+            return "src" + File.separator + FILE_NAME;
         } else if (OS.contains("mac")) {
-            // Running on macOS, use the original path
-            return FILE_NAME;
+            // Running on macOS, us the original path
+            return "." + File.separator + FILE_NAME;
         } else {
             // Use a default path for other operating systems
-            return "src" + File.separator + File.separator + FILE_NAME;
+            return "src" + File.separator + FILE_NAME;
         }
     }
 
