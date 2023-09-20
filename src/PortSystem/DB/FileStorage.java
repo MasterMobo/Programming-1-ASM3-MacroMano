@@ -13,7 +13,7 @@ public class FileStorage {
             return "src" + File.separator + FILE_NAME;
         } else if (OS.contains("mac")) {
             // Running on macOS, us the original path
-            return "." + File.separator + FILE_NAME;
+            return "src" + File.separator + FILE_NAME;
         } else {
             // Use a default path for other operating systems
             return "src" + File.separator + FILE_NAME;
