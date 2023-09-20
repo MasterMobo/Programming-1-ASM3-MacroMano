@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class DisplayUtils {
     public static void printArray(ArrayList arr) {
         if (arr == null) return;
-        for (int i = 0; i < arr.size(); i++) {
-            System.out.println(arr.get(i));
+        for (Object o : arr) {
+            System.out.println(o);
         }
     }
 
