@@ -7,20 +7,14 @@ import PortSystem.Utils.DisplayUtils;
 
 public class RegisterCommand extends Command{
     public RegisterCommand() {
+        super();
         signature = "register";
         desc = "Initiate register object sequence";
         usage = "register";
         arguments = 0;
     }
 
-    public static void process(String[] args, MasterDatabase db, CLI cli) {
-        RegisterCommand cmd = new RegisterCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-        cmd.execute(args, db, cli);
-    }
-
+    @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         User user = db.users.register();
         if (user == null) return;

@@ -6,21 +6,14 @@ import PortSystem.User.SystemAdmin;
 
 public class RefuelCommand extends Command{
     public RefuelCommand() {
+        super();
         signature ="refuel";
         desc = "Refuel the given vehicle";
         usage ="refuel <vehicleId>";
         arguments = 1;
     }
 
-    public static void process(String[] args, MasterDatabase db, CLI cli) {
-        RefuelCommand cmd = new RefuelCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db, cli);
-    }
-
+    @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         String vId = args[0];
         if (cli.user instanceof SystemAdmin) {

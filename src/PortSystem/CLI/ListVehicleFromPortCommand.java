@@ -6,22 +6,15 @@ import PortSystem.Utils.DisplayUtils;
 public class ListVehicleFromPortCommand extends Command{
 
     public ListVehicleFromPortCommand() {
+        super();
         signature = "lsv";
         desc = "List all vehicle (of given type) in a port. Type 'all' for <vehicleType> to get all types";
         usage = "lsv <vehicleType> <portId>";
         arguments = 2;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
-        ListVehicleFromPortCommand cmd = new ListVehicleFromPortCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db);
-    }
-
-    public void execute(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         String type = args[0];
         String portId = args[1];
 

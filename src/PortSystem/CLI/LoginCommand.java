@@ -7,21 +7,15 @@ import PortSystem.Utils.DisplayUtils;
 public class LoginCommand extends Command{
 
     public LoginCommand() {
+        super();
         signature = "login";
         desc = "Initiate login sequence";
         usage = "login";
         arguments = 0;
     }
 
-    public static void process(String[] args, MasterDatabase db, CLI cli) {
-        LoginCommand cmd = new LoginCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-        execute(args, db, cli);
-    }
-
-    public static void execute(String[] args, MasterDatabase db, CLI cli) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         User user =  db.users.login();
         if (user == null) {
             DisplayUtils.printErrorMessage("Login Failed");

@@ -4,12 +4,16 @@ import PortSystem.DB.MasterDatabase;
 
 public class QuitCommand extends Command{
     public QuitCommand() {
+        super();
         signature = "!q";
         desc = "Quit program";
         usage = "!q";
         arguments = 0;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] arg, MasterDatabase db, CLI cli) {
+
     }
+
 }
