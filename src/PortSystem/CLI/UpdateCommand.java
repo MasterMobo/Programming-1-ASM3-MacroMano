@@ -11,7 +11,7 @@ public class UpdateCommand extends Command{
     public UpdateCommand() {
         super();
         signature = "upd";
-        desc = "Initiate update sequence of given type";
+        desc = "Update record of given type and id";
         usage = "upd <type> <id>";
         arguments = 2;
     }

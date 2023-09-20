@@ -8,7 +8,7 @@ public class ListVehicleFromPortCommand extends Command{
     public ListVehicleFromPortCommand() {
         super();
         signature = "lsv";
-        desc = "List all vehicle (of given type) in a port. Type 'all' for <vehicleType> to get all types";
+        desc = "List all vehicle (of given type) from a port. Type 'all' for <vehicleType> to get all types";
         usage = "lsv <vehicleType> <portId>";
         arguments = 2;
     }

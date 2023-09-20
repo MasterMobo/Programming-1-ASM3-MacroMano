@@ -7,7 +7,7 @@ public class ListContainerFromVehicleCommand extends Command{
     public ListContainerFromVehicleCommand() {
         super();
         signature = "lscv";
-        desc = "List containers (of given type) of a vehicle. Type 'all' for <containerType> to get all types";
+        desc = "List containers (of given type) from a vehicle. Type 'all' for <containerType> to get all types";
         usage = "lscv <containerType> <vehicleId>";
         arguments = 2;
     }

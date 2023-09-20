@@ -9,7 +9,7 @@ public class LoginCommand extends Command{
     public LoginCommand() {
         super();
         signature = "login";
-        desc = "Initiate login sequence";
+        desc = "Login to user";
         usage = "login";
         arguments = 0;
     }

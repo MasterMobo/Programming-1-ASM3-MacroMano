@@ -9,7 +9,7 @@ public class RegisterCommand extends Command{
     public RegisterCommand() {
         super();
         signature = "register";
-        desc = "Initiate register object sequence";
+        desc = "Register new user";
         usage = "register";
         arguments = 0;
     }

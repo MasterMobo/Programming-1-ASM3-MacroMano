@@ -12,7 +12,7 @@ public class CreateCommand extends Command{
     public CreateCommand() {
         super();
         signature = "crt";
-        desc = "Initiate create object sequence of given type";
+        desc = "Create record of given type";
         usage = "crt <type>";
         arguments = 1;
     }

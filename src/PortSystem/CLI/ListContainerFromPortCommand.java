@@ -7,7 +7,7 @@ public class ListContainerFromPortCommand extends Command{
     public ListContainerFromPortCommand() {
         super();
         signature = "lscp";
-        desc = "List containers (of given type) of a port. Type 'all' for <containerType> to get all types";
+        desc = "List containers (of given type) from a port. Type 'all' for <containerType> to get all types";
         usage = "lscp <containerType> <portId>";
         arguments = 2;
     }
