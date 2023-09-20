@@ -111,7 +111,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         System.out.println("Vehicle can go on this trip, type Yes to add trip or No to cancel");
         Scanner scanner = new Scanner(System.in);
         String prompt = scanner.nextLine();
-        if (!(prompt == "Yes")) {
+        if (prompt.equals("No")) {
             return;
         }
         LocalDate lD = DateUtils.toLocalDate(departDate);

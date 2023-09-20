@@ -109,7 +109,7 @@ public class TripDatabase extends Database<Trip>{
         System.out.println("Do you want to update trip status? Press Yes or No to proceed");
         Scanner scanner = new Scanner(System.in);
         String prompt = scanner.nextLine();
-        if (prompt == "Yes") {
+        if (prompt.equals("Yes")) {
             if (Objects.equals(trip.getStatus(), TripStatus.PROCESSING)) {
                 System.out.println("Trip is initiated!");
                 trip.setStatus(TripStatus.EN_ROUTE);
