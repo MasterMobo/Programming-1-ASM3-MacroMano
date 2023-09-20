@@ -59,6 +59,7 @@ public class DBUtils {
 
         DryStorage c = new DryStorage(12.4);
         c.vehicleId = v1.getId();
+        v1.addWeight(c);
         db.containers.add(c);
 
         Trip trip1 = new Trip(v1.getId(), p1.getId(), p2.getId(), DateUtils.toLocalDate("11/09/2023"), DateUtils.toLocalDate("20/10/2023"), 1300, 655.4, TripStatus.PROCESSING);

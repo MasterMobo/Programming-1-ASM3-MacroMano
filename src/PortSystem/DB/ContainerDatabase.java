@@ -345,4 +345,21 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         mdb.save();
         return container;
     }
+
+    @Override
+    public Container delete(String id) {
+        Container deletedContainer = super.delete(id);
+        if (deletedContainer == null) return null;
+
+        if (mdb.ports.exists(deletedContainer.portId)) {
+            Port port = mdb.ports.find(deletedContainer.portId);
+            port.removeContainer(deletedContainer);
+        }
+
+        if (mdb.vehicles.exists(deletedContainer.vehicleId)) {
+            Vehicle vehicle = mdb.vehicles.find(deletedContainer.vehicleId);
+            vehicle.deductWeight(deletedContainer);
+        }
+
+        return deletedContainer;    }
 }

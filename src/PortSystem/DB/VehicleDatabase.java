@@ -196,6 +196,7 @@ public class VehicleDatabase extends Database<Vehicle> {
     @Override
     public Vehicle delete(String id) {
         Vehicle deletedVehicle = super.delete(id);
+        if (deletedVehicle == null) return null;
 
         if (mdb.ports.exists(deletedVehicle.portId)) {
             mdb.ports.find(deletedVehicle.portId).decreaseVehicleCount();
