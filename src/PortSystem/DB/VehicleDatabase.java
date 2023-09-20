@@ -147,6 +147,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
 
         vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
+        DisplayUtils.printSystemMessage("Successfully refueled vehicle");
         mdb.save();
     }
 

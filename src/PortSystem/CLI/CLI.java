@@ -39,6 +39,7 @@ public class CLI {
         commandMap.put("statcon", this::statContainer);
         commandMap.put("svm", this::startVehicleMove);
         commandMap.put("uts", this::updateTripStatus);
+        commandMap.put("refuel", this::refuel);
         // Add more commands as needed
 
     }
@@ -146,8 +147,13 @@ public class CLI {
     }
 
     public void updateTripStatus(String[] args) {
-        if (!isLoggedIn()) return;;
+        if (!isLoggedIn()) return;
         new UpdateTripStatus().process(args, db, this);
+    }
+
+    public void refuel(String[] args) {
+        if (!isLoggedIn()) return;
+        new RefuelCommand().process(args, db, this);
     }
 
     public void register(String[] args) {
