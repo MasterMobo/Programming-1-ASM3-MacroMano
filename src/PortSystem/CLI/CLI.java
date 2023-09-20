@@ -197,7 +197,7 @@ public class CLI {
             + new RefuelCommand().getInfo() + "\n"
             + new StatContainerCommand().getInfo() + "\n"
             + new StatFuelCommand().getInfo() + "\n"
-            + new UpdateTripStatus().getInfo() + "\n"
+            + new UpdateTripStatus().getInfo()
         );
     }
 

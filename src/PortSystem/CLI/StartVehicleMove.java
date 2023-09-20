@@ -7,7 +7,7 @@ public class StartVehicleMove extends Command{
         super();
         signature = "svm";
         desc = "Check if vehicle can go on this trip and create new trip";
-        usage = "svm <vId> <pId> <departDate>";
+        usage = "svm <vehicleId> <destinationPortId> <departDate>";
         arguments = 3;
     }
 
