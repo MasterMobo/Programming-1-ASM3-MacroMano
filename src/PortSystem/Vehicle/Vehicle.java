@@ -99,7 +99,7 @@ public class Vehicle implements DatabaseRecord, Serializable {
     };
 
 
-    public float calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
+    public double calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
         float result = 0;
         double portDistance = p1.getDist(p2);
 
