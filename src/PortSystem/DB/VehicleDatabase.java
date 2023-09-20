@@ -76,20 +76,11 @@ public class VehicleDatabase extends Database<Vehicle> {
 
 
 
-    public Float totalConsumption(String vehicleId, String nextPortId) {
-        if (!(vehicleExists(vehicleId))) return null;
-        Vehicle v = mdb.vehicles.find(vehicleId);
+    public double getTotalConsumption(Vehicle vehicle, Port nextPort) {
+        Port currentPort = mdb.ports.find(vehicle.portId);
 
-        if (!(portExists(nextPortId))) {
-            return null;
-        }
-
-
-        Port currentPort = mdb.ports.find(v.portId);
-        Port nextPort = mdb.ports.find(nextPortId);
-
-        ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicleId);
-        return v.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
+        ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicle.getId());
+        return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
     public void startMove(String vehicleId, String nextPortId, String departDate) {
@@ -105,9 +96,10 @@ public class VehicleDatabase extends Database<Vehicle> {
         // TODO also need these conditions for moving:
         //  1. Only the ports that are marked “landing” can utilize trucks for carrying.
         //  2. Check if vehicle is already on a different trip
+        //  3. Is vehicle already in the nextPort?
         //  also, can you pls put all the move conditions into one function instead of putting them here? (its really hard to read)
 
-        Double totalConsumption = Double.valueOf(mdb.vehicles.totalConsumption(vehicleId, nextPortId));
+        double totalConsumption = mdb.vehicles.getTotalConsumption(v, nextPort);
         if (!(totalConsumption < v.getCurfuelCapacity())) {
             System.out.println("Vehicle not allowed to move due to fuel capacity exceeding");
             return;
