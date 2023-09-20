@@ -6,6 +6,7 @@ import PortSystem.User.SystemAdmin;
 
 public class UpdateTripStatus extends Command{
     public UpdateTripStatus() {
+        super();
         signature = "uts";
         desc = "Update Trip Status";
         usage = "uts <tripId>";
