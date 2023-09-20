@@ -108,16 +108,25 @@ public class VehicleDatabase extends Database<Vehicle> {
             return;
         }
 
-        System.out.println("Vehicle can go on this trip, type Yes to add trip or No to cancel");
+        DisplayUtils.printSystemMessage("Moving " + v.getName() + " from " + vCurrentPort.getName() + " to " + nextPort.getName());
+        DisplayUtils.printSystemMessage("Confirm trip? (y/n)");
         Scanner scanner = new Scanner(System.in);
-        String prompt = scanner.nextLine();
-        if (prompt.equals("No")) {
+        String prompt = scanner.nextLine().trim();
+
+        if (prompt.equals("n")) {
             return;
         }
-        LocalDate lD = DateUtils.toLocalDate(departDate);
-        Trip trip = new Trip(vehicleId, v.portId, nextPortId, lD, null, vCurrentPort.getDist(nextPort), totalConsumption, TripStatus.PROCESSING);
-        mdb.trips.add(trip);
-        scanner.close();
+
+        if (prompt.equals("y")) {
+            LocalDate lD = DateUtils.toLocalDate(departDate);
+            Trip trip = new Trip(vehicleId, v.portId, nextPortId, lD, null, vCurrentPort.getDist(nextPort), totalConsumption, TripStatus.PROCESSING);
+            mdb.trips.add(trip);
+            DisplayUtils.printSystemMessage("Added new trip: " + trip);
+            return;
+        }
+
+        // TODO maybe throw exception if input is wrong?
+//        throw new Exception("Invalid input, Expecting 'y' or 'n");
     }
 
 
