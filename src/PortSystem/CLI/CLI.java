@@ -36,7 +36,8 @@ public class CLI {
         commandMap.put("find", this::findObject);
         commandMap.put("statfuel", this::statFuel);
         commandMap.put("statcon", this::statContainer);
-        commandMap.put("vmc", this::moveVehicle);
+        commandMap.put("svm", this::startVehicleMove);
+        commandMap.put("uts", this::updateTripStatus);
         // Add more commands as needed
 
     }
@@ -124,9 +125,9 @@ public class CLI {
         UnloadContainerCommand.process(args, db, this);
     }
 
-    public void moveVehicle(String[] args) {
+    public void startVehicleMove(String[] args) {
         if (!isLoggedIn()) return;
-        VehicleMoveCommand.process(args, db);
+        StartVehicleMove.process(args, db);
     }
     public void showUserInfo(String[] args) {
         if (!isLoggedIn()) return;
@@ -148,6 +149,10 @@ public class CLI {
         StatContainerCommand.process(args, db);
     }
 
+    public void updateTripStatus(String[] args) {
+        if (!isLoggedIn()) return;;
+        UpdateTripStatus.process(args, db);
+    }
 
     public void register(String[] args) {
         if (user != null) {
@@ -192,10 +197,11 @@ public class CLI {
             + new UpdateCommand().getInfo() + "\n"
             + new LoadContainerCommand().getInfo() + "\n"
             + new UnloadContainerCommand().getInfo() + "\n"
-            + new VehicleMoveCommand().getInfo() + "\n"
+            + new StartVehicleMove().getInfo() + "\n"
             + new RefuelCommand().getInfo() + "\n"
             + new StatContainerCommand().getInfo() + "\n"
             + new StatFuelCommand().getInfo() + "\n"
+            + new UpdateTripStatus().getInfo() + "\n"
         );
     }
 

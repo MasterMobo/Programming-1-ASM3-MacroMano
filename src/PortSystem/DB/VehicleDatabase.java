@@ -89,46 +89,10 @@ public class VehicleDatabase extends Database<Vehicle> {
         Port nextPort = mdb.ports.find(nextPortId);
 
         ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicleId);
-        return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
+        return v.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
-
-//    public void move(String vehicleId) {
-////        Checking if object exists
-//        Vehicle vehicle = mdb.vehicles.find(vehicleId);
-//        if (vehicle == null) return;
-//
-//        Trip trip = mdb.trips.find(vehicleId);
-//
-//        if (!mdb.ports.exists(vehicle.portId)) {
-//            System.out.println("Vehicle's port can't be found");
-//            return;
-//        }
-//
-//
-////        Default status for trip
-//        trip.setStatus(TripStatus.PROCESSING);
-//        System.out.println("Trip is being processed to check if vehicle is capable");
-//        Double totalConsumption = Double.valueOf(mdb.vehicles.totalConsumption(vehicleId, trip.arrivePortId));
-//        if (!(totalConsumption < vehicle.getCurfuelCapacity())) {
-//            System.out.println("Vehicle not allowed to move due to fuel capacity exceeding");
-//            return;
-//        }
-//        vehicle.setCurfuelCapacity(vehicle.getCurfuelCapacity() - totalConsumption);
-//
-////        Next Status
-//        trip.setStatus(TripStatus.EN_ROUTE);
-//        System.out.println("Vehicle is en route!");
-//        vehicle.portId = null;
-//
-////        Fulfilled Status
-//        trip.setStatus(TripStatus.FULFILLED);
-//        vehicle.portId = trip.arrivePortId;
-//        trip.setFuelConsumed(totalConsumption);
-//        mdb.save();
-//    }
-
-    public void startMove(String vehicleId, String nextPortId, String departDate, LocalDate arriveDate) {
+    public void startMove(String vehicleId, String nextPortId, String departDate) {
         if (!(vehicleExists(vehicleId))) {
             return;
         }
@@ -144,42 +108,16 @@ public class VehicleDatabase extends Database<Vehicle> {
             return;
         }
 
-        LocalDate lD = DateUtils.toLocalDate(departDate);
-
-        Trip trip = new Trip(vehicleId, v.portId, nextPortId, lD, null, vCurrentPort.getDist(nextPort), totalConsumption, TripStatus.PROCESSING);
-
-        mdb.trips.add(trip);
-    }
-
-    public void updateStatus(String tripId) {
-        if (!mdb.trips.exists(tripId)) {
-            return;
-        }
-
-        Trip trip = mdb.trips.find(tripId);
-        Vehicle v = mdb.vehicles.find(trip.vehicleId);
-//        Show current status
-        System.out.println("The current trip status is: " + trip.getStatus());
-        System.out.println("Do you want to update trip status? Press Yes or No to proceed");
+        System.out.println("Vehicle can go on this trip, type Yes to add trip or No to cancel");
         Scanner scanner = new Scanner(System.in);
         String prompt = scanner.nextLine();
-        if (prompt == "Yes") {
-            if (Objects.equals(trip.getStatus(), TripStatus.PROCESSING)) {
-                System.out.println("Trip is initiated!");
-                trip.setStatus(TripStatus.EN_ROUTE);
-                v.portId = null;
-                v.setCurfuelCapacity(v.getFuelCapacity() - trip.getFuelConsumed());
-            }
-            if (Objects.equals(trip.getStatus(), TripStatus.EN_ROUTE)) {
-                System.out.println("Trip is fulfilled!");
-                trip.setStatus(TripStatus.FULFILLED);
-                v.portId = trip.arrivePortId;
-            }
-        }
-        else {
+        if (!(prompt == "Yes")) {
             return;
         }
-
+        LocalDate lD = DateUtils.toLocalDate(departDate);
+        Trip trip = new Trip(vehicleId, v.portId, nextPortId, lD, null, vCurrentPort.getDist(nextPort), totalConsumption, TripStatus.PROCESSING);
+        mdb.trips.add(trip);
+        scanner.close();
     }
 
 

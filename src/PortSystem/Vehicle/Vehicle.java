@@ -10,7 +10,7 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     private String name;
 
-    protected String id;
+    private String id;
 
     protected String type;
     public String portId;
