@@ -99,11 +99,9 @@ public class TripDatabase extends Database<Trip>{
     }
 
     public void updateTripStatus(String tripId) {
-        if (!mdb.trips.exists(tripId)) {
-            System.out.println("No trip with this ID exists");
-            return;
-        }
         Trip trip = mdb.trips.find(tripId);
+        if (trip == null) return;
+
         Vehicle v = mdb.vehicles.find(trip.vehicleId);
 
         if (trip.getStatus().equals(TripStatus.FULFILLED)) {
@@ -127,11 +125,11 @@ public class TripDatabase extends Database<Trip>{
                 return;
             }
 
-            // TODO set arrival date
             if (trip.getStatus().equals(TripStatus.EN_ROUTE)) {
                 DisplayUtils.printSystemMessage("Trip is fulfilled! Vehicle has arrived at destination");
                 trip.setStatus(TripStatus.FULFILLED);
                 v.portId = trip.arrivePortId;
+                trip.setArriveDate(LocalDate.now());
                 mdb.save();
                 return;
             }

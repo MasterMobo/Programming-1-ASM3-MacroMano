@@ -59,6 +59,9 @@ public class    Trip implements DatabaseRecord, Serializable {
         this.status = status;
     }
 
+    public void setArriveDate(LocalDate date) {
+        arriveDate = date;
+    }
 
     @Override
     public String toString() {
