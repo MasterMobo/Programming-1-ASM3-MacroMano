@@ -6,6 +6,7 @@ import PortSystem.Utils.DateUtils;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class MasterDatabase implements Serializable {
@@ -37,8 +38,7 @@ public class MasterDatabase implements Serializable {
         }
 
         MasterDatabase db = FileStorage.read();
-        // TODO this is still bugged
-//        db.refresh();
+        db.refresh();
         return db;
     }
 
@@ -50,10 +50,15 @@ public class MasterDatabase implements Serializable {
         // Deletes expired records
         LocalDate now = LocalDate.now();
 
+        ArrayList<String> deleteIds = new ArrayList<>();
         for (Trip trip: trips.data.values()) {
             if (DateUtils.daysBetween(trip.getDepartDate(), now) > RECORD_LIFETIME) {
-                trips.delete(trip.getId());
+                deleteIds.add(trip.getId());
             }
+        }
+
+        for (String id: deleteIds) {
+            trips.delete(id);
         }
     }
 }
