@@ -10,7 +10,7 @@ public class VehicleMoveCommand extends Command{
         usage = "vmc <vId>";
         arguments = 1;
     }
-    
+
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         String vId = args[0];
