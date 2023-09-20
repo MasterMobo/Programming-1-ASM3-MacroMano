@@ -194,10 +194,10 @@ public class CLI {
             + new LoadContainerCommand().getInfo() + "\n"
             + new UnloadContainerCommand().getInfo() + "\n"
             + new StartVehicleMove().getInfo() + "\n"
+            + new UpdateTripStatus().getInfo()
             + new RefuelCommand().getInfo() + "\n"
             + new StatContainerCommand().getInfo() + "\n"
             + new StatFuelCommand().getInfo() + "\n"
-            + new UpdateTripStatus().getInfo()
         );
     }
 
