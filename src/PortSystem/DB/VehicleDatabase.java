@@ -101,6 +101,11 @@ public class VehicleDatabase extends Database<Vehicle> {
         if (!(portExists(nextPortId))) {
             return;
         }
+        // TODO also need these conditions for moving:
+        //  1. Only the ports that are marked “landing” can utilize trucks for carrying.
+        //  2. Check if vehicle is already on a different trip
+        //  also, can you pls put all the conditions into one function instead of putting them here? (its really hard to read)
+
         Port nextPort = mdb.ports.find(nextPortId);
         Double totalConsumption = Double.valueOf(mdb.vehicles.totalConsumption(vehicleId, nextPortId));
         if (!(totalConsumption < v.getCurfuelCapacity())) {
