@@ -88,7 +88,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
 
-        if (!Objects.equals(vehicle.portId, userPortId)) {
+        if (userPortId != null && !Objects.equals(vehicle.portId, userPortId)) {
             DisplayUtils.printErrorMessage("You do not have permission to this vehicle because it is not in your port");
             return;
         }
@@ -149,8 +149,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             mdb.ports.find(container.portId).removeContainer(container);
             container.portId = null;
             vehicle.addWeight(container);
-            container.portId = null;
-            System.out.println("Successfully loaded to vehicle.");
+            DisplayUtils.printSystemMessage("Successfully loaded to vehicle.");
             mdb.save();
         }
     }
@@ -163,7 +162,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
 
-        if (!Objects.equals(vehicle.portId, userPortId)) {
+        if (userPortId != null && !Objects.equals(vehicle.portId, userPortId)) {
             DisplayUtils.printErrorMessage("You do not have permission to this vehicle because it is not in your port");
             return;
         }
