@@ -81,9 +81,13 @@ public class VehicleDatabase extends Database<Vehicle> {
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
-    public void startMove(String vehicleId, String nextPortId, String departDate) {
+    public void startMove(String vehicleId, String nextPortId, String departDateString) {
         Vehicle v = mdb.vehicles.find(vehicleId);
         if (v  == null) return;
+
+        if (v.portId == null) {
+            DisplayUtils.printErrorMessage("Vehicle is already on a trip");
+        }
 
         Port vCurrentPort = mdb.ports.find(v.portId);
         if (vCurrentPort == null) return;
@@ -91,9 +95,12 @@ public class VehicleDatabase extends Database<Vehicle> {
         Port nextPort = mdb.ports.find(nextPortId);
         if (nextPort == null) return;
 
+        LocalDate departDate = DateUtils.toLocalDate(departDateString);
+        if (departDate == null) return;
+
         // TODO also need these conditions for moving:
         //  1. Only the ports that are marked “landing” can utilize trucks for carrying.
-        //  2. Check if vehicle is already on a different trip
+        //  2. Check if vehicle is already on a different trip (is any trip associated with this vehicle still PROCESSING or EN_ROUTE?)
         //  3. Is vehicle already in the nextPort?
         //  also, can you pls put all the move conditions into one function instead of putting them here? (its really hard to read)
 
@@ -114,8 +121,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
 
         if (prompt.equals("y")) {
-            LocalDate lD = DateUtils.toLocalDate(departDate);
-            Trip trip = new Trip(vehicleId, v.portId, nextPortId, lD, null, vCurrentPort.getDist(nextPort), totalConsumption, TripStatus.PROCESSING);
+            Trip trip = new Trip(vehicleId, v.portId, nextPortId, departDate, null, vCurrentPort.getDist(nextPort), totalConsumption, TripStatus.PROCESSING);
             mdb.trips.add(trip);
             DisplayUtils.printSystemMessage("Added new trip: " + trip);
             return;

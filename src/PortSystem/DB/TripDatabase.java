@@ -5,6 +5,7 @@ import PortSystem.Port.Port;
 import PortSystem.Trip.Trip;
 import PortSystem.Trip.TripStatus;
 import PortSystem.Utils.DateUtils;
+import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Vehicle;
 
 import java.time.LocalDate;
@@ -104,29 +105,45 @@ public class TripDatabase extends Database<Trip>{
         }
         Trip trip = mdb.trips.find(tripId);
         Vehicle v = mdb.vehicles.find(trip.vehicleId);
+
+        if (trip.getStatus().equals(TripStatus.FULFILLED)) {
+            DisplayUtils.printErrorMessage("This trip is already fulfilled, can not update further");
+            return;
+        }
+
 //        Show current status
-        System.out.println("The current trip status is: " + trip.getStatus());
-        System.out.println("Do you want to update trip status? Press Yes or No to proceed");
+        DisplayUtils.printSystemMessage("The current trip status is: " + trip.getStatus());
+        DisplayUtils.printSystemMessage("Do you want to update trip status? (y/n)");
         Scanner scanner = new Scanner(System.in);
         String prompt = scanner.nextLine();
-        if (prompt.equals("Yes")) {
-            if (Objects.equals(trip.getStatus(), TripStatus.PROCESSING)) {
-                System.out.println("Trip is initiated!");
+
+        if (prompt.equals("y")) {
+            if (trip.getStatus().equals(TripStatus.PROCESSING)) {
+                DisplayUtils.printSystemMessage("Trip is initiated! Vehicle is on the way");
                 trip.setStatus(TripStatus.EN_ROUTE);
                 v.portId = null;
                 v.setCurfuelCapacity(v.getFuelCapacity() - trip.getFuelConsumed());
+                mdb.save();
+                return;
             }
+
             // TODO set arrival date
-            if (Objects.equals(trip.getStatus(), TripStatus.EN_ROUTE)) {
-                System.out.println("Trip is fulfilled!");
+            if (trip.getStatus().equals(TripStatus.EN_ROUTE)) {
+                DisplayUtils.printSystemMessage("Trip is fulfilled! Vehicle has arrived at destination");
                 trip.setStatus(TripStatus.FULFILLED);
                 v.portId = trip.arrivePortId;
+                mdb.save();
+                return;
             }
         }
-        else {
+
+        if (prompt.equals("n")) {
+            DisplayUtils.printErrorMessage("Update canceled");
             return;
         }
-        scanner.close();
+
+        // TODO maybe throw exception if input is wrong?
+//        throw new Exception("Invalid input, Expecting 'y' or 'n");
     }
 
 // TODO do you even need this? just use find()

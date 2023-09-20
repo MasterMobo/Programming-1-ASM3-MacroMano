@@ -38,7 +38,8 @@ public class MasterDatabase implements Serializable {
         }
 
         MasterDatabase db = FileStorage.read();
-        db.refresh();
+        // TODO will comment out for now, put it back in when shipped
+//        db.refresh();
         return db;
     }
 
