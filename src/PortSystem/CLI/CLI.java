@@ -6,6 +6,7 @@ import PortSystem.Utils.ConsoleColors;
 import PortSystem.Utils.DisplayUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -70,82 +71,82 @@ public class CLI {
 
     public void list(String[] args) {
         if (!isLoggedIn()) return;
-        ListCommand.process(args, db);
+        new ListCommand().process(args, db, this);
     }
 
 
     public void listVehiclesFromPort(String[] args) {
         if (!isLoggedIn()) return;
-        ListVehicleFromPortCommand.process(args, db);
+        new ListVehicleFromPortCommand().process(args, db, this);
     }
 
     public void listContainersFromVehicle(String[] args) {
         if (!isLoggedIn()) return;
-        ListContainerFromVehicleCommand.process(args, db);
+        new ListContainerFromVehicleCommand().process(args, db, this);
     }
 
     public void listContainersFromPort(String[] args) {
         if (!isLoggedIn()) return;
-        ListContainerFromPortCommand.process(args, db);
+        new ListContainerFromPortCommand().process(args, db, this);
     }
 
     public void listTripsFromPort(String[] args) {
         if (!isLoggedIn()) return;
-        ListTripsFromPortCommand.process(args, db);
+        new ListTripsFromPortCommand().process(args, db, this);
     }
 
     public void listTripsOnDays(String[] args) {
         if (!isLoggedIn()) return;
-        ListTripsOnDaysCommand.process(args, db);
+        new ListTripsOnDaysCommand().process(args, db, this);
     }
 
     public void create(String[] args) {
         if (!isLoggedIn()) return;
-        CreateCommand.process(args, db, this);
+        new CreateCommand().process(args, db, this);
     }
 
     public void update(String[] args) {
         if (!isLoggedIn()) return;
-        UpdateCommand.process(args, db, this);
+        new UpdateCommand().process(args, db, this);
     }
 
     public void delete(String[] args) {
         if (!isLoggedIn()) return;
-        DeleteCommand.process(args, db, this);
+        new DeleteCommand().process(args, db, this);
     }
 
     public void loadContainerOnVehicle(String[] args) {
         if (!isLoggedIn()) return;
-        LoadContainerCommand.process(args, db, this);
+        new LoadContainerCommand().process(args, db, this);
     }
 
     public void unloadFromVehicle(String[] args) {
         if (!isLoggedIn()) return;
-        UnloadContainerCommand.process(args, db, this);
+        new UnloadContainerCommand().process(args, db, this);
     }
 
     public void moveVehicle(String[] args) {
         if (!isLoggedIn()) return;
-        VehicleMoveCommand.process(args, db);
+        new VehicleMoveCommand().process(args, db, this);
     }
     public void showUserInfo(String[] args) {
         if (!isLoggedIn()) return;
-        ShowUserInfoCommand.process(args, db, this);
+        new ShowUserInfoCommand().process(args, db, this);
     }
 
     public void findObject(String[] args) {
         if (!isLoggedIn()) return;
-        FindCommand.process(args, db, this);
+        new FindCommand().process(args, db, this);
     }
 
     public void statFuel(String[] args) {
         if (!isLoggedIn()) return;
-        StatFuelCommand.process(args, db);
+        new StatFuelCommand().process(args, db, this);
     }
 
     public void statContainer(String[] args) {
         if (!isLoggedIn()) return;
-        StatContainerCommand.process(args, db);
+        new StatContainerCommand().process(args, db, this);
     }
 
 
@@ -154,7 +155,7 @@ public class CLI {
             System.out.println("You are already logged in, please logout first");
             return;
         }
-        RegisterCommand.process(args, db, this);
+        new RegisterCommand().process(args, db, this);
     }
 
     public void login(String[] args) {
@@ -162,12 +163,12 @@ public class CLI {
             System.out.println("You are already logged in, please logout first");
             return;
         }
-        LoginCommand.process(args, db, this);
+        new LoginCommand().process(args, db, this);
     }
 
     private void logout(String[] args) {
         if (!isLoggedIn()) return;
-        LogoutCommand.process(args, db, this);
+        new LogoutCommand().process(args, db, this);
     }
 
     public void help(String[] args) {

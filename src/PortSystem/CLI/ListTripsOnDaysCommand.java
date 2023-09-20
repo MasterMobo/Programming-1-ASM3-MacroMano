@@ -5,22 +5,15 @@ import PortSystem.Utils.DisplayUtils;
 
 public class ListTripsOnDaysCommand extends Command{
     public ListTripsOnDaysCommand() {
+        super();
         signature = "lstd";
         desc = "List all trips from one day to another. Expecting dd/MM/yyyy format. Type '.' for <toDay> to gets trips on <fromDay> only ";
         usage = "lstd <fromDay> <toDay>";
         arguments = 2;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
-        ListTripsOnDaysCommand cmd = new ListTripsOnDaysCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db);
-    }
-
-    public void execute(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         String fromDay = args[0];
         String toDay = args[1];
 

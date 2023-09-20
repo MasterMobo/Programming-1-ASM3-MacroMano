@@ -7,21 +7,14 @@ import PortSystem.User.SystemAdmin;
 public class LoadContainerCommand extends Command {
 
     public LoadContainerCommand() {
+        super();
         signature = "load";
         desc = "Load containers onto a vehicle";
         usage = "load <vehicleID>";
         arguments = 1;
     }
 
-    public static void process(String[] args, MasterDatabase db, CLI cli) {
-        LoadContainerCommand cmd = new LoadContainerCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db, cli);
-    }
-
+    @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         if (cli.user instanceof SystemAdmin) {
             db.containers.loadContainerOnVehicle(args[0], null);

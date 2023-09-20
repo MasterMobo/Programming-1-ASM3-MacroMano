@@ -5,22 +5,15 @@ import PortSystem.Utils.DisplayUtils;
 
 public class ListContainerFromVehicleCommand extends Command{
     public ListContainerFromVehicleCommand() {
+        super();
         signature = "lscv";
         desc = "List containers (of given type) of a vehicle. Type 'all' for <containerType> to get all types";
         usage = "lscv <containerType> <vehicleId>";
         arguments = 2;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
-        ListContainerFromVehicleCommand cmd = new ListContainerFromVehicleCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db);
-    }
-
-    public void execute(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         String type = args[0];
         String vehicleId = args[1];
         switch (type) {

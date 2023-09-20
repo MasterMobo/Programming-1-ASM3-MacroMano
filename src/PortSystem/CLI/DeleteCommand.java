@@ -9,21 +9,14 @@ import java.util.Objects;
 
 public class DeleteCommand extends Command{
     public DeleteCommand() {
+        super();
         signature = "del";
         desc = "Delete record of given type and id";
         usage = "del <type> <id>";
         arguments = 2;
     }
 
-    public static void process(String[] args, MasterDatabase db, CLI cli) {
-        DeleteCommand cmd = new DeleteCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db, cli);
-    }
-
+    @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         String type = args[0];
         String id = args[1];

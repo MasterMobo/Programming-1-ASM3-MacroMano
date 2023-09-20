@@ -10,28 +10,19 @@ import PortSystem.Vehicle.Vehicle;
 
 public class CreateCommand extends Command{
     public CreateCommand() {
+        super();
         signature = "crt";
         desc = "Initiate create object sequence of given type";
         usage = "crt <type>";
         arguments = 1;
     }
 
-    public static void process(String[] args, MasterDatabase db, CLI cli) {
-        CreateCommand cmd = new CreateCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db, cli);
-    }
-
+    @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         if (!cli.user.isAccessible(args[0])) {
             DisplayUtils.printErrorMessage("You do not have the authority to this command");
             return;
         }
-
-
 
         switch (args[0]) {
             case "port":

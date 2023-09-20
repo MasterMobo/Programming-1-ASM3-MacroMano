@@ -5,22 +5,15 @@ import PortSystem.Utils.DisplayUtils;
 
 public class ListTripsFromPortCommand extends Command {
     public ListTripsFromPortCommand() {
+        super();
         signature = "lstp";
         desc = "List all trips in a port";
         usage = "lstp <portId>";
         arguments = 1;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
-        ListTripsFromPortCommand cmd = new ListTripsFromPortCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db);
-    }
-
-    public void execute(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         DisplayUtils.printArray(db.trips.fromPort(args[0]));
     }
 }

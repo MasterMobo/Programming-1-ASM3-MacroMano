@@ -9,21 +9,14 @@ import java.util.Objects;
 
 public class UpdateCommand extends Command{
     public UpdateCommand() {
+        super();
         signature = "upd";
         desc = "Initiate update sequence of given type";
         usage = "upd <type> <id>";
         arguments = 2;
     }
 
-    public static void process(String[] args, MasterDatabase db, CLI cli) {
-        UpdateCommand cmd = new UpdateCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db, cli);
-    }
-
+    @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         String type = args[0];
         String id = args[1];

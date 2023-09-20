@@ -5,22 +5,15 @@ import PortSystem.Utils.DisplayUtils;
 
 public class ListContainerFromPortCommand extends Command{
     public ListContainerFromPortCommand() {
+        super();
         signature = "lscp";
         desc = "List containers (of given type) of a port. Type 'all' for <containerType> to get all types";
         usage = "lscp <containerType> <portId>";
         arguments = 2;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
-        ListContainerFromPortCommand cmd = new ListContainerFromPortCommand();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db);
-    }
-
-    public void execute(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         String type = args[0];
         String vehicleId = args[1];
         switch (type) {
