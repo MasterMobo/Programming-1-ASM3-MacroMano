@@ -33,7 +33,6 @@ public class DeleteCommand extends Command{
                 if (db.vehicles.delete(id) == null) return;
                 break;
             case "container":
-                // TODO does deleting container affect port and vehicle?
                 Container container = db.containers.find(id);
                 if (container == null) return;
 

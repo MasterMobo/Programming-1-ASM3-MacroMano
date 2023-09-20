@@ -43,11 +43,6 @@ public class CLI {
 
     }
 
-
-
-
-    // TODO: integrate user roles with commands
-
     public void executeCommand(String input) {
         String[] parts = input.split("\\s+", 2); // Split the input into command and arguments
         String command = parts[0].trim();
