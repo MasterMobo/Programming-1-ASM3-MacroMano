@@ -128,7 +128,7 @@ public class CLI {
 
     public void startVehicleMove(String[] args) {
         if (!isLoggedIn()) return;
-        StartVehicleMove.process(args, db);
+        new StartVehicleMove().process(args, db, this);
     }
     public void showUserInfo(String[] args) {
         if (!isLoggedIn()) return;
@@ -152,7 +152,7 @@ public class CLI {
 
     public void updateTripStatus(String[] args) {
         if (!isLoggedIn()) return;;
-        UpdateTripStatus.process(args, db);
+        new UpdateTripStatus().process(args, db, this);
     }
 
     public void register(String[] args) {

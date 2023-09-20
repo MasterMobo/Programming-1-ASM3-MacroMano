@@ -12,16 +12,8 @@ public class UpdateTripStatus extends Command{
         arguments = 1;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
-        UpdateTripStatus cmd = new UpdateTripStatus();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db);
-    }
-
-    public void execute(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         String tripId = args[0];
         db.trips.updateTripStatus(tripId);
     }

@@ -10,16 +10,8 @@ public class StartVehicleMove extends Command{
         arguments = 3;
     }
 
-    public static void process(String[] args, MasterDatabase db) {
-        StartVehicleMove cmd = new StartVehicleMove();
-        if (!cmd.validateArguments(args)) {
-            return;
-        }
-
-        cmd.execute(args, db);
-    }
-
-    public void execute(String[] args, MasterDatabase db) {
+    @Override
+    public void execute(String[] args, MasterDatabase db, CLI cli) {
         String vId = args[0];
         String pId = args[1];
         String departDate = args[2];
