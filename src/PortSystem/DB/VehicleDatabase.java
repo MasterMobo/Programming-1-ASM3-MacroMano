@@ -114,6 +114,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         String prompt = scanner.nextLine().trim();
 
         if (prompt.equals("n")) {
+            DisplayUtils.printErrorMessage("Trip Cancelled");
             return;
         }
 
