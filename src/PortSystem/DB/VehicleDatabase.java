@@ -76,9 +76,7 @@ public class VehicleDatabase extends Database<Vehicle> {
 
 
 
-    public double getTotalConsumption(Vehicle vehicle, Port nextPort) {
-        Port currentPort = mdb.ports.find(vehicle.portId);
-
+    public double getTotalConsumption(Vehicle vehicle, Port currentPort, Port nextPort) {
         ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicle.getId());
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
@@ -99,7 +97,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         //  3. Is vehicle already in the nextPort?
         //  also, can you pls put all the move conditions into one function instead of putting them here? (its really hard to read)
 
-        double totalConsumption = mdb.vehicles.getTotalConsumption(v, nextPort);
+        double totalConsumption = mdb.vehicles.getTotalConsumption(v, vCurrentPort, nextPort);
         if (!(totalConsumption < v.getCurfuelCapacity())) {
             System.out.println("Vehicle not allowed to move due to fuel capacity exceeding");
             return;
