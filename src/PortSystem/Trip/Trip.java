@@ -46,8 +46,6 @@ public class    Trip implements DatabaseRecord, Serializable {
         return status;
     }
     public double getFuelConsumed () { return fuelConsumed;}
-    public void setFuelConsumed(double fuelConsumption) {this.fuelConsumed += fuelConsumption;};
-
 
     public String getId() {
         return id;

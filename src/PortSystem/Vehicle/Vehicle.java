@@ -9,21 +9,15 @@ import java.util.*;
 public class Vehicle implements DatabaseRecord, Serializable {
 
     private String name;
-
     private String id;
-
     protected String type;
     public String portId;
     private double carryCapacity;
-
     private double curCarryWeight;
     private double fuelCapacity;
     private double curfuelCapacity = fuelCapacity;
-
     protected String[] allowedContainers;
-
     private double curFuelConsumption = 0.0;
-
 
     public Vehicle(String name, double carryCapacity, double fuelCapacity) {
         this.name = name;

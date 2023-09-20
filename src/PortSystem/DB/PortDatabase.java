@@ -12,10 +12,6 @@ public class PortDatabase extends Database<Port> {
     public PortDatabase(MasterDatabase mdb) {
         super(mdb, "p");
     }
-    private boolean portExists(String portId) {
-        return mdb.ports.find(portId) != null;
-    }
-
     // TODO do you even need this? just use find()
 
 //    public void showInfo(String portID) {

@@ -116,6 +116,7 @@ public class TripDatabase extends Database<Trip>{
                 v.portId = null;
                 v.setCurfuelCapacity(v.getFuelCapacity() - trip.getFuelConsumed());
             }
+            // TODO set arrival date
             if (Objects.equals(trip.getStatus(), TripStatus.EN_ROUTE)) {
                 System.out.println("Trip is fulfilled!");
                 trip.setStatus(TripStatus.FULFILLED);

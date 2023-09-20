@@ -16,25 +16,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     private boolean vehicleExists(String vehicleId) {
-        return mdb.vehicles.find(vehicleId) != null;
+        return mdb.vehicles.exists(vehicleId);
     }
-
-    private boolean containerExists(String containerID) {return mdb.containers.find(containerID) != null;}
-
-
-    public Container getContainerFromPort (String containerID, String portId){
-        if (!containerExists(containerID)) return null;
-        ArrayList<Container> containers = fromPort(portId);
-
-        for (Container container : containers) {
-            if (container.getId().equals(containerID)) {
-                return container;
-            }
-        }
-        return null;
-    }
-
-
 
     public ArrayList<Container> fromVehicle(String vehicleId) {
         if (!vehicleExists(vehicleId)) return null;
@@ -271,8 +254,6 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         };
     }
 
-
-
     public void listContainerTypeByWeight() {
         HashMap<String, Double> typeCount = Container.countContainerWeight(new ArrayList<>(data.values()));
         for (Map.Entry<String, Double> set: typeCount.entrySet()) {
@@ -361,5 +342,6 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             vehicle.deductWeight(deletedContainer);
         }
 
-        return deletedContainer;    }
+        return deletedContainer;
+    }
 }
