@@ -30,8 +30,11 @@ public class ListCommand extends Command{
             case "trip":
                 db.trips.display();
                 break;
+            case "manager":
+                DisplayUtils.printArray(db.users.getManagers());
+                break;
             default:
-                DisplayUtils.printInvalidTypeError("port, vehicle, container, trip");
+                DisplayUtils.printInvalidTypeError("port, vehicle, container, trip, manager");
         }
     }
 

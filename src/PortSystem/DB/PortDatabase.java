@@ -46,5 +46,8 @@ public class PortDatabase extends Database<Port> {
         return port;
     }
 
+    public void printAllPorts() {
+        data.values().forEach((Port p) -> System.out.println(p.getName() + " - " + p.getId()));
+    }
 
 }

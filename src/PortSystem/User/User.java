@@ -40,7 +40,8 @@ public class User implements DatabaseRecord, Serializable {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='*****'" +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

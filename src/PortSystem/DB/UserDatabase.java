@@ -1,10 +1,12 @@
 package PortSystem.DB;
 
+import PortSystem.Port.Port;
 import PortSystem.User.PortManager;
 import PortSystem.User.SystemAdmin;
 import PortSystem.User.User;
 import PortSystem.Utils.DisplayUtils;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -88,7 +90,7 @@ public class UserDatabase extends Database<User>{
             return null;
         }
 
-        System.out.print("Enter role (admin, manager):");
+        System.out.print("Enter role (admin, manager): ");
         String role = scanner.nextLine().trim();
 
         User newUser = null;
@@ -96,6 +98,9 @@ public class UserDatabase extends Database<User>{
         if (role.equals("admin")) {
             newUser =  new SystemAdmin(username, password);
         } else if (role.equals("manager")) {
+            DisplayUtils.printSystemMessage("Available Ports:");
+            mdb.ports.printAllPorts();
+
             System.out.print("Enter port ID: ");
             String portID = scanner.nextLine().trim();
             if (mdb.ports.find(portID) == null) return null;
@@ -107,5 +112,13 @@ public class UserDatabase extends Database<User>{
 
         add(newUser);
         return newUser;
+    }
+
+    public ArrayList<User> getManagers() {
+        ArrayList<User> managers = new ArrayList<>();
+        for (User user: data.values()) {
+            if (user instanceof PortManager) managers.add(user);
+        }
+        return managers;
     }
 }
