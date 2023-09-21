@@ -1,6 +1,7 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Exceptions.CommandNotFoundException;
 import PortSystem.User.User;
 import PortSystem.Utils.ConsoleColors;
 import PortSystem.Utils.DisplayUtils;
@@ -44,7 +45,7 @@ public class CLI {
 
     }
 
-    public void executeCommand(String input) {
+    public void executeCommand(String input) throws CommandNotFoundException {
         String[] parts = input.split("\\s+", 2); // Split the input into command and arguments
         String command = parts[0].trim();
         String[] arguments = parts.length > 1 ? parts[1].trim().split("\\s+") : new String[0];
@@ -53,7 +54,7 @@ public class CLI {
         if (action != null) {
             action.accept(arguments);
         } else {
-            DisplayUtils.printErrorMessage("Command not found: " + command);
+            throw new CommandNotFoundException(command);
         }
     }
 

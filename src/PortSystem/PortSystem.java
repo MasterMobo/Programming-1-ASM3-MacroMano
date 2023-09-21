@@ -2,8 +2,11 @@ package PortSystem;
 
 import PortSystem.CLI.CLI;
 import PortSystem.DB.MasterDatabase;
+import PortSystem.Exceptions.CommandNotFoundException;
 import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DisplayUtils;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PortSystem {
@@ -20,16 +23,31 @@ public class PortSystem {
                 "Duong Tran Minh Hoang - s3978452\n" +
                 "Nguyen Trong Tien - s3978616");
         System.out.println();
+
         System.out.println(ConsoleColors.BLUE_BOLD + "Welcome to PORTIFY!" + ConsoleColors.RESET);
         System.out.println("Type 'login' or 'register' to begin");
+
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine().trim();
         while (!command.equals("!q")) {
-            cli.executeCommand(command);
+            try {
+                cli.executeCommand(command);
+            }
+            catch (InputMismatchException e) {
+                DisplayUtils.printErrorMessage("Invalid Input");
+            }
+            catch (CommandNotFoundException e) {
+                DisplayUtils.printErrorMessage(e.getMessage());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
-            command = scanner.nextLine().trim();
-
+            finally {
+                command = scanner.nextLine().trim();
+            }
         }
+
     }
 
 }
