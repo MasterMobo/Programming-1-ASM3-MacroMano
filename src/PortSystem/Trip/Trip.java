@@ -9,9 +9,9 @@ import PortSystem.Vehicle.Vehicle;
 
 public class    Trip implements DatabaseRecord, Serializable {
     private String id;
-    public String vehicleId;
-    public String departPortId;
-    public String arrivePortId;
+    private String vehicleId;
+    private String departPortId;
+    private String arrivePortId;
     private LocalDate departDate;
     private LocalDate arriveDate;
     private double length;
@@ -46,6 +46,19 @@ public class    Trip implements DatabaseRecord, Serializable {
         return status;
     }
     public double getFuelConsumed () { return fuelConsumed;}
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public String getDepartPortId() {
+        return departPortId;
+    }
+
+    public String getArrivePortId() {
+        return arrivePortId;
+    }
+
 
     public String getId() {
         return id;

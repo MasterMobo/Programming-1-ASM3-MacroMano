@@ -76,7 +76,7 @@ public class TripDatabase extends Database<Trip>{
 
         for (Map.Entry<String, Trip> set: data.entrySet()) {
             Trip trip = set.getValue();
-            if (trip.departPortId.equals(portId) || trip.arrivePortId.equals(portId)) {
+            if (trip.getDepartPortId().equals(portId) || trip.getArrivePortId().equals(portId)) {
                 res.add(trip);
             }
         }
@@ -102,7 +102,9 @@ public class TripDatabase extends Database<Trip>{
         Trip trip = mdb.getTrips().find(tripId);
         if (trip == null) return;
 
-        Vehicle v = mdb.getVehicles().find(trip.vehicleId);
+
+        Vehicle v = mdb.getVehicles().find(trip.getVehicleId());
+
 
         if (trip.getStatus().equals(TripStatus.FULFILLED)) {
             DisplayUtils.printErrorMessage("This trip is already fulfilled, can not update further");
@@ -119,7 +121,7 @@ public class TripDatabase extends Database<Trip>{
             if (trip.getStatus().equals(TripStatus.PROCESSING)) {
                 DisplayUtils.printSystemMessage("Trip is initiated! Vehicle is on the way");
                 trip.setStatus(TripStatus.EN_ROUTE);
-                v.portId = null;
+                v.setPortId(null);
                 v.setCurfuelCapacity(v.getFuelCapacity() - trip.getFuelConsumed());
                 mdb.save();
                 return;
@@ -128,7 +130,7 @@ public class TripDatabase extends Database<Trip>{
             if (trip.getStatus().equals(TripStatus.EN_ROUTE)) {
                 DisplayUtils.printSystemMessage("Trip is fulfilled! Vehicle has arrived at destination");
                 trip.setStatus(TripStatus.FULFILLED);
-                v.portId = trip.arrivePortId;
+                v.setPortId(trip.getArrivePortId());
                 trip.setArriveDate(LocalDate.now());
                 mdb.save();
                 return;

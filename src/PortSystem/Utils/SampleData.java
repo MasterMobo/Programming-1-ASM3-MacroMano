@@ -45,260 +45,260 @@ public class SampleData {
 
         // Create Ships:
         Ship ship1 = new Ship("Dakota-102", 5000.0, 2500.0);
-        ship1.portId = p1.getId();
+        ship1.setPortId(p1.getId());
         p1.increaseVehicleCount();
         db.getVehicles().add(ship1);
 
         Ship ship2 = new Ship("Yamato-234", 5000.0, 2500.0);
-        ship2.portId = p2.getId();
+        ship2.setPortId(p2.getId());
         p2.increaseVehicleCount();
         db.getVehicles().add(ship2);
 
         Ship ship3 = new Ship("BanaHill-781", 5500.0, 2500.0);
-        ship3.portId = p3.getId();
+        ship3.setPortId(p3.getId());
         p3.increaseVehicleCount();
         db.getVehicles().add(ship3);
 
         Ship ship4 = new Ship("AkiGun-124", 5500.0, 2500.0);
-        ship4.portId = p4.getId();
+        ship4.setPortId(p4.getId());
         p4.increaseVehicleCount();
         db.getVehicles().add(ship4);
 
         Ship ship5 = new Ship("NinhKieu-369", 5200.0, 2200.0);
-        ship5.portId = p5.getId();
+        ship5.setPortId(p5.getId());
         p5.increaseVehicleCount();
         db.getVehicles().add(ship5);
 
         //Create Trucks:
         Truck truck1 = new Truck("FuMiHung-556", 340.0, 300.0);
-        truck1.portId = p1.getId();
+        truck1.setPortId(p1.getId());
         p1.increaseVehicleCount();
         db.getVehicles().add(truck1);
 
         Truck truck2 = new Truck("OnePillar-231", 360.0, 300.0);
-        truck2.portId = p2.getId();
+        truck2.setPortId(p2.getId());
         p2.increaseVehicleCount();
         db.getVehicles().add(truck2);
 
         Truck truck3 = new Truck("CauRong-404", 340.0, 300.0);
-        truck3.portId = p3.getId();
+        truck3.setPortId(p3.getId());
         p1.increaseVehicleCount();
         db.getVehicles().add(truck3);
 
         Truck truck4 = new Truck("UnderTheSea-142", 320.0, 350.0);
-        truck4.portId = p4.getId();
+        truck4.setPortId(p4.getId());
         p4.increaseVehicleCount();
         db.getVehicles().add(truck4);
 
         Truck truck5 = new Truck("KienCuong-876", 320.0, 350.0);
-        truck5.portId = p5.getId();
+        truck5.setPortId(p5.getId());
         p5.increaseVehicleCount();
         db.getVehicles().add(truck5);
 
         //Create TankerTrucks:
         TankerTruck tt1 = new TankerTruck("Hulk-014", 1000.0, 500.0);
-        tt1.portId = p1.getId();
+        tt1.setPortId(p1.getId());
         p1.increaseVehicleCount();
         db.getVehicles().add(tt1);
 
         TankerTruck tt2 = new TankerTruck("IronMan-031", 1200.0, 600.0);
-        tt2.portId = p2.getId();
+        tt2.setPortId(p2.getId());
         p2.increaseVehicleCount();
         db.getVehicles().add(tt2);
 
         TankerTruck tt3 = new TankerTruck("CaptainAmerica-023", 1000.0, 500.0);
-        tt3.portId = p1.getId();
+        tt3.setPortId(p1.getId());
         p3.increaseVehicleCount();
         db.getVehicles().add(tt3);
 
         TankerTruck tt4 = new TankerTruck("Thor-134", 1000.0, 500.0);
-        tt4.portId = p4.getId();
+        tt4.setPortId(p4.getId());
         p4.increaseVehicleCount();
         db.getVehicles().add(tt4);
 
         TankerTruck tt5 = new TankerTruck("BlackWidow-314", 1000.0, 500.0);
-        tt5.portId = p5.getId();
+        tt5.setPortId(p5.getId());
         p5.increaseVehicleCount();
         db.getVehicles().add(tt5);
 
         //Create ReeferTrucks
         ReeferTruck rt1 = new ReeferTruck("Batman-504", 900.0, 600.0);
-        rt1.portId = p1.getId();
+        rt1.setPortId(p1.getId());
         p1.increaseVehicleCount();
         db.getVehicles().add(rt1);
 
         ReeferTruck rt2 = new ReeferTruck("Superman-321", 950.0, 650.0);
-        rt2.portId = p2.getId();
+        rt2.setPortId(p2.getId());
         p2.increaseVehicleCount();
         db.getVehicles().add(rt2);
 
         ReeferTruck rt3 = new ReeferTruck("WonderWoman-456", 850.0, 600.0);
-        rt3.portId = p3.getId();
+        rt3.setPortId(p3.getId());
         p3.increaseVehicleCount();
         db.getVehicles().add(rt3);
 
         ReeferTruck rt4 = new ReeferTruck("TheFlash-131", 850.0, 600.0);
-        rt4.portId = p4.getId();
+        rt4.setPortId(p4.getId());
         p4.increaseVehicleCount();
         db.getVehicles().add(rt4);
 
         ReeferTruck rt5 = new ReeferTruck("GreenLantern-122", 850.0, 600.0);
-        rt5.portId = p5.getId();
+        rt5.setPortId(p5.getId());
         p5.increaseVehicleCount();
         db.getVehicles().add(rt5);
 
         //Create Containers:
         // Containers loaded on vehicles
         DryStorage c1 = new DryStorage(12.4);
-        c1.vehicleId = ship1.getId();
+        c1.setVehicleId(ship1.getId());
         ship1.addWeight(c1);
         db.getContainers().add(c1);
 
         Liquid c2 = new Liquid(15.7);
-        c2.vehicleId = truck2.getId();
+        c2.setVehicleId(truck2.getId());
         truck2.addWeight(c2);
         db.getContainers().add(c2);
 
         OpenSide c3 = new OpenSide(10.2);
-        c3.vehicleId = tt3.getId();
+        c3.setVehicleId(tt3.getId());
         tt3.addWeight(c3);
         db.getContainers().add(c3);
 
         OpenTop c4 = new OpenTop(8.5);
-        c4.vehicleId = rt4.getId();
+        c4.setVehicleId(rt4.getId());
         rt4.addWeight(c4);
         db.getContainers().add(c4);
 
         Refrigerated c5 = new Refrigerated(18.9);
-        c5.vehicleId = ship5.getId();
+        c5.setVehicleId(ship5.getId());
         ship5.addWeight(c5);
         db.getContainers().add(c5);
 
         DryStorage c6 = new DryStorage(14.3);
-        c6.vehicleId = truck1.getId();
+        c6.setVehicleId(truck1.getId());
         truck1.addWeight(c6);
         db.getContainers().add(c6);
 
         Liquid c7 = new Liquid(20.0);
-        c7.vehicleId = tt4.getId();
+        c7.setVehicleId(tt4.getId());
         tt4.addWeight(c7);
         db.getContainers().add(c7);
 
         OpenSide c8 = new OpenSide(9.8);
-        c8.vehicleId = rt3.getId();
+        c8.setVehicleId(rt3.getId());
         rt3.addWeight(c8);
         db.getContainers().add(c8);
 
         OpenTop c9 = new OpenTop(7.2);
-        c9.vehicleId = ship2.getId();
+        c9.setVehicleId(ship2.getId());
         ship2.addWeight(c9);
         db.getContainers().add(c9);
 
         Refrigerated c10 = new Refrigerated(22.1);
-        c10.vehicleId = truck5.getId();
+        c10.setVehicleId(truck5.getId());
         truck5.addWeight(c10);
         db.getContainers().add(c10);
 
         // Containers on ports
         DryStorage c11 = new DryStorage(16.8);
-        c11.portId = p3.getId();
+        c11.setPortId(p3.getId());
         p3.addContainer(c11);
         db.getContainers().add(c11);
 
         Liquid c12 = new Liquid(13.6);
-        c12.portId = p1.getId();
+        c12.setPortId(p1.getId());
         p1.addContainer(c12);
         db.getContainers().add(c12);
 
         OpenSide c13 = new OpenSide(11.1);
-        c13.portId = p5.getId();
+        c13.setPortId(p5.getId());
         p5.addContainer(c13);
         db.getContainers().add(c13);
 
         OpenTop c14 = new OpenTop(9.3);
-        c14.portId = p4.getId();
+        c14.setPortId(p4.getId());
         p4.addContainer(c14);
         db.getContainers().add(c14);
 
         Refrigerated c15 = new Refrigerated(17.5);
-        c15.portId = p2.getId();
+        c15.setPortId(p2.getId());
         p2.addContainer(c15);
         db.getContainers().add(c15);
 
         DryStorage c16 = new DryStorage(14.7);
-        c16.portId = p4.getId();
+        c16.setPortId(p4.getId());
         p4.addContainer(c16);
         db.getContainers().add(c16);
 
         Liquid c17 = new Liquid(19.2);
-        c17.portId = p2.getId();
+        c17.setPortId(p2.getId());
         p2.addContainer(c17);
         db.getContainers().add(c17);
 
         OpenSide c18 = new OpenSide(8.4);
-        c18.portId = p3.getId();
+        c18.setPortId(p3.getId());
         p3.addContainer(c18);
         db.getContainers().add(c18);
 
         OpenTop c19 = new OpenTop(10.0);
-        c19.portId = p5.getId();
+        c19.setPortId(p5.getId());
         p5.addContainer(c19);
         db.getContainers().add(c19);
 
         Refrigerated c20 = new Refrigerated(21.3);
-        c20.portId = p1.getId();
+        c20.setPortId(p1.getId());
         p1.addContainer(c20);
         db.getContainers().add(c20);
 
         // Containers loaded on vehicles (continued)
         DryStorage c21 = new DryStorage(11.0);
-        c21.vehicleId = truck3.getId();
+        c21.setVehicleId(truck3.getId());
         truck3.addWeight(c21);
         db.getContainers().add(c21);
 
         Liquid c22 = new Liquid(14.8);
-        c22.vehicleId = tt2.getId();
+        c22.setVehicleId(tt2.getId());
         tt2.addWeight(c22);
         db.getContainers().add(c22);
 
         OpenSide c23 = new OpenSide(9.7);
-        c23.vehicleId = rt5.getId();
+        c23.setVehicleId(rt5.getId());
         rt5.addWeight(c23);
         db.getContainers().add(c23);
 
         OpenTop c24 = new OpenTop(8.1);
-        c24.vehicleId = ship3.getId();
+        c24.setVehicleId(ship3.getId());
         ship3.addWeight(c24);
         db.getContainers().add(c24);
 
         Refrigerated c25 = new Refrigerated(19.4);
-        c25.vehicleId = truck4.getId();
+        c25.setVehicleId(truck4.getId());
         truck4.addWeight(c25);
         db.getContainers().add(c25);
 
 // Containers on ports (continued)
         DryStorage c26 = new DryStorage(15.2);
-        c26.portId = p1.getId();
+        c26.setPortId(p1.getId());
         p1.addContainer(c26);
         db.getContainers().add(c26);
 
         Liquid c27 = new Liquid(18.0);
-        c27.portId = p3.getId();
+        c27.setPortId(p3.getId());
         p3.addContainer(c27);
         db.getContainers().add(c27);
 
         OpenSide c28 = new OpenSide(10.5);
-        c28.portId = p5.getId();
+        c28.setPortId(p5.getId());
         p5.addContainer(c28);
         db.getContainers().add(c28);
 
         OpenTop c29 = new OpenTop(7.8);
-        c29.portId = p2.getId();
+        c29.setPortId(p2.getId());
         p2.addContainer(c29);
         db.getContainers().add(c29);
 
         Refrigerated c30 = new Refrigerated(20.7);
-        c30.portId = p4.getId();
+        c30.setPortId(p4.getId());
         p4.addContainer(c30);
         db.getContainers().add(c30);
 

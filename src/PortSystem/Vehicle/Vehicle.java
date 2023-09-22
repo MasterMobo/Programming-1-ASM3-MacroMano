@@ -11,7 +11,7 @@ public class Vehicle implements DatabaseRecord, Serializable {
     private String name;
     private String id;
     protected String type;
-    public String portId;
+    private String portId;
     private double carryCapacity;
     private double curCarryWeight;
     private double fuelCapacity;
@@ -48,6 +48,14 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     public double getFuelCapacity() {
         return fuelCapacity;
+    }
+
+    public String getPortId() {
+        return portId;
+    }
+
+    public void setPortId(String portId) {
+        this.portId = portId;
     }
 
     public void setCarryCapacity(double carryCapacity) {

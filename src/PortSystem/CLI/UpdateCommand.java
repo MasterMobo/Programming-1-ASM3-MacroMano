@@ -37,7 +37,7 @@ public class UpdateCommand extends Command{
                 Container container = db.getContainers().find(id);
                 if (container == null) return;
 
-                if (cli.user instanceof PortManager && !Objects.equals(container.portId, ((PortManager) cli.user).getPortID())) {
+                if (cli.user instanceof PortManager && !Objects.equals(container.getPortId(), ((PortManager) cli.user).getPortID())) {
                     DisplayUtils.printErrorMessage("You do not have permission to this container");
                     return;
                 }
