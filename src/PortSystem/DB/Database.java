@@ -16,7 +16,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
     // IMPORTANT: Objects to be stored in the database MUST implement the DatabaseRecord interface
 
     private final String ID_HEADER; // The first character(s) of the id
-    protected static final int KEY_LENGTH = 6;  // Length of the random generated key (excluding the ID_HEADER and separator)
+    private static final int KEY_LENGTH = 6;  // Length of the random generated key (excluding the ID_HEADER and separator)
     protected HashMap<String, T> data; // This is where the records are stored. The HashMap maps the id to the object reference.
     protected MasterDatabase mdb;
 
