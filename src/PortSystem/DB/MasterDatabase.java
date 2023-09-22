@@ -3,6 +3,7 @@ package PortSystem.DB;
 import PortSystem.Trip.Trip;
 import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DateUtils;
+import PortSystem.Utils.SampleData;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class MasterDatabase implements Serializable {
     public static MasterDatabase initDB() {
         if (!FileStorage.fileExists()) {
             // TODO records can only be kept for 7 days, should sample data consider this?
-            MasterDatabase db = DBUtils.createSampleDatabase();
+            MasterDatabase db = SampleData.createSampleDatabase();
             FileStorage.write(db);
             return db;
         }
