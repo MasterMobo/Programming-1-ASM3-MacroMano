@@ -18,22 +18,22 @@ public class ListContainerFromVehicleCommand extends Command{
         String vehicleId = args[1];
         switch (type) {
             case "all":
-                DisplayUtils.printArray(db.containers.fromVehicle(vehicleId));
+                DisplayUtils.printArray(db.getContainers().fromVehicle(vehicleId));
                 break;
             case "liquid":
-                DisplayUtils.printArray(db.containers.fromVehicle(vehicleId, "Liquid"));
+                DisplayUtils.printArray(db.getContainers().fromVehicle(vehicleId, "Liquid"));
                 break;
             case "dry":
-                DisplayUtils.printArray(db.containers.fromVehicle(vehicleId, "Dry Storage"));
+                DisplayUtils.printArray(db.getContainers().fromVehicle(vehicleId, "Dry Storage"));
                 break;
             case "openside":
-                DisplayUtils.printArray(db.containers.fromVehicle(vehicleId, "Open Side"));
+                DisplayUtils.printArray(db.getContainers().fromVehicle(vehicleId, "Open Side"));
                 break;
             case "opentop":
-                DisplayUtils.printArray(db.containers.fromVehicle(vehicleId, "Open Top"));
+                DisplayUtils.printArray(db.getContainers().fromVehicle(vehicleId, "Open Top"));
                 break;
             case "refridg":
-                DisplayUtils.printArray(db.containers.fromVehicle(vehicleId,"Refrigerated"));
+                DisplayUtils.printArray(db.getContainers().fromVehicle(vehicleId,"Refrigerated"));
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("all, liquid, dry, openside, opentop, refridg");

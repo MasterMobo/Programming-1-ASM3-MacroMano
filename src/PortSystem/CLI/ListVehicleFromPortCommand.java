@@ -20,13 +20,13 @@ public class ListVehicleFromPortCommand extends Command{
 
         switch (type) {
             case "all":
-                DisplayUtils.printArray(db.vehicles.fromPort(portId));
+                DisplayUtils.printArray(db.getVehicles().fromPort(portId));
                 break;
             case "truck":
-                DisplayUtils.printArray(db.vehicles.trucksFromPort(portId));
+                DisplayUtils.printArray(db.getVehicles().trucksFromPort(portId));
                 break;
             case "ship":
-                DisplayUtils.printArray(db.vehicles.shipsFromPort(portId));
+                DisplayUtils.printArray(db.getVehicles().shipsFromPort(portId));
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("all, truck, ship");

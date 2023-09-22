@@ -22,16 +22,16 @@ public class FindCommand extends Command{
         String id = args[1];
         switch (type) {
             case "port":
-                System.out.println(db.ports.find(id));
+                System.out.println(db.getPorts().find(id));
                 break;
             case "vehicle":
-                System.out.println(db.vehicles.find(id));
+                System.out.println(db.getVehicles().find(id));
                 break;
             case "container":
-                System.out.println(db.containers.find(id));
+                System.out.println(db.getContainers().find(id));
                 break;
             case  "trip":
-                System.out.println(db.trips.find(id));
+                System.out.println(db.getTrips().find(id));
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("port, vehicle, container, trip");

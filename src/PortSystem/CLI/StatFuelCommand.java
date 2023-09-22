@@ -13,7 +13,7 @@ public class StatFuelCommand extends Command{
 
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        double fuelConsumed = db.trips.fuelConsumed(args[0]);
+        double fuelConsumed = db.getTrips().fuelConsumed(args[0]);
         if (fuelConsumed < 0 ) return;
         System.out.println("Total fuel consumed on " + args[0] + ": " + fuelConsumed + "(gallons)");
     }

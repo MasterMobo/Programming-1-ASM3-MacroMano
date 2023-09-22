@@ -27,13 +27,13 @@ public class DeleteCommand extends Command{
 
         switch (type) {
             case "port":
-                if (db.ports.delete(id) == null) return;
+                if (db.getPorts().delete(id) == null) return;
                 break;
             case "vehicle":
-                if (db.vehicles.delete(id) == null) return;
+                if (db.getVehicles().delete(id) == null) return;
                 break;
             case "container":
-                Container container = db.containers.find(id);
+                Container container = db.getContainers().find(id);
                 if (container == null) return;
 
                 if (cli.user instanceof PortManager && !container.portId.equals(((PortManager) cli.user).getPortID())) {
@@ -41,13 +41,13 @@ public class DeleteCommand extends Command{
                     return;
                 }
 
-                db.containers.delete(id);
+                db.getContainers().delete(id);
                 break;
             case "manager":
-                if (db.users.deleteManager(id) == null) return;
+                if (db.getUsers().deleteManager(id) == null) return;
                 break;
             case "trip":
-                if (db.trips.delete(id) == null) return;
+                if (db.getTrips().delete(id) == null) return;
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("port, vehicle, container, trip");

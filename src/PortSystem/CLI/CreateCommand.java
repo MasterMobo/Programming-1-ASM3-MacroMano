@@ -27,11 +27,11 @@ public class CreateCommand extends Command{
         switch (args[0]) {
             case "port":
                 Port port = Port.createPort();
-                if (db.ports.createRecord(port) == null) return;
+                if (db.getPorts().createRecord(port) == null) return;
                 break;
             case "vehicle":
                 Vehicle vehicle = Vehicle.createVehicle();
-                if (db.vehicles.createRecord(vehicle) == null) return;
+                if (db.getVehicles().createRecord(vehicle) == null) return;
                 break;
             case "container":
                 String portId = null;
@@ -40,7 +40,7 @@ public class CreateCommand extends Command{
                 }
 
                 Container container = Container.createContainer();
-                if (db.containers.createRecord(container, portId) == null) return;
+                if (db.getContainers().createRecord(container, portId) == null) return;
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("port, vehicle, container");

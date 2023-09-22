@@ -22,13 +22,13 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
     private boolean portExists(String portId) {
-        return mdb.ports.exists(portId);
+        return mdb.getPorts().exists(portId);
     }
     private boolean vehicleExists(String vehicleId) {
-        return mdb.vehicles.exists(vehicleId);
+        return mdb.getVehicles().exists(vehicleId);
     }
     private boolean tripExists(String tripId) {
-        return mdb.trips.exists(tripId);
+        return mdb.getTrips().exists(tripId);
     }
 
     public ArrayList<Vehicle> fromPort(String portID) {
@@ -77,22 +77,22 @@ public class VehicleDatabase extends Database<Vehicle> {
 
 
     public double getTotalConsumption(Vehicle vehicle, Port currentPort, Port nextPort) {
-        ArrayList<Container> loadedContainers = mdb.containers.fromVehicle(vehicle.getId());
+        ArrayList<Container> loadedContainers = mdb.getContainers().fromVehicle(vehicle.getId());
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
     public void startMove(String vehicleId, String nextPortId, String departDateString) {
-        Vehicle v = mdb.vehicles.find(vehicleId);
+        Vehicle v = mdb.getVehicles().find(vehicleId);
         if (v  == null) return;
 
         if (v.portId == null) {
             DisplayUtils.printErrorMessage("Vehicle is already on a trip");
         }
 
-        Port vCurrentPort = mdb.ports.find(v.portId);
+        Port vCurrentPort = mdb.getPorts().find(v.portId);
         if (vCurrentPort == null) return;
 
-        Port nextPort = mdb.ports.find(nextPortId);
+        Port nextPort = mdb.getPorts().find(nextPortId);
         if (nextPort == null) return;
 
         LocalDate departDate = DateUtils.toLocalDate(departDateString);
@@ -122,7 +122,7 @@ public class VehicleDatabase extends Database<Vehicle> {
 
         if (prompt.equals("y")) {
             Trip trip = new Trip(vehicleId, v.portId, nextPortId, departDate, null, vCurrentPort.getDist(nextPort), totalConsumption, TripStatus.PROCESSING);
-            mdb.trips.add(trip);
+            mdb.getTrips().add(trip);
             DisplayUtils.printSystemMessage("Added new trip: " + trip);
             return;
         }
@@ -133,7 +133,7 @@ public class VehicleDatabase extends Database<Vehicle> {
 
 
     public void refuelVehicle(String vehicleId, String userPortId) {
-        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
         if (vehicle == null) return;
 
         if (userPortId != null && !Objects.equals(vehicle.portId, userPortId)) {
@@ -157,7 +157,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter port ID: ");
-        Port p = mdb.ports.find(scanner.nextLine().trim());
+        Port p = mdb.getPorts().find(scanner.nextLine().trim());
         if (p == null) return null;
 
         vehicle.portId = p.getId();
@@ -182,7 +182,7 @@ public class VehicleDatabase extends Database<Vehicle> {
 
         vehicle.setFuelCapacity(getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
 
-        vehicle.portId = getInputId("Port ID: ", vehicle.portId, scanner, mdb.ports);
+        vehicle.portId = getInputId("Port ID: ", vehicle.portId, scanner, mdb.getPorts());
 
         vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
         mdb.save();
@@ -195,8 +195,8 @@ public class VehicleDatabase extends Database<Vehicle> {
         Vehicle deletedVehicle = super.delete(id);
         if (deletedVehicle == null) return null;
 
-        if (mdb.ports.exists(deletedVehicle.portId)) {
-            mdb.ports.find(deletedVehicle.portId).decreaseVehicleCount();
+        if (mdb.getPorts().exists(deletedVehicle.portId)) {
+            mdb.getPorts().find(deletedVehicle.portId).decreaseVehicleCount();
         }
 
         return deletedVehicle;

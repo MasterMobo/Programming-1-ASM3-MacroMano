@@ -74,7 +74,7 @@ public class UserDatabase extends Database<User>{
         System.out.print("Enter Username: ");
         String username = scanner.nextLine().trim();
 
-        if (mdb.users.exists(username)) {
+        if (mdb.getUsers().exists(username)) {
             DisplayUtils.printErrorMessage("Username already exists");
             return null;
         }
@@ -99,11 +99,11 @@ public class UserDatabase extends Database<User>{
             newUser =  new SystemAdmin(username, password);
         } else if (role.equals("manager")) {
             DisplayUtils.printSystemMessage("Available Ports:");
-            mdb.ports.printAllPorts();
+            mdb.getPorts().printAllPorts();
 
             System.out.print("Enter port ID: ");
             String portID = scanner.nextLine().trim();
-            if (mdb.ports.find(portID) == null) return null;
+            if (mdb.getPorts().find(portID) == null) return null;
 
             newUser = new PortManager(username, password, portID);
         }

@@ -16,6 +16,6 @@ public class UpdateTripStatus extends Command{
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         String tripId = args[0];
-        db.trips.updateTripStatus(tripId);
+        db.getTrips().updateTripStatus(tripId);
     }
 }

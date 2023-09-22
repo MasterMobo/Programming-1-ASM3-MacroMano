@@ -16,11 +16,11 @@ public class MasterDatabase implements Serializable {
 
     private static final int RECORD_LIFETIME = 7;
 
-    public PortDatabase ports;
-    public UserDatabase users;
-    public TripDatabase trips;
-    public ContainerDatabase containers;
-    public VehicleDatabase vehicles;
+    private PortDatabase ports;
+    private UserDatabase users;
+    private TripDatabase trips;
+    private ContainerDatabase containers;
+    private VehicleDatabase vehicles;
 
     public MasterDatabase() {
         ports = new PortDatabase(this);
@@ -62,5 +62,25 @@ public class MasterDatabase implements Serializable {
         for (String id: deleteIds) {
             trips.delete(id);
         }
+    }
+
+    public PortDatabase getPorts() {
+        return ports;
+    }
+
+    public UserDatabase getUsers() {
+        return users;
+    }
+
+    public TripDatabase getTrips() {
+        return trips;
+    }
+
+    public ContainerDatabase getContainers() {
+        return containers;
+    }
+
+    public VehicleDatabase getVehicles() {
+        return vehicles;
     }
 }

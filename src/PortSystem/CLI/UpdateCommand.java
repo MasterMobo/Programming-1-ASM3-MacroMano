@@ -28,13 +28,13 @@ public class UpdateCommand extends Command{
 
         switch (type) {
             case "port":
-                if (db.ports.updateRecord(id) == null) return;
+                if (db.getPorts().updateRecord(id) == null) return;
                 break;
             case "vehicle":
-                if (db.vehicles.updateRecord(id) == null) return;
+                if (db.getVehicles().updateRecord(id) == null) return;
                 break;
             case "container":
-                Container container = db.containers.find(id);
+                Container container = db.getContainers().find(id);
                 if (container == null) return;
 
                 if (cli.user instanceof PortManager && !Objects.equals(container.portId, ((PortManager) cli.user).getPortID())) {
@@ -42,7 +42,7 @@ public class UpdateCommand extends Command{
                     return;
                 }
 
-                if (db.containers.updateRecord(id) == null) return;
+                if (db.getContainers().updateRecord(id) == null) return;
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("port, vehicle, container");

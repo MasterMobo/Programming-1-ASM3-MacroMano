@@ -16,6 +16,6 @@ public class StartVehicleMove extends Command{
         String vId = args[0];
         String pId = args[1];
         String departDate = args[2];
-        db.vehicles.startMove(vId, pId, departDate);
+        db.getVehicles().startMove(vId, pId, departDate);
     }
 }

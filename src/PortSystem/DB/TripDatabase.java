@@ -22,7 +22,7 @@ public class TripDatabase extends Database<Trip>{
         super(mdb, "t");
     }
     private boolean tripExists(String tripId) {
-        return mdb.trips.find(tripId) != null;
+        return mdb.getTrips().find(tripId) != null;
     }
 
     public ArrayList<Trip> tripsOn(String dateString) {
@@ -69,7 +69,7 @@ public class TripDatabase extends Database<Trip>{
     }
 
     public ArrayList<Trip> fromPort(String portId) {
-        Port port = mdb.ports.find(portId);
+        Port port = mdb.getPorts().find(portId);
         if (port == null) return null;
 
         ArrayList<Trip> res = new ArrayList<>();
@@ -99,10 +99,10 @@ public class TripDatabase extends Database<Trip>{
     }
 
     public void updateTripStatus(String tripId) {
-        Trip trip = mdb.trips.find(tripId);
+        Trip trip = mdb.getTrips().find(tripId);
         if (trip == null) return;
 
-        Vehicle v = mdb.vehicles.find(trip.vehicleId);
+        Vehicle v = mdb.getVehicles().find(trip.vehicleId);
 
         if (trip.getStatus().equals(TripStatus.FULFILLED)) {
             DisplayUtils.printErrorMessage("This trip is already fulfilled, can not update further");

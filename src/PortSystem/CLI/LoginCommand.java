@@ -16,7 +16,7 @@ public class LoginCommand extends Command{
 
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        User user =  db.users.login();
+        User user =  db.getUsers().login();
         if (user == null) {
             DisplayUtils.printErrorMessage("Login Failed");
             return;

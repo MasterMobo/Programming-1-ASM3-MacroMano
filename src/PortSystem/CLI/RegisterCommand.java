@@ -16,7 +16,7 @@ public class RegisterCommand extends Command{
 
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        User user = db.users.register();
+        User user = db.getUsers().register();
         if (user == null) return;
         cli.user = user;       // Set current user
         DisplayUtils.printSystemMessage("Successfully created new Account!");
