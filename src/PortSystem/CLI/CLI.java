@@ -4,10 +4,8 @@ import PortSystem.DB.MasterDatabase;
 import PortSystem.Exceptions.CommandNotFoundException;
 import PortSystem.User.User;
 import PortSystem.Utils.ConsoleColors;
-import PortSystem.Utils.DisplayUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -38,7 +36,7 @@ public class CLI {
         commandMap.put("find", this::findObject);
         commandMap.put("statfuel", this::statFuel);
         commandMap.put("statcon", this::statContainer);
-        commandMap.put("svm", this::startVehicleMove);
+        commandMap.put("vnt", this::vehicleNewTrip);
         commandMap.put("uts", this::updateTripStatus);
         commandMap.put("refuel", this::refuel);
         // Add more commands as needed
@@ -123,9 +121,9 @@ public class CLI {
         new UnloadContainerCommand().process(args, db, this);
     }
 
-    public void startVehicleMove(String[] args) {
+    public void vehicleNewTrip(String[] args) {
         if (!isLoggedIn()) return;
-        new StartVehicleMove().process(args, db, this);
+        new VehicleNewTrip().process(args, db, this);
     }
     public void showUserInfo(String[] args) {
         if (!isLoggedIn()) return;
@@ -200,7 +198,7 @@ public class CLI {
             + new UpdateCommand().getInfo() + "\n"
             + new LoadContainerCommand().getInfo() + "\n"
             + new UnloadContainerCommand().getInfo() + "\n"
-            + new StartVehicleMove().getInfo() + "\n"
+            + new VehicleNewTrip().getInfo() + "\n"
             + new UpdateTripStatus().getInfo()
             + new RefuelCommand().getInfo() + "\n"
             + new StatContainerCommand().getInfo() + "\n"

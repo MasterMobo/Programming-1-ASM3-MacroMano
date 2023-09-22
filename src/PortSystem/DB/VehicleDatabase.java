@@ -81,12 +81,21 @@ public class VehicleDatabase extends Database<Vehicle> {
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
-    public void startMove(String vehicleId, String nextPortId, String departDateString) {
+
+    public void newTrip(String vehicleId, String nextPortId, String departDateString) {
         Vehicle v = mdb.getVehicles().find(vehicleId);
         if (v  == null) return;
 
-        if (v.getPortId() == null) {
-            DisplayUtils.printErrorMessage("Vehicle is already on a trip");
+        if (v.getPortId () == nextPortId) {
+            System.out.println("This vehicle is already in this port");
+            return;
+        }
+
+        for (Trip trip: mdb.getTrips().fromVehicle(vehicleId)) {
+            if (trip.getStatus() == TripStatus.EN_ROUTE || trip.getStatus() == TripStatus.PROCESSING) {
+                DisplayUtils.printErrorMessage("This vehicle is currently on a trip. Unable to receive a new trip");
+                return;
+            }
         }
 
 
@@ -100,10 +109,14 @@ public class VehicleDatabase extends Database<Vehicle> {
         LocalDate departDate = DateUtils.toLocalDate(departDateString);
         if (departDate == null) return;
 
+        if ((!vCurrentPort.isLanding() || !nextPort.isLanding()) && v instanceof Truck) {
+            DisplayUtils.printErrorMessage("The ports are currently unavailable for trucks");
+            return;
+        }
+
+
+
         // TODO also need these conditions for moving:
-        //  1. Only the ports that are marked “landing” can utilize trucks for carrying.
-        //  2. Check if vehicle is already on a different trip (is any trip associated with this vehicle still PROCESSING or EN_ROUTE?)
-        //  3. Is vehicle already in the nextPort?
         //  also, can you pls put all the move conditions into one function instead of putting them here? (its really hard to read)
 
         double totalConsumption = getTotalConsumption(v, vCurrentPort, nextPort);
@@ -130,9 +143,7 @@ public class VehicleDatabase extends Database<Vehicle> {
             DisplayUtils.printSystemMessage("Added new trip: " + trip);
             return;
         }
-
-        // TODO maybe throw exception if input is wrong?
-//        throw new Exception("Invalid input, Expecting 'y' or 'n");
+        DisplayUtils.printErrorMessage("Invalid input, Expecting 'y' or 'n\'");
     }
 
 

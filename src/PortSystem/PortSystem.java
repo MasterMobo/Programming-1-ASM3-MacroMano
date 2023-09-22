@@ -39,6 +39,9 @@ public class PortSystem {
             catch (CommandNotFoundException e) {
                 DisplayUtils.printErrorMessage(e.getMessage());
             }
+            catch (NumberFormatException e) {
+                DisplayUtils.printErrorMessage("Invalid Input");
+            }
             catch (Exception e) {
                 e.printStackTrace();
             }

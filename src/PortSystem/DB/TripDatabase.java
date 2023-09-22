@@ -85,6 +85,22 @@ public class TripDatabase extends Database<Trip>{
 
     }
 
+    public ArrayList<Trip> fromVehicle(String vehicleId) {
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
+        if (vehicle == null) return null;
+        ArrayList<Trip> res = new ArrayList<>();
+
+        for (Map.Entry<String, Trip> set: data.entrySet()) {
+            Trip trip = set.getValue();
+            if (trip.getVehicleId().equals(vehicleId)) {
+                res.add(trip);
+            }
+        }
+
+        return res;
+
+    }
+
     public double fuelConsumed(String dayString) {
         double res = 0;
 

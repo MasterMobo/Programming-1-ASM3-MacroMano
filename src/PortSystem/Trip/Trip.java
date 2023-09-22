@@ -7,7 +7,7 @@ import PortSystem.DB.DatabaseRecord;
 import PortSystem.Port.Port;
 import PortSystem.Vehicle.Vehicle;
 
-public class    Trip implements DatabaseRecord, Serializable {
+public class Trip implements DatabaseRecord, Serializable {
     private String id;
     private String vehicleId;
     private String departPortId;
@@ -29,6 +29,7 @@ public class    Trip implements DatabaseRecord, Serializable {
         this.fuelConsumed = fuelConsumed;
         this.status = status;
     }
+
 
     public LocalDate getArriveDate() {
         return arriveDate;

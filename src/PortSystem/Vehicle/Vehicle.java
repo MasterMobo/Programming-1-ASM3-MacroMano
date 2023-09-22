@@ -17,7 +17,6 @@ public class Vehicle implements DatabaseRecord, Serializable {
     private double fuelCapacity;
     private double curfuelCapacity = fuelCapacity;
     protected String[] allowedContainers;
-    private double curFuelConsumption = 0.0;
 
     public Vehicle(String name, double carryCapacity, double fuelCapacity) {
         this.name = name;
@@ -163,17 +162,16 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", portId='" + portId + '\'' +
-                ", carryCapacity=" + carryCapacity +
+        return "Vehicle {" +
+                "\n         name='" + name + '\'' +
+                ", \n         id='" + id + '\'' +
+                ", \n         type='" + type + '\'' +
+                ", \n         portId='" + portId + '\'' +
+                ", \n         carryCapacity=" + carryCapacity +
                 ", curCarryWeight=" + curCarryWeight +
                 ", fuelCapacity=" + fuelCapacity +
                 ", curfuelCapacity=" + curfuelCapacity +
-                ", allowedContainers=" + Arrays.toString(allowedContainers) +
-                ", curFuelConsumption=" + curFuelConsumption +
-                '}';
+                ", \n         allowedContainers=" + Arrays.toString(allowedContainers) +
+                "\n         }";
     }
 }
