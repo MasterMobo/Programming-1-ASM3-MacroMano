@@ -36,9 +36,12 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
         return name;
     }
 
+    @Override
     public String getId() {
         return id;
     }
+
+    @Override
     public void setId(String id) {this.id = id;}
 
     public double getLat() {

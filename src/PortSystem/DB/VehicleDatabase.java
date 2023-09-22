@@ -189,15 +189,15 @@ public class VehicleDatabase extends Database<Vehicle> {
 
         Scanner scanner = new Scanner(System.in);
 
-        vehicle.setName(getInputString("Name: ", vehicle.getName(), scanner));
+        vehicle.setName(DBUtils.getInputString("Name: ", vehicle.getName(), scanner));
 
-        vehicle.setCarryCapacity(getInputDouble("Carry Weight Capacity: ", vehicle.getCarryCapacity(), scanner));
+        vehicle.setCarryCapacity(DBUtils.getInputDouble("Carry Weight Capacity: ", vehicle.getCarryCapacity(), scanner));
 
-        vehicle.setCurCarryWeight(getInputDouble("Current Carry Weight: ", vehicle.getCurCarryWeight(), scanner));
+        vehicle.setCurCarryWeight(DBUtils.getInputDouble("Current Carry Weight: ", vehicle.getCurCarryWeight(), scanner));
 
-        vehicle.setFuelCapacity(getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
+        vehicle.setFuelCapacity(DBUtils.getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
 
-        vehicle.setPortId(getInputId("Port ID: ", vehicle.getPortId(), scanner, mdb.getPorts()));
+        vehicle.setPortId(DBUtils.getInputId("Port ID: ", vehicle.getPortId(), scanner, mdb.getPorts()));
 
 
         vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());

@@ -4,6 +4,7 @@ import PortSystem.CLI.CLI;
 import PortSystem.Containers.*;
 import PortSystem.Port.Port;
 import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.*;
 
@@ -315,16 +316,16 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         if (container == null) return null;
 
         Scanner scanner = new Scanner(System.in);
-        container.setWeight(getInputDouble("Weight: ", container.getWeight(), scanner));
+        container.setWeight(DBUtils.getInputDouble("Weight: ", container.getWeight(), scanner));
 
-        container.setShipFuelConsumption(getInputDouble("Ship Fuel Consumption: ", container.getShipFuelConsumption(), scanner));
+        container.setShipFuelConsumption(DBUtils.getInputDouble("Ship Fuel Consumption: ", container.getShipFuelConsumption(), scanner));
 
-        container.setTruckFuelConsumption(getInputDouble("Truck Fuel Consumption: ", container.getTruckFuelConsumption(), scanner));
+        container.setTruckFuelConsumption(DBUtils.getInputDouble("Truck Fuel Consumption: ", container.getTruckFuelConsumption(), scanner));
 
 
-        container.setPortId(getInputId("Port ID: ", container.getPortId(), scanner, mdb.getPorts()));
+        container.setPortId(DBUtils.getInputId("Port ID: ", container.getPortId(), scanner, mdb.getPorts()));
 
-        container.setVehicleId(getInputId("Vehicle ID: ", container.getVehicleId(), scanner, mdb.getVehicles()));
+        container.setVehicleId(DBUtils.getInputId("Vehicle ID: ", container.getVehicleId(), scanner, mdb.getVehicles()));
 
 
         DisplayUtils.printSystemMessage("Updated record: " + container);

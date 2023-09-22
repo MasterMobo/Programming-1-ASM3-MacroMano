@@ -109,30 +109,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         return record;
     }
 
-    protected String getInputString(String prompt, String currentVal, Scanner scanner) {
-        System.out.print(prompt);
-        String input = scanner.nextLine().trim();
-        return input.equals(".") ? currentVal : input;
-    }
 
-    protected String getInputId(String prompt, String currentId, Scanner scanner, Database db) {
-        System.out.print(prompt);
-        String input = scanner.nextLine().trim();
-        if (input.equals(".")) return currentId;
-
-        if (input.equals("null")) return null;
-
-        Object record = db.find(input);
-        if (record == null) return currentId;
-
-        return input;
-    }
-
-    protected double getInputDouble(String prompt, double currentVal, Scanner scanner) {
-        System.out.print(prompt);
-        String input = scanner.nextLine().trim();
-        return input.equals(".") ? currentVal : Double.parseDouble(input);
-    }
 
     public void display() {
         data.forEach((key, val) -> {
