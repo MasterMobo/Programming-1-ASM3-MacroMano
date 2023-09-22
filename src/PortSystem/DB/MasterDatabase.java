@@ -32,15 +32,13 @@ public class MasterDatabase implements Serializable {
 
     public static MasterDatabase initDB() {
         if (!FileStorage.fileExists()) {
-            // TODO records can only be kept for 7 days, should sample data consider this?
             MasterDatabase db = SampleData.createSampleDatabase();
             FileStorage.write(db);
             return db;
         }
 
         MasterDatabase db = FileStorage.read();
-        // TODO will comment out for now, put it back in when shipped
-//        db.refresh();
+        db.refresh();
         return db;
     }
 

@@ -158,8 +158,7 @@ public class TripDatabase extends Database<Trip>{
             return;
         }
 
-        // TODO maybe throw exception if input is wrong?
-//        throw new Exception("Invalid input, Expecting 'y' or 'n");
+        DisplayUtils.printErrorMessage("Invalid input, Expecting 'y' or 'n\'");
     }
 
 // TODO do you even need this? just use find()
