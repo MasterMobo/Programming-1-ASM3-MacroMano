@@ -11,7 +11,6 @@ A Port Management System by Nacromano
 - [Usage](#usage)
 - [Features](#features)
 - [Contributors](#contributors)
-- [License](#license)
 
 ## About
 
