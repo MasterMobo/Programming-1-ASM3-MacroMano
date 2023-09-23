@@ -15,6 +15,7 @@ public class CreateCommand extends Command{
         desc = "Create record of given type";
         usage = "crt <type>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override

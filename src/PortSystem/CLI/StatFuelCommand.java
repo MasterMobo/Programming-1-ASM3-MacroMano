@@ -9,6 +9,7 @@ public class StatFuelCommand extends Command{
         desc = "Calculate total fuel consumed for given day. Expecting dd/mm/yyy format";
         usage = "statfuel <day>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override

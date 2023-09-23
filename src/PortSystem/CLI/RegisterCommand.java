@@ -12,6 +12,23 @@ public class RegisterCommand extends Command{
         desc = "Register new user";
         usage = "register";
         arguments = 0;
+        loginRequired = false;
+    }
+
+    @Override
+    public void process(String[] args, MasterDatabase db, CLI cli) {
+        if (cli.isLoggedIn()) {
+            DisplayUtils.printErrorMessage("You are currently logged in. Please logout first");
+            return;
+        }
+
+        if (!validArguments(args)) {
+            DisplayUtils.printErrorMessage("Expected " + arguments + " argument(s), but received " + args.length);
+            DisplayUtils.printErrorMessage("Usage: " + usage);
+            return;
+        }
+
+        execute(args, db, cli);
     }
 
     @Override

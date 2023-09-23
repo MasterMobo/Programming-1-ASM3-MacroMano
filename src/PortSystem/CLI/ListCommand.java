@@ -12,6 +12,7 @@ public class ListCommand extends Command{
         desc = "List all the record of given type";
         usage = "ls <type>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override

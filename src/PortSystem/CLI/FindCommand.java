@@ -14,6 +14,7 @@ public class FindCommand extends Command{
         desc = "Find and show the information of an object";
         usage = "find <type> <id>";
         arguments = 2;
+        loginRequired = true;
     }
 
     @Override

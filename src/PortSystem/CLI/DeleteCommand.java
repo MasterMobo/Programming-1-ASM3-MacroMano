@@ -14,6 +14,7 @@ public class DeleteCommand extends Command{
         desc = "Delete record of given type and id";
         usage = "del <type> <id>";
         arguments = 2;
+        loginRequired = true;
     }
 
     @Override

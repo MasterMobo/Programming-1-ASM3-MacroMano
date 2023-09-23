@@ -10,6 +10,7 @@ public class ListTripsOnDaysCommand extends Command{
         desc = "List all trips from one day to another. Expecting dd/MM/yyyy format. Type '.' for <toDay> to gets trips on <fromDay> only ";
         usage = "lstd <fromDay> <toDay>";
         arguments = 2;
+        loginRequired = true;
     }
 
     @Override

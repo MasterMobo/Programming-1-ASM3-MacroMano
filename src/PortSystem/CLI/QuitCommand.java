@@ -9,6 +9,7 @@ public class QuitCommand extends Command{
         desc = "Quit program";
         usage = "!q";
         arguments = 0;
+        loginRequired = true;
     }
 
     @Override

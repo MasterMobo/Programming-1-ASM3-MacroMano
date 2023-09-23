@@ -12,6 +12,7 @@ public class UnloadContainerCommand extends Command {
         desc = "Unload containers onto a vehicle";
         usage = "unload <vehicleID>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override

@@ -11,6 +11,7 @@ public class UpdateTripStatus extends Command{
         desc = "Update Trip Status";
         usage = "uts <tripId>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override

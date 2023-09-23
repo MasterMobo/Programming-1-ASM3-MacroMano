@@ -9,6 +9,7 @@ public class StatContainerCommand extends Command{
         desc = "Calculate container weight by type. Type 'all' for <portId> to search through all ports";
         usage = "statcon <portId>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override
