@@ -19,7 +19,7 @@ public class ShowUserInfoCommand extends Command{
 
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        db.getUsers().showInfo(cli.user);
+        db.getUsers().showUserInfo(cli.user);
     }
 }
 

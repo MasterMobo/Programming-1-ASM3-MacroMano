@@ -28,7 +28,12 @@ public class UserDatabase extends Database<User>{
         return user;
     }
 
-    public void showInfo(User user) {
+    @Override
+    public String showInfo(String id) {
+        return null;
+    }
+
+    public void showUserInfo(User user) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();

@@ -165,12 +165,12 @@ public class TripDatabase extends Database<Trip>{
     public String showInfo(String tripID) {
         Trip foundTrip = find(tripID);
         return "Trip{" +
-                "\n     id='" + foundTrip.getId() + '\'' + ", " +
-                "\n     vehicleId='" + foundTrip.getVehicleId() + '\'' + ", " +
-                "\n     departPortId='" + foundTrip.getDepartPortId() + '\'' + ", arrivePortId='" + foundTrip.getArrivePortId() + '\'' + ", " +
-                "\n     departDate=" + foundTrip.getDepartDate() + ", arriveDate=" + foundTrip.getArriveDate() + ", " +
-                "\n     length=" + foundTrip.getLength() + ", fuelConsumed=" + foundTrip.getFuelConsumed() + ", " +
-                "\n     status=" + foundTrip.getStatus() +
+                "\n     ID: " + foundTrip.getId() + ", " +
+                "\n     Vehicle ID: " + foundTrip.getVehicleId()  + ", " +
+                "\n     Depart Port ID: " + foundTrip.getDepartPortId() + ", Arrive Port ID: " + foundTrip.getArrivePortId() + ", " +
+                "\n     Depart Date: " + foundTrip.getDepartDate() + ", Arrive Date: " + foundTrip.getArriveDate() + ", " +
+                "\n     Distance: " + foundTrip.getLength() + ", Fuel Consumed: " + foundTrip.getFuelConsumed() + ", " +
+                "\n     Status: " + foundTrip.getStatus() +
                 "\n     }";
     }
 

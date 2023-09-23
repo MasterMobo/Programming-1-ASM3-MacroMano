@@ -21,12 +21,12 @@ public class PortDatabase extends Database<Port> {
     public String showInfo(String portID) {
         Port foundPort = find(portID);
         return "Port{" +
-                "\n     name='" + foundPort.getName() + '\'' + ", " +
-                "\n     id='" + foundPort.getId() + '\'' + ", " +
-                "\n     latitude=" + foundPort.getLat() + ", longitude=" + foundPort.getLon() + ", " +
-                "\n     capacity=" + foundPort.getCapacity() + ", currentWeight=" + foundPort.getCurrentWeight() + ", " +
-                "\n     isLanding=" + foundPort.isLanding() + ", " +
-                "\n     containerCount=" + getContainerCount(portID) + ", vehicleCount=" + getVehicleCount(portID) +
+                "\n     Name: " + foundPort.getName() + ", " +
+                "\n     ID: " + foundPort.getId() + ", " +
+                "\n     Latitude: " + DisplayUtils.formatDouble(foundPort.getLat()) + ", Longitude: " + DisplayUtils.formatDouble(foundPort.getLon()) + ", " +
+                "\n     Capacity: " + DisplayUtils.formatDouble(foundPort.getCapacity())+ ", Current Weight: " + DisplayUtils.formatDouble(foundPort.getCurrentWeight()) + ", " +
+                "\n     Landing: " + foundPort.isLanding() + ", " +
+                "\n     Container Count: " + getContainerCount(portID) + ", Vehicle Count:" + getVehicleCount(portID) +
                 "\n}";
     }
 

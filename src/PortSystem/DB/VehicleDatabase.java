@@ -234,13 +234,14 @@ public class VehicleDatabase extends Database<Vehicle> {
         Vehicle foundVehicle = find(vehicleID);
         return
                 "Vehicle {" +
-                "\n         name='" + foundVehicle.getName() + '\'' + ", " +
-                "\n         id='" + foundVehicle.getId() + '\'' + ", " +
-                "\n         type='" + foundVehicle.getType() + '\'' + ", " +
-                "\n         portId='" + foundVehicle.getPortId() + '\'' + ", " +
-                "\n         carryCapacity=" + foundVehicle.getCarryCapacity() + ", curCarryWeight=" + foundVehicle.getCurCarryWeight() + ", fuelCapacity=" + foundVehicle.getFuelCapacity() + ", curfuelCapacity=" + foundVehicle.getCurfuelCapacity() + ", " +
-                "\n         allowedContainers=" + Arrays.toString(foundVehicle.getAllowedContainers())  + ", " +
-                "\n         curContainerNum=" + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId()) + " (Dry Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Dry Storage") + "; Liquid: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Liquid") + "; Open Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Storage") + "; Open Top: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Top") + "; Refrigerated: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Refrigerated") + ")" +
+                "\n         Name: " + foundVehicle.getName() + ", " +
+                "\n         ID: " + foundVehicle.getId() + ", " +
+                "\n         Type: " + foundVehicle.getType() + ", " +
+                "\n         Port ID: " + foundVehicle.getPortId() + ", " +
+                "\n         Carry Capacity: " + DisplayUtils.formatDouble(foundVehicle.getCarryCapacity()) + ", Current Carry Weight: " + DisplayUtils.formatDouble(foundVehicle.getCurCarryWeight()) +
+                "\n         Fuel Capacity: " + DisplayUtils.formatDouble(foundVehicle.getFuelCapacity()) + ", Current Fuel Capacity: " + DisplayUtils.formatDouble(foundVehicle.getCurfuelCapacity()) + ", " +
+                "\n         Allowed Containers: " + Arrays.toString(foundVehicle.getAllowedContainers())  + ", " +
+                "\n         Container Count: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId()) + " (Dry Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Dry Storage") + "; Liquid: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Liquid") + "; Open Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Storage") + "; Open Top: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Top") + "; Refrigerated: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Refrigerated") + ")" +
                 "\n         }";
     }
 }
