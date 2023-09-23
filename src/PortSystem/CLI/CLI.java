@@ -60,7 +60,4 @@ public class CLI {
        return user != null;
     }
 
-    public Map<String, Command> getCommandMap() {
-        return commandMap;
-    }
 }
