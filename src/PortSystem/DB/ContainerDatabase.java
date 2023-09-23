@@ -21,7 +21,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     public ArrayList<Container> fromVehicle(String vehicleId) {
-        if (!vehicleExists(vehicleId)) return null;
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
+        if (vehicle == null) return null;
 
         ArrayList<Container> res = new ArrayList<>();
 
@@ -34,7 +35,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     public ArrayList<Container> fromVehicle(String vehicleId, String type) {
-        if (!vehicleExists(vehicleId)) return null;
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
+        if (vehicle == null) return null;
 
         ArrayList<Container> res = new ArrayList<>();
 
