@@ -348,6 +348,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         return deletedContainer;
     }
+
+    @Override
     public String showInfo(String containerId) {
         Container foundContainer = mdb.getContainers().find(containerId);
         return "Container{" +

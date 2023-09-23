@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import static PortSystem.Utils.DBUtils.randKey;
 
-public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>, Serializable {
+public abstract class Database<T extends DatabaseRecord> implements DatabaseOperations<T>, Serializable {
     // Generalized class to store objects (referred to as records) of any type
     // Each record of the database has a unique id
     // IMPORTANT: Objects to be stored in the database MUST implement the DatabaseRecord interface
@@ -84,6 +84,9 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
     public boolean exists(String id) {
         return data.containsKey(id);
     }
+
+    @Override
+    public abstract String showInfo(String id);
 
     @Override
     public T createRecord(T item) {

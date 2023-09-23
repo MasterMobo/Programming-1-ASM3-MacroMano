@@ -7,4 +7,5 @@ public interface DatabaseOperations<T> {
     T createRecord(T item);
     T updateRecord(String id);
     boolean exists(String id);
+    String showInfo(String id);
 }
