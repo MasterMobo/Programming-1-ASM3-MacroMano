@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import PortSystem.DB.DatabaseRecord;
-import PortSystem.Port.Port;
-import PortSystem.Vehicle.Vehicle;
 
 public class Trip implements DatabaseRecord, Serializable {
     private String id;
@@ -14,7 +12,7 @@ public class Trip implements DatabaseRecord, Serializable {
     private String arrivePortId;
     private LocalDate departDate;
     private LocalDate arriveDate;
-    private double length;
+    private double distance;
     private double fuelConsumed;
     private TripStatus status;
 
@@ -25,7 +23,7 @@ public class Trip implements DatabaseRecord, Serializable {
         this.arrivePortId = arrivePortId;
         this.departDate = departDate;
         this.arriveDate = arriveDate;
-        this.length = length;
+        this.distance = length;
         this.fuelConsumed = fuelConsumed;
         this.status = status;
     }
@@ -39,8 +37,8 @@ public class Trip implements DatabaseRecord, Serializable {
         return departDate;
     }
 
-    public double getLength() {
-        return length;
+    public double getDistance() {
+        return distance;
     }
 
     public TripStatus getStatus() {
@@ -80,13 +78,13 @@ public class Trip implements DatabaseRecord, Serializable {
     @Override
     public String toString() {
         return "Trip{" +
-                "id='" + id + '\'' +
+                id +
                 ", vehicleId='" + vehicleId + '\'' +
-                ", departPortId='" + departPortId + '\'' +
-                ", arrivePortId='" + arrivePortId + '\'' +
+                ", from port " + departPortId +
+                " to port " + arrivePortId +
                 ", departDate=" + departDate +
                 ", arriveDate=" + arriveDate +
-                ", length=" + length +
+                ", distance=" + distance +
                 ", fuelConsumed=" + fuelConsumed +
                 ", status=" + status +
                 '}';

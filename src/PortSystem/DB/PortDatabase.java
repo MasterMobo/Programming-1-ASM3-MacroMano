@@ -24,7 +24,7 @@ public class PortDatabase extends Database<Port> {
                 "\n     name='" + foundPort.getName() + '\'' + ", " +
                 "\n     id='" + foundPort.getId() + '\'' + ", " +
                 "\n     latitude=" + foundPort.getLat() + ", longitude=" + foundPort.getLon() + ", " +
-                "\n     capacity=" + foundPort.getCapacity() + ", currentWeight=" + foundPort.getCurrentWeight() + ", " +
+                "\n     capacity=" + foundPort.getCapacity() + ", currentWeight=" + DisplayUtils.formatDouble(foundPort.getCurrentWeight()) + ", " +
                 "\n     isLanding=" + foundPort.isLanding() + ", " +
                 "\n     containerCount=" + getContainerCount(portID) + ", vehicleCount=" + getVehicleCount(portID) +
                 "\n}";

@@ -15,13 +15,13 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
     private double carryCapacity;
     private double curCarryWeight;
     private double fuelCapacity;
-    private double curfuelCapacity = fuelCapacity;
+    private double curFuelAmount = fuelCapacity;
     protected String[] allowedContainers;
 
     public Vehicle(String name, double carryCapacity, double fuelCapacity) {
         this.name = name;
         this.carryCapacity = carryCapacity;
-        curfuelCapacity = fuelCapacity;
+        curFuelAmount = fuelCapacity;
         this.fuelCapacity = fuelCapacity;
     }
 
@@ -37,8 +37,8 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
         this.name = name;
     }
 
-    public double getCurfuelCapacity() {
-        return curfuelCapacity;
+    public double getCurFuelAmount() {
+        return curFuelAmount;
     }
 
     public void setFuelCapacity(double fuelCapacity) {
@@ -61,8 +61,8 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
         this.carryCapacity = carryCapacity;
     }
 
-    public void setCurfuelCapacity(double curfuelCapacity) {
-        this.curfuelCapacity = curfuelCapacity;
+    public void setCurFuelAmount(double curFuelAmount) {
+        this.curFuelAmount = curFuelAmount;
     }
 
     public void setCurCarryWeight(double curCarryWeight) {
@@ -104,7 +104,7 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
         curCarryWeight -= c.getWeight();
     }
     public double deductFuel(Vehicle v) {
-       return v.getFuelCapacity() - v.getCurfuelCapacity();
+       return v.getFuelCapacity() - v.getCurFuelAmount();
     };
 
 
@@ -165,14 +165,14 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
     @Override
     public String toString() {
         return "Vehicle {" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", type='" + type + '\'' +
+                name +
+                " - " + id +
+                " - " + type +
                 ", portId='" + portId + '\'' +
                 ", carryCapacity=" + carryCapacity +
                 ", curCarryWeight=" + curCarryWeight +
                 ", fuelCapacity=" + fuelCapacity +
-                ", curfuelCapacity=" + curfuelCapacity +
+                ", curFuelAmount=" + curFuelAmount +
                 "}";
     }
 }
