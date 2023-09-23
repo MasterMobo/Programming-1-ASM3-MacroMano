@@ -3,9 +3,11 @@ package PortSystem.DB;
 import PortSystem.Trip.Trip;
 import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DateUtils;
+import PortSystem.Utils.SampleData;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class MasterDatabase implements Serializable {
@@ -14,11 +16,11 @@ public class MasterDatabase implements Serializable {
 
     private static final int RECORD_LIFETIME = 7;
 
-    public PortDatabase ports;
-    public UserDatabase users;
-    public TripDatabase trips;
-    public ContainerDatabase containers;
-    public VehicleDatabase vehicles;
+    private PortDatabase ports;
+    private UserDatabase users;
+    private TripDatabase trips;
+    private ContainerDatabase containers;
+    private VehicleDatabase vehicles;
 
     public MasterDatabase() {
         ports = new PortDatabase(this);
@@ -30,8 +32,7 @@ public class MasterDatabase implements Serializable {
 
     public static MasterDatabase initDB() {
         if (!FileStorage.fileExists()) {
-            // TODO records can only be kept for 7 days, should sample data consider this?
-            MasterDatabase db = DBUtils.createSampleDatabase();
+            MasterDatabase db = SampleData.createSampleDatabase();
             FileStorage.write(db);
             return db;
         }
@@ -49,10 +50,35 @@ public class MasterDatabase implements Serializable {
         // Deletes expired records
         LocalDate now = LocalDate.now();
 
+        ArrayList<String> deleteIds = new ArrayList<>();
         for (Trip trip: trips.data.values()) {
             if (DateUtils.daysBetween(trip.getDepartDate(), now) > RECORD_LIFETIME) {
-                trips.delete(trip.getId());
+                deleteIds.add(trip.getId());
             }
         }
+
+        for (String id: deleteIds) {
+            trips.delete(id);
+        }
+    }
+
+    public PortDatabase getPorts() {
+        return ports;
+    }
+
+    public UserDatabase getUsers() {
+        return users;
+    }
+
+    public TripDatabase getTrips() {
+        return trips;
+    }
+
+    public ContainerDatabase getContainers() {
+        return containers;
+    }
+
+    public VehicleDatabase getVehicles() {
+        return vehicles;
     }
 }

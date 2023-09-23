@@ -11,7 +11,7 @@ public class UpdateCommand extends Command{
     public UpdateCommand() {
         super();
         signature = "upd";
-        desc = "Initiate update sequence of given type";
+        desc = "Update record of given type and id";
         usage = "upd <type> <id>";
         arguments = 2;
     }
@@ -28,21 +28,21 @@ public class UpdateCommand extends Command{
 
         switch (type) {
             case "port":
-                if (db.ports.updateRecord(id) == null) return;
+                if (db.getPorts().updateRecord(id) == null) return;
                 break;
             case "vehicle":
-                if (db.vehicles.updateRecord(id) == null) return;
+                if (db.getVehicles().updateRecord(id) == null) return;
                 break;
             case "container":
-                Container container = db.containers.find(id);
+                Container container = db.getContainers().find(id);
                 if (container == null) return;
 
-                if (cli.user instanceof PortManager && !Objects.equals(container.portId, ((PortManager) cli.user).getPortID())) {
+                if (cli.user instanceof PortManager && !Objects.equals(container.getPortId(), ((PortManager) cli.user).getPortID())) {
                     DisplayUtils.printErrorMessage("You do not have permission to this container");
                     return;
                 }
 
-                if (db.containers.updateRecord(id) == null) return;
+                if (db.getContainers().updateRecord(id) == null) return;
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("port, vehicle, container");

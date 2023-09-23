@@ -14,9 +14,9 @@ public class StatContainerCommand extends Command{
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         if (args[0].equals("all")) {
-            db.containers.listContainerTypeByWeight();
+            db.getContainers().listContainerTypeByWeight();
         } else {
-            db.containers.listContainerTypeByWeight(args[0]);
+            db.getContainers().listContainerTypeByWeight(args[0]);
         }
     }
 }

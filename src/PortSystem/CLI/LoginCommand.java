@@ -9,14 +9,14 @@ public class LoginCommand extends Command{
     public LoginCommand() {
         super();
         signature = "login";
-        desc = "Initiate login sequence";
+        desc = "Login to user";
         usage = "login";
         arguments = 0;
     }
 
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        User user =  db.users.login();
+        User user =  db.getUsers().login();
         if (user == null) {
             DisplayUtils.printErrorMessage("Login Failed");
             return;

@@ -5,6 +5,7 @@ import PortSystem.Port.Port;
 import PortSystem.Trip.Trip;
 import PortSystem.Trip.TripStatus;
 import PortSystem.Utils.DateUtils;
+import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Vehicle;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class TripDatabase extends Database<Trip>{
         super(mdb, "t");
     }
     private boolean tripExists(String tripId) {
-        return mdb.trips.find(tripId) != null;
+        return mdb.getTrips().find(tripId) != null;
     }
 
     public ArrayList<Trip> tripsOn(String dateString) {
@@ -68,14 +69,30 @@ public class TripDatabase extends Database<Trip>{
     }
 
     public ArrayList<Trip> fromPort(String portId) {
-        Port port = mdb.ports.find(portId);
+        Port port = mdb.getPorts().find(portId);
         if (port == null) return null;
 
         ArrayList<Trip> res = new ArrayList<>();
 
         for (Map.Entry<String, Trip> set: data.entrySet()) {
             Trip trip = set.getValue();
-            if (trip.departPortId.equals(portId) || trip.arrivePortId.equals(portId)) {
+            if (trip.getDepartPortId().equals(portId) || trip.getArrivePortId().equals(portId)) {
+                res.add(trip);
+            }
+        }
+
+        return res;
+
+    }
+
+    public ArrayList<Trip> fromVehicle(String vehicleId) {
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
+        if (vehicle == null) return null;
+        ArrayList<Trip> res = new ArrayList<>();
+
+        for (Map.Entry<String, Trip> set: data.entrySet()) {
+            Trip trip = set.getValue();
+            if (trip.getVehicleId().equals(vehicleId)) {
                 res.add(trip);
             }
         }
@@ -98,34 +115,50 @@ public class TripDatabase extends Database<Trip>{
     }
 
     public void updateTripStatus(String tripId) {
-        if (!mdb.trips.exists(tripId)) {
-            System.out.println("No trip with this ID exists");
+        Trip trip = mdb.getTrips().find(tripId);
+        if (trip == null) return;
+
+
+        Vehicle v = mdb.getVehicles().find(trip.getVehicleId());
+
+
+        if (trip.getStatus().equals(TripStatus.FULFILLED)) {
+            DisplayUtils.printErrorMessage("This trip is already fulfilled, can not update further");
             return;
         }
-        Trip trip = mdb.trips.find(tripId);
-        Vehicle v = mdb.vehicles.find(trip.vehicleId);
+
 //        Show current status
-        System.out.println("The current trip status is: " + trip.getStatus());
-        System.out.println("Do you want to update trip status? Press Yes or No to proceed");
+        DisplayUtils.printSystemMessage("The current trip status is: " + trip.getStatus());
+        DisplayUtils.printSystemMessage("Do you want to update trip status? (y/n)");
         Scanner scanner = new Scanner(System.in);
         String prompt = scanner.nextLine();
-        if (prompt.equals("Yes")) {
-            if (Objects.equals(trip.getStatus(), TripStatus.PROCESSING)) {
-                System.out.println("Trip is initiated!");
+
+        if (prompt.equals("y")) {
+            if (trip.getStatus().equals(TripStatus.PROCESSING)) {
+                DisplayUtils.printSystemMessage("Trip is initiated! Vehicle is on the way");
                 trip.setStatus(TripStatus.EN_ROUTE);
-                v.portId = null;
+                v.setPortId(null);
                 v.setCurfuelCapacity(v.getFuelCapacity() - trip.getFuelConsumed());
+                mdb.save();
+                return;
             }
-            if (Objects.equals(trip.getStatus(), TripStatus.EN_ROUTE)) {
-                System.out.println("Trip is fulfilled!");
+
+            if (trip.getStatus().equals(TripStatus.EN_ROUTE)) {
+                DisplayUtils.printSystemMessage("Trip is fulfilled! Vehicle has arrived at destination");
                 trip.setStatus(TripStatus.FULFILLED);
-                v.portId = trip.arrivePortId;
+                v.setPortId(trip.getArrivePortId());
+                trip.setArriveDate(LocalDate.now());
+                mdb.save();
+                return;
             }
         }
-        else {
+
+        if (prompt.equals("n")) {
+            DisplayUtils.printErrorMessage("Update canceled");
             return;
         }
-        scanner.close();
+
+        DisplayUtils.printErrorMessage("Invalid input, Expecting 'y' or 'n\'");
     }
 
 // TODO do you even need this? just use find()

@@ -2,7 +2,7 @@ package PortSystem.DB;
 
 import PortSystem.Port.Port;
 import PortSystem.User.User;
-import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DisplayUtils;
 
 import java.util.Scanner;
@@ -12,10 +12,6 @@ public class PortDatabase extends Database<Port> {
     public PortDatabase(MasterDatabase mdb) {
         super(mdb, "p");
     }
-    private boolean portExists(String portId) {
-        return mdb.ports.find(portId) != null;
-    }
-
     // TODO do you even need this? just use find()
 
 //    public void showInfo(String portID) {
@@ -34,15 +30,15 @@ public class PortDatabase extends Database<Port> {
 
         Scanner scanner = new Scanner(System.in);
 
-        port.setName(getInputString("Name: ", port.getName(), scanner));
+        port.setName(DBUtils.getInputString("Name: ", port.getName(), scanner));
 
-        port.setLat(getInputDouble("Latitude: ", port.getLat(), scanner));
+        port.setLat(DBUtils.getInputDouble("Latitude: ", port.getLat(), scanner));
 
-        port.setLon(getInputDouble("Longitude: ", port.getLon(), scanner));
+        port.setLon(DBUtils.getInputDouble("Longitude: ", port.getLon(), scanner));
 
-        port.setCapacity(getInputDouble("Capacity: ", port.getCapacity(), scanner));
+        port.setCapacity(DBUtils.getInputDouble("Capacity: ", port.getCapacity(), scanner));
 
-        port.setCurrentWeight(getInputDouble("Current Weight: ", port.getCurrentWeight(), scanner));
+        port.setCurrentWeight(DBUtils.getInputDouble("Current Weight: ", port.getCurrentWeight(), scanner));
 
         DisplayUtils.printSystemMessage("Updated record: " + port);
 
@@ -50,5 +46,8 @@ public class PortDatabase extends Database<Port> {
         return port;
     }
 
+    public void printAllPorts() {
+        data.values().forEach((Port p) -> System.out.println(p.getName() + " - " + p.getId()));
+    }
 
 }

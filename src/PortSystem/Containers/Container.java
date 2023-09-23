@@ -10,8 +10,8 @@ import java.util.*;
 public abstract class Container implements DatabaseRecord, Serializable {
     protected String type;
     protected String id;
-    public String vehicleId;
-    public String portId;
+    private String vehicleId;
+    private String portId;
     protected double weight;
     protected double shipFuelConsumption;
     protected double truckFuelConsumption;
@@ -32,6 +32,22 @@ public abstract class Container implements DatabaseRecord, Serializable {
 
     public double getWeight() {
         return weight;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public String getPortId() {
+        return portId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public void setPortId(String portId) {
+        this.portId = portId;
     }
 
     public void setWeight(double weight) {

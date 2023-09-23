@@ -18,10 +18,10 @@ public class ListTripsOnDaysCommand extends Command{
         String toDay = args[1];
 
         if (toDay.equals(".")) {
-            DisplayUtils.printArray(db.trips.tripsOn(fromDay));
+            DisplayUtils.printArray(db.getTrips().tripsOn(fromDay));
             return;
         }
 
-        DisplayUtils.printArray(db.trips.tripsBetween(fromDay, toDay));
+        DisplayUtils.printArray(db.getTrips().tripsBetween(fromDay, toDay));
     }
 }

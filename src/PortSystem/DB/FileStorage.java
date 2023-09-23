@@ -5,19 +5,9 @@ import java.util.Locale;
 
 public class FileStorage {
     private static final String FILE_NAME = "db.obj";
-    private static final String OS = System.getProperty("os.name", "unknown").toLowerCase(Locale.ENGLISH);
 
     private static String getFileDir() {
-        if (OS.contains("win")) {
-            // Running on Windows, use a different path
-            return "src" + File.separator + File.separator + FILE_NAME;
-        } else if (OS.contains("mac")) {
-            // Running on macOS, use the original path
-            return FILE_NAME;
-        } else {
-            // Use a default path for other operating systems
-            return "src" + File.separator + File.separator + FILE_NAME;
-        }
+        return "src" + File.separator + FILE_NAME;
     }
 
     static boolean fileExists() {

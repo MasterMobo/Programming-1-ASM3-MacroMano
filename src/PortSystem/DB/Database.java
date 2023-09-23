@@ -15,12 +15,11 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
     // Each record of the database has a unique id
     // IMPORTANT: Objects to be stored in the database MUST implement the DatabaseRecord interface
 
-    // TODO: Implement 7-day refresh
     private final String ID_HEADER; // The first character(s) of the id
-    protected static final int KEY_LENGTH = 6;  // Length of the random generated key (excluding the ID_HEADER and separator)
-    public HashMap<String, T> data; // This is where the records are stored. The HashMap maps the id to the object reference.
-
+    private static final int KEY_LENGTH = 6;  // Length of the random generated key (excluding the ID_HEADER and separator)
+    protected HashMap<String, T> data; // This is where the records are stored. The HashMap maps the id to the object reference.
     protected MasterDatabase mdb;
+
     public Database(MasterDatabase mdb, String idHeader) {
         this.mdb = mdb;
         this.data = new HashMap<>();
@@ -28,7 +27,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
     }
 
     private String generateRandomId() {
-        return ID_HEADER + randKey(6);
+        return ID_HEADER + randKey(KEY_LENGTH);
     }
 
     protected boolean isValidId(String id) {
@@ -110,30 +109,7 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         return record;
     }
 
-    protected String getInputString(String prompt, String currentVal, Scanner scanner) {
-        System.out.print(prompt);
-        String input = scanner.nextLine().trim();
-        return input.equals(".") ? currentVal : input;
-    }
 
-    protected String getInputId(String prompt, String currentId, Scanner scanner, Database db) {
-        System.out.print(prompt);
-        String input = scanner.nextLine().trim();
-        if (input.equals(".")) return currentId;
-
-        if (input.equals("null")) return null;
-
-        Object record = db.find(input);
-        if (record == null) return currentId;
-
-        return input;
-    }
-
-    protected double getInputDouble(String prompt, double currentVal, Scanner scanner) {
-        System.out.print(prompt);
-        String input = scanner.nextLine().trim();
-        return input.equals(".") ? currentVal : Double.parseDouble(input);
-    }
 
     public void display() {
         data.forEach((key, val) -> {

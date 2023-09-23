@@ -14,6 +14,6 @@ public class ListTripsFromPortCommand extends Command {
 
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        DisplayUtils.printArray(db.trips.fromPort(args[0]));
+        DisplayUtils.printArray(db.getTrips().fromPort(args[0]));
     }
 }

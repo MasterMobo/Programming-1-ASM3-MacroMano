@@ -8,7 +8,7 @@ public class ListVehicleFromPortCommand extends Command{
     public ListVehicleFromPortCommand() {
         super();
         signature = "lsv";
-        desc = "List all vehicle (of given type) in a port. Type 'all' for <vehicleType> to get all types";
+        desc = "List all vehicle (of given type) from a port. Type 'all' for <vehicleType> to get all types";
         usage = "lsv <vehicleType> <portId>";
         arguments = 2;
     }
@@ -20,13 +20,13 @@ public class ListVehicleFromPortCommand extends Command{
 
         switch (type) {
             case "all":
-                DisplayUtils.printArray(db.vehicles.fromPort(portId));
+                DisplayUtils.printArray(db.getVehicles().fromPort(portId));
                 break;
             case "truck":
-                DisplayUtils.printArray(db.vehicles.trucksFromPort(portId));
+                DisplayUtils.printArray(db.getVehicles().trucksFromPort(portId));
                 break;
             case "ship":
-                DisplayUtils.printArray(db.vehicles.shipsFromPort(portId));
+                DisplayUtils.printArray(db.getVehicles().shipsFromPort(portId));
                 break;
             default:
                 DisplayUtils.printInvalidTypeError("all, truck, ship");

@@ -9,21 +9,14 @@ import java.util.*;
 public class Vehicle implements DatabaseRecord, Serializable {
 
     private String name;
-
     private String id;
-
     protected String type;
-    public String portId;
+    private String portId;
     private double carryCapacity;
-
     private double curCarryWeight;
     private double fuelCapacity;
     private double curfuelCapacity = fuelCapacity;
-
     protected String[] allowedContainers;
-
-    private double curFuelConsumption = 0.0;
-
 
     public Vehicle(String name, double carryCapacity, double fuelCapacity) {
         this.name = name;
@@ -54,6 +47,14 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     public double getFuelCapacity() {
         return fuelCapacity;
+    }
+
+    public String getPortId() {
+        return portId;
+    }
+
+    public void setPortId(String portId) {
+        this.portId = portId;
     }
 
     public void setCarryCapacity(double carryCapacity) {
@@ -105,7 +106,7 @@ public class Vehicle implements DatabaseRecord, Serializable {
     };
 
 
-    public float calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
+    public double calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
         float result = 0;
         double portDistance = p1.getDist(p2);
 
@@ -161,17 +162,16 @@ public class Vehicle implements DatabaseRecord, Serializable {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", portId='" + portId + '\'' +
-                ", carryCapacity=" + carryCapacity +
+        return "Vehicle {" +
+                "\n         name='" + name + '\'' +
+                ", \n         id='" + id + '\'' +
+                ", \n         type='" + type + '\'' +
+                ", \n         portId='" + portId + '\'' +
+                ", \n         carryCapacity=" + carryCapacity +
                 ", curCarryWeight=" + curCarryWeight +
                 ", fuelCapacity=" + fuelCapacity +
                 ", curfuelCapacity=" + curfuelCapacity +
-                ", allowedContainers=" + Arrays.toString(allowedContainers) +
-                ", curFuelConsumption=" + curFuelConsumption +
-                '}';
+                ", \n         allowedContainers=" + Arrays.toString(allowedContainers) +
+                "\n         }";
     }
 }

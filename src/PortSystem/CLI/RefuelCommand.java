@@ -17,9 +17,9 @@ public class RefuelCommand extends Command{
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         String vId = args[0];
         if (cli.user instanceof SystemAdmin) {
-            db.vehicles.refuelVehicle(vId, null);
+            db.getVehicles().refuelVehicle(vId, null);
         } else if (cli.user instanceof PortManager) {
-            db.vehicles.refuelVehicle(vId, ((PortManager) cli.user).getPortID());
+            db.getVehicles().refuelVehicle(vId, ((PortManager) cli.user).getPortID());
         }
 
     }

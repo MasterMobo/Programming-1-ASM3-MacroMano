@@ -4,6 +4,7 @@ import PortSystem.CLI.CLI;
 import PortSystem.Containers.*;
 import PortSystem.Port.Port;
 import PortSystem.Utils.ConsoleColors;
+import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.*;
 
@@ -16,25 +17,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     private boolean vehicleExists(String vehicleId) {
-        return mdb.vehicles.find(vehicleId) != null;
+        return mdb.getVehicles().exists(vehicleId);
     }
-
-    private boolean containerExists(String containerID) {return mdb.containers.find(containerID) != null;}
-
-
-    public Container getContainerFromPort (String containerID, String portId){
-        if (!containerExists(containerID)) return null;
-        ArrayList<Container> containers = fromPort(portId);
-
-        for (Container container : containers) {
-            if (container.getId().equals(containerID)) {
-                return container;
-            }
-        }
-        return null;
-    }
-
-
 
     public ArrayList<Container> fromVehicle(String vehicleId) {
         if (!vehicleExists(vehicleId)) return null;
@@ -43,7 +27,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         for (Map.Entry<String, Container> set: data.entrySet()) {
             Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId)) {
+            if (Objects.equals(container.getVehicleId(), vehicleId)) {
                 res.add(container);
             }
         }
@@ -57,7 +41,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         for (Map.Entry<String, Container> set: data.entrySet()) {
             Container container = set.getValue();
-            if (Objects.equals(container.vehicleId, vehicleId) && container.getType().equals(type)) {
+            if (Objects.equals(container.getVehicleId(), vehicleId) && container.getType().equals(type)) {
                 res.add(container);
             }
         }
@@ -66,14 +50,14 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
 
     public ArrayList<Container> fromPort(String pId) {
-        Port port = mdb.ports.find(pId);
+        Port port = mdb.getPorts().find(pId);
         if (port == null) return null;
 
         ArrayList<Container> res = new ArrayList<>();
 
         for (Map.Entry<String, Container> set: data.entrySet()) {
             Container container = set.getValue();
-            if (Objects.equals(container.portId, pId)) {
+            if (container.getPortId().equals(pId)) {
                 res.add(container);
             }
         }
@@ -83,14 +67,14 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     public ArrayList<Container> fromPort(String pId, String type) {
-        Port port = mdb.ports.find(pId);
+        Port port = mdb.getPorts().find(pId);
         if (port == null) return null;
 
         ArrayList<Container> res = new ArrayList<>();
 
         for (Map.Entry<String, Container> set: data.entrySet()) {
             Container container = set.getValue();
-            if (Objects.equals(container.portId, pId)  && container.getType().equals(type)) {
+            if (container.getPortId().equals(pId) && container.getType().equals(type)) {
                 res.add(container);
             }
         }
@@ -100,17 +84,17 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     public void loadContainerOnVehicle(String vehicleId, String userPortId) {
-        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
         if (vehicle == null) {
             return;
         }
 
-        if (!Objects.equals(vehicle.portId, userPortId)) {
+        if (userPortId != null && !Objects.equals(vehicle.getPortId(), userPortId)) {
             DisplayUtils.printErrorMessage("You do not have permission to this vehicle because it is not in your port");
             return;
         }
 
-        if (vehicle.portId == null) {
+        if (vehicle.getPortId() == null) {
             DisplayUtils.printErrorMessage("Vehicle is currently not in a port. Unable to load containers");
             return;
         }
@@ -120,7 +104,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
 
-        mdb.containers.showAllContainerInPort(vehicleId);
+        mdb.getContainers().showAllContainerInPort(vehicleId);
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -136,17 +120,17 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-            if (!Objects.equals(container.portId, vehicle.portId)) {
+            if (!container.getPortId().equals(vehicle.getPortId())) {
                 DisplayUtils.printErrorMessage("Container is not within this port");
                 continue;
             }
 
-           if(Objects.equals(container.vehicleId, vehicle.getId())) {
+           if(Objects.equals(container.getVehicleId(), vehicle.getId())) {
                DisplayUtils.printErrorMessage("Container is already on this vehicle");
                continue;
            }
 
-           if (container.vehicleId != null) {
+           if (container.getVehicleId() != null) {
                DisplayUtils.printErrorMessage("Container already loaded on another vehicle");
                continue;
            }
@@ -162,25 +146,27 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-            container.vehicleId = vehicle.getId();
-            mdb.ports.find(container.portId).removeContainer(container);
-            container.portId = null;
+
+            container.setVehicleId(vehicle.getId());
+            mdb.getPorts().find(container.getPortId()).removeContainer(container);
+            container.setPortId(null);
+
+           
             vehicle.addWeight(container);
-            container.portId = null;
-            System.out.println("Successfully loaded to vehicle.");
+            DisplayUtils.printSystemMessage("Successfully loaded to vehicle.");
             mdb.save();
         }
     }
 
 
     public void unloadFromVehicle(String vehicleId, String userPortId) {
-        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
         if (vehicle == null) {
             DisplayUtils.printErrorMessage("There is no vehicle with the provided ID");
             return;
         }
 
-        if (!Objects.equals(vehicle.portId, userPortId)) {
+        if (userPortId != null && !Objects.equals(vehicle.getPortId(), userPortId)) {
             DisplayUtils.printErrorMessage("You do not have permission to this vehicle because it is not in your port");
             return;
         }
@@ -190,13 +176,14 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return;
         }
 
-        Port port = mdb.ports.find(vehicle.portId);
+        Port port = mdb.getPorts().find(vehicle.getPortId());
+
         if (port == null) {
             DisplayUtils.printErrorMessage("Vehicle not currently in a port");
             return;
         }
 
-        mdb.containers.showAllContainerInVehicle(vehicleId);
+        mdb.getContainers().showAllContainerInVehicle(vehicleId);
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Enter container ID (or 'exit' to stop): ");
@@ -211,12 +198,12 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-            if(!mdb.containers.fromVehicle(vehicleId).contains(container)) {
+            if(!mdb.getContainers().fromVehicle(vehicleId).contains(container)) {
                 DisplayUtils.printErrorMessage("Container is not on this vehicle");
                 continue;
             }
 
-            if (container.vehicleId == null) {
+            if (container.getVehicleId() == null) {
                 DisplayUtils.printErrorMessage("Container currently not on a vehicle");
                 continue;
             }
@@ -228,8 +215,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
             port.addContainer(container);
             vehicle.deductWeight(container);
-            container.portId = vehicle.portId;
-            container.vehicleId = null;
+            container.setPortId(vehicle.getPortId());
+            container.setVehicleId(null);
             DisplayUtils.printSystemMessage("Successfully unloaded from vehicle");
             mdb.save();
         }
@@ -247,22 +234,22 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 //    }
 
     public void showAllContainerInPort (String vehicleId) {
-        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
         if (vehicle == null) return;
 
-        if (vehicle.portId == null) {
+        if (vehicle.getPortId() == null) {
             System.out.println("Vehicle is currently not in a port. Unable to load containers");
             return;
         }
 
         System.out.println("Available containers in this port: ");
-        for (Container c: fromPort(vehicle.portId)) {
-            if (c.vehicleId == null) System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
+        for (Container c: fromPort(vehicle.getPortId())) {
+            if (c.getVehicleId() == null) System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
         };
     }
 
     public void showAllContainerInVehicle (String vehicleId) {
-        Vehicle vehicle = mdb.vehicles.find(vehicleId);
+        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
         if (vehicle == null) return;
 
         System.out.println("Containers currently on this vehicle: ");
@@ -270,8 +257,6 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             System.out.println(c.getType() + ", id: " + c.getId() + ", weight: " + c.getWeight());
         };
     }
-
-
 
     public void listContainerTypeByWeight() {
         HashMap<String, Double> typeCount = Container.countContainerWeight(new ArrayList<>(data.values()));
@@ -307,10 +292,10 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         if (portId == null) {
             System.out.print("Enter port ID: ");
-            p = mdb.ports.find(scanner.nextLine().trim());
+            p = mdb.getPorts().find(scanner.nextLine().trim());
             if (p == null) return null;
         } else {
-            p = mdb.ports.find(portId);
+            p = mdb.getPorts().find(portId);
         }
 
         if (!p.canAddContainer(container)) {
@@ -318,7 +303,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             return null;
         }
 
-        container.portId = p.getId();
+        container.setPortId(p.getId());
         p.addContainer(container);
         add(container);
         DisplayUtils.printSystemMessage("Created Record: " + container);
@@ -331,18 +316,40 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         if (container == null) return null;
 
         Scanner scanner = new Scanner(System.in);
-        container.setWeight(getInputDouble("Weight: ", container.getWeight(), scanner));
+        container.setWeight(DBUtils.getInputDouble("Weight: ", container.getWeight(), scanner));
 
-        container.setShipFuelConsumption(getInputDouble("Ship Fuel Consumption: ", container.getShipFuelConsumption(), scanner));
+        container.setShipFuelConsumption(DBUtils.getInputDouble("Ship Fuel Consumption: ", container.getShipFuelConsumption(), scanner));
 
-        container.setTruckFuelConsumption(getInputDouble("Truck Fuel Consumption: ", container.getTruckFuelConsumption(), scanner));
+        container.setTruckFuelConsumption(DBUtils.getInputDouble("Truck Fuel Consumption: ", container.getTruckFuelConsumption(), scanner));
 
-        container.portId = getInputId("Port ID: ", container.portId, scanner, mdb.ports);
 
-        container.vehicleId = getInputId("Vehicle ID: ", container.vehicleId, scanner, mdb.vehicles);
+        container.setPortId(DBUtils.getInputId("Port ID: ", container.getPortId(), scanner, mdb.getPorts()));
+
+        container.setVehicleId(DBUtils.getInputId("Vehicle ID: ", container.getVehicleId(), scanner, mdb.getVehicles()));
+
 
         DisplayUtils.printSystemMessage("Updated record: " + container);
         mdb.save();
         return container;
+    }
+
+    @Override
+    public Container delete(String id) {
+        Container deletedContainer = super.delete(id);
+        if (deletedContainer == null) return null;
+
+
+        if (mdb.getPorts().exists(deletedContainer.getPortId())) {
+            Port port = mdb.getPorts().find(deletedContainer.getPortId());
+            port.removeContainer(deletedContainer);
+        }
+
+        if (mdb.getVehicles().exists(deletedContainer.getVehicleId())) {
+            Vehicle vehicle = mdb.getVehicles().find(deletedContainer.getVehicleId());
+
+            vehicle.deductWeight(deletedContainer);
+        }
+
+        return deletedContainer;
     }
 }

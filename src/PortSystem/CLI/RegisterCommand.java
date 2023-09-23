@@ -9,14 +9,14 @@ public class RegisterCommand extends Command{
     public RegisterCommand() {
         super();
         signature = "register";
-        desc = "Initiate register object sequence";
+        desc = "Register new user";
         usage = "register";
         arguments = 0;
     }
 
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
-        User user = db.users.register();
+        User user = db.getUsers().register();
         if (user == null) return;
         cli.user = user;       // Set current user
         DisplayUtils.printSystemMessage("Successfully created new Account!");

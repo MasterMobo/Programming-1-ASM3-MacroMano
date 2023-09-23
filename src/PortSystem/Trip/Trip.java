@@ -7,11 +7,11 @@ import PortSystem.DB.DatabaseRecord;
 import PortSystem.Port.Port;
 import PortSystem.Vehicle.Vehicle;
 
-public class    Trip implements DatabaseRecord, Serializable {
+public class Trip implements DatabaseRecord, Serializable {
     private String id;
-    public String vehicleId;
-    public String departPortId;
-    public String arrivePortId;
+    private String vehicleId;
+    private String departPortId;
+    private String arrivePortId;
     private LocalDate departDate;
     private LocalDate arriveDate;
     private double length;
@@ -30,6 +30,7 @@ public class    Trip implements DatabaseRecord, Serializable {
         this.status = status;
     }
 
+
     public LocalDate getArriveDate() {
         return arriveDate;
     }
@@ -46,7 +47,18 @@ public class    Trip implements DatabaseRecord, Serializable {
         return status;
     }
     public double getFuelConsumed () { return fuelConsumed;}
-    public void setFuelConsumed(double fuelConsumption) {this.fuelConsumed += fuelConsumption;};
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public String getDepartPortId() {
+        return departPortId;
+    }
+
+    public String getArrivePortId() {
+        return arrivePortId;
+    }
 
 
     public String getId() {
@@ -61,6 +73,9 @@ public class    Trip implements DatabaseRecord, Serializable {
         this.status = status;
     }
 
+    public void setArriveDate(LocalDate date) {
+        arriveDate = date;
+    }
 
     @Override
     public String toString() {

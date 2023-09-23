@@ -19,19 +19,22 @@ public class ListCommand extends Command{
         String type = args[0];
         switch (type) {
             case "port":
-                db.ports.display();
+                db.getPorts().display();
                 break;
             case "vehicle":
-                db.vehicles.display();
+                db.getVehicles().display();
                 break;
             case "container":
-                db.containers.display();
+                db.getContainers().display();
                 break;
             case "trip":
-                db.trips.display();
+                db.getTrips().display();
+                break;
+            case "manager":
+                DisplayUtils.printArray(db.getUsers().getManagers());
                 break;
             default:
-                DisplayUtils.printInvalidTypeError("port, vehicle, container, trip");
+                DisplayUtils.printInvalidTypeError("port, vehicle, container, trip, manager");
         }
     }
 

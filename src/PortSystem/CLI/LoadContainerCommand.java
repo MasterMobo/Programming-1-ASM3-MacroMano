@@ -17,9 +17,9 @@ public class LoadContainerCommand extends Command {
     @Override
     public void execute(String[] args, MasterDatabase db, CLI cli) {
         if (cli.user instanceof SystemAdmin) {
-            db.containers.loadContainerOnVehicle(args[0], null);
+            db.getContainers().loadContainerOnVehicle(args[0], null);
         } else if (cli.user instanceof PortManager) {
-            db.containers.loadContainerOnVehicle(args[0], ((PortManager) cli.user).getPortID());
+            db.getContainers().loadContainerOnVehicle(args[0], ((PortManager) cli.user).getPortID());
         }
     }
 
