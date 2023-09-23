@@ -10,6 +10,7 @@ public class ListContainerFromPortCommand extends Command{
         desc = "List containers (of given type) from a port. Type 'all' for <containerType> to get all types";
         usage = "lscp <containerType> <portId>";
         arguments = 2;
+        loginRequired = true;
     }
 
     @Override

@@ -10,35 +10,35 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class CLI {
-    private final Map<String, Consumer<String[]>> commandMap;
+    private final Map<String, Command> commandMap;
     private final MasterDatabase db;
     protected User user = null;
 
     public CLI(MasterDatabase db) {
         this.db = db;
         commandMap = new HashMap<>();
-        commandMap.put("ls", this::list);
-        commandMap.put("lsv", this::listVehiclesFromPort);
-        commandMap.put("lscv", this::listContainersFromVehicle);
-        commandMap.put("lscp", this::listContainersFromPort);
-        commandMap.put("lstp", this::listTripsFromPort);
-        commandMap.put("lstd", this::listTripsOnDays);
-        commandMap.put("crt", this::create);
-        commandMap.put("del", this::delete);
-        commandMap.put("upd", this::update);
-        commandMap.put("help", this::help);
-        commandMap.put("login", this::login);
-        commandMap.put("logout", this::logout);
-        commandMap.put("register", this::register);
-        commandMap.put("load", this::loadContainerOnVehicle);
-        commandMap.put("unload", this::unloadFromVehicle);
-        commandMap.put("info", this::showUserInfo);
-        commandMap.put("find", this::findObject);
-        commandMap.put("statfuel", this::statFuel);
-        commandMap.put("statcon", this::statContainer);
-        commandMap.put("vnt", this::vehicleNewTrip);
-        commandMap.put("uts", this::updateTripStatus);
-        commandMap.put("refuel", this::refuel);
+        commandMap.put("ls", new ListCommand());
+        commandMap.put("lsv", new ListContainerFromPortCommand());
+        commandMap.put("lscv", new ListContainerFromVehicleCommand());
+        commandMap.put("lscp", new ListContainerFromPortCommand());
+        commandMap.put("lstp", new ListTripsFromPortCommand());
+        commandMap.put("lstd", new ListTripsOnDaysCommand());
+        commandMap.put("crt", new CreateCommand());
+        commandMap.put("del", new DeleteCommand());
+        commandMap.put("upd", new UpdateCommand());
+        commandMap.put("help", new HelpCommand());
+        commandMap.put("login", new LoginCommand());
+        commandMap.put("logout", new LogoutCommand());
+        commandMap.put("register", new RegisterCommand());
+        commandMap.put("load", new LoadContainerCommand());
+        commandMap.put("unload", new UnloadContainerCommand());
+        commandMap.put("info", new ShowUserInfoCommand());
+        commandMap.put("find", new FindCommand());
+        commandMap.put("statfuel", new StatFuelCommand());
+        commandMap.put("statcon", new StatContainerCommand());
+        commandMap.put("vnt", new VehicleNewTrip());
+        commandMap.put("uts", new UpdateTripStatus());
+        commandMap.put("refuel", new RefuelCommand());
         // Add more commands as needed
 
     }
@@ -48,162 +48,19 @@ public class CLI {
         String command = parts[0].trim();
         String[] arguments = parts.length > 1 ? parts[1].trim().split("\\s+") : new String[0];
 
-        Consumer<String[]> action = commandMap.get(command);
-        if (action != null) {
-            action.accept(arguments);
+        Command cmd = commandMap.get(command);
+        if (cmd != null) {
+            cmd.process(arguments, db, this);
         } else {
             throw new CommandNotFoundException(command);
         }
     }
 
-    private boolean isLoggedIn() {
-        if (user == null) {
-            System.out.println("Please login before continue");
-            return false;
-        }
-        return true;
+    boolean isLoggedIn() {
+       return user != null;
     }
 
-
-    public void list(String[] args) {
-        if (!isLoggedIn()) return;
-        new ListCommand().process(args, db, this);
+    public Map<String, Command> getCommandMap() {
+        return commandMap;
     }
-
-
-    public void listVehiclesFromPort(String[] args) {
-        if (!isLoggedIn()) return;
-        new ListVehicleFromPortCommand().process(args, db, this);
-    }
-
-    public void listContainersFromVehicle(String[] args) {
-        if (!isLoggedIn()) return;
-        new ListContainerFromVehicleCommand().process(args, db, this);
-    }
-
-    public void listContainersFromPort(String[] args) {
-        if (!isLoggedIn()) return;
-        new ListContainerFromPortCommand().process(args, db, this);
-    }
-
-    public void listTripsFromPort(String[] args) {
-        if (!isLoggedIn()) return;
-        new ListTripsFromPortCommand().process(args, db, this);
-    }
-
-    public void listTripsOnDays(String[] args) {
-        if (!isLoggedIn()) return;
-        new ListTripsOnDaysCommand().process(args, db, this);
-    }
-
-    public void create(String[] args) {
-        if (!isLoggedIn()) return;
-        new CreateCommand().process(args, db, this);
-    }
-
-    public void update(String[] args) {
-        if (!isLoggedIn()) return;
-        new UpdateCommand().process(args, db, this);
-    }
-
-    public void delete(String[] args) {
-        if (!isLoggedIn()) return;
-        new DeleteCommand().process(args, db, this);
-    }
-
-    public void loadContainerOnVehicle(String[] args) {
-        if (!isLoggedIn()) return;
-        new LoadContainerCommand().process(args, db, this);
-    }
-
-    public void unloadFromVehicle(String[] args) {
-        if (!isLoggedIn()) return;
-        new UnloadContainerCommand().process(args, db, this);
-    }
-
-    public void vehicleNewTrip(String[] args) {
-        if (!isLoggedIn()) return;
-        new VehicleNewTrip().process(args, db, this);
-    }
-    public void showUserInfo(String[] args) {
-        if (!isLoggedIn()) return;
-        new ShowUserInfoCommand().process(args, db, this);
-    }
-
-    public void findObject(String[] args) {
-        if (!isLoggedIn()) return;
-        new FindCommand().process(args, db, this);
-    }
-
-    public void statFuel(String[] args) {
-        if (!isLoggedIn()) return;
-        new StatFuelCommand().process(args, db, this);
-    }
-
-    public void statContainer(String[] args) {
-        if (!isLoggedIn()) return;
-        new StatContainerCommand().process(args, db, this);
-    }
-
-    public void updateTripStatus(String[] args) {
-        if (!isLoggedIn()) return;
-        new UpdateTripStatus().process(args, db, this);
-    }
-
-    public void refuel(String[] args) {
-        if (!isLoggedIn()) return;
-        new RefuelCommand().process(args, db, this);
-    }
-
-    public void register(String[] args) {
-        if (user != null) {
-            System.out.println("You are already logged in, please logout first");
-            return;
-        }
-        new RegisterCommand().process(args, db, this);
-    }
-
-    public void login(String[] args) {
-        if (user != null) {
-            System.out.println("You are already logged in, please logout first");
-            return;
-        }
-        new LoginCommand().process(args, db, this);
-    }
-
-    private void logout(String[] args) {
-        if (!isLoggedIn()) return;
-        new LogoutCommand().process(args, db, this);
-    }
-
-    public void help(String[] args) {
-
-        // TODO: add more commands for help
-        System.out.println(ConsoleColors.CYAN_UNDERLINED + "Available Commands:\n" + ConsoleColors.RESET
-            + new HelpCommand().getInfo() + "\n"
-            + new QuitCommand().getInfo() + "\n"
-            + new LoginCommand().getInfo() + "\n"
-            + new RegisterCommand().getInfo() + "\n"
-            + new LogoutCommand().getInfo() + "\n"
-            + new ShowUserInfoCommand().getInfo() + "\n"
-            + new ListCommand().getInfo() + "\n"
-            + new ListContainerFromVehicleCommand().getInfo() + "\n"
-            + new ListContainerFromPortCommand().getInfo() + "\n"
-            + new ListVehicleFromPortCommand().getInfo() + "\n"
-            + new ListTripsFromPortCommand().getInfo() + "\n"
-            + new ListTripsOnDaysCommand().getInfo() + "\n"
-            + new FindCommand().getInfo() + "\n"
-            + new CreateCommand().getInfo() + "\n"
-            + new DeleteCommand().getInfo() + "\n"
-            + new UpdateCommand().getInfo() + "\n"
-            + new LoadContainerCommand().getInfo() + "\n"
-            + new UnloadContainerCommand().getInfo() + "\n"
-            + new VehicleNewTrip().getInfo() + "\n"
-            + new UpdateTripStatus().getInfo()
-            + new RefuelCommand().getInfo() + "\n"
-            + new StatContainerCommand().getInfo() + "\n"
-            + new StatFuelCommand().getInfo() + "\n"
-        );
-    }
-
 }

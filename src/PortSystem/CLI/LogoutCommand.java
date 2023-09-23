@@ -10,6 +10,7 @@ public class LogoutCommand extends Command{
         desc = "Log out of current user";
         usage = "logout";
         arguments = 0;
+        loginRequired = true;
     }
 
     @Override

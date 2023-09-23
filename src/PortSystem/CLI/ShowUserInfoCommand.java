@@ -14,6 +14,7 @@ public class ShowUserInfoCommand extends Command{
         desc = "Show the information of the current user";
         usage = "info";
         arguments = 0;
+        loginRequired = true;
     }
 
     @Override

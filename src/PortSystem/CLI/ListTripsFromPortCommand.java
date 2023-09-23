@@ -10,6 +10,7 @@ public class ListTripsFromPortCommand extends Command {
         desc = "List all trips in a port";
         usage = "lstp <portId>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override

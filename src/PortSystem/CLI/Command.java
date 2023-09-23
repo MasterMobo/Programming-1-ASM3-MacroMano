@@ -9,19 +9,28 @@ public abstract class Command {
     protected String desc;
     protected String usage;
     protected int arguments;
+    protected boolean loginRequired;
 
     public Command() {
     }
 
-    public Command(String signature, String desc, String usage, int arguments) {
+    public Command(String signature, String desc, String usage, int arguments, boolean loginRequired) {
         this.signature = signature;
         this.desc = desc;
         this.usage = usage;
         this.arguments = arguments;
+        this.loginRequired = loginRequired;
     }
 
     public void process(String[] args, MasterDatabase db, CLI cli) {
-        if (!validateArguments(args)) {
+        if (loginRequired && !cli.isLoggedIn()) {
+            DisplayUtils.printErrorMessage("Please login before continue");
+            return;
+        }
+
+        if (!validArguments(args)) {
+            DisplayUtils.printErrorMessage("Expected " + arguments + " argument(s), but received " + args.length);
+            DisplayUtils.printErrorMessage("Usage: " + usage);
             return;
         }
 
@@ -30,16 +39,9 @@ public abstract class Command {
 
     public abstract void execute(String[] arg, MasterDatabase db, CLI cli);
 
-    protected boolean validateArguments(String[] args) {
-        if (args.length != arguments) {
-            DisplayUtils.printErrorMessage("Expected " + arguments + " argument(s), but received " + args.length);
-            DisplayUtils.printErrorMessage("Usage: " + usage);
-            return false;
-        }
-        return true;
+    protected boolean validArguments(String[] args) {
+        return args.length == arguments;
     }
-
-
 
     public String getInfo() {
         return ConsoleColors.BLUE_BOLD + usage + ": " + ConsoleColors.RESET +  desc;

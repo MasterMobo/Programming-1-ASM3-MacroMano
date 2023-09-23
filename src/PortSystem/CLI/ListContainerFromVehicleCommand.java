@@ -10,6 +10,7 @@ public class ListContainerFromVehicleCommand extends Command{
         desc = "List containers (of given type) from a vehicle. Type 'all' for <containerType> to get all types";
         usage = "lscv <containerType> <vehicleId>";
         arguments = 2;
+        loginRequired = true;
     }
 
     @Override

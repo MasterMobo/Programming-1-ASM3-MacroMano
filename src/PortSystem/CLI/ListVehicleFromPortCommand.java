@@ -11,6 +11,7 @@ public class ListVehicleFromPortCommand extends Command{
         desc = "List all vehicle (of given type) from a port. Type 'all' for <vehicleType> to get all types";
         usage = "lsv <vehicleType> <portId>";
         arguments = 2;
+        loginRequired = true;
     }
 
     @Override

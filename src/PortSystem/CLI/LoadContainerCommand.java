@@ -12,6 +12,7 @@ public class LoadContainerCommand extends Command {
         desc = "Load containers onto a vehicle";
         usage = "load <vehicleID>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override

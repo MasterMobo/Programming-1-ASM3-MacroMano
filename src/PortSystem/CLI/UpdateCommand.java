@@ -14,6 +14,7 @@ public class UpdateCommand extends Command{
         desc = "Update record of given type and id";
         usage = "upd <type> <id>";
         arguments = 2;
+        loginRequired = true;
     }
 
     @Override

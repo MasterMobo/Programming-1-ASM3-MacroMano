@@ -9,6 +9,7 @@ public class VehicleNewTrip extends Command{
         desc = "Check if vehicle can move to destination port and create new trip";
         usage = "vnt <vehicleId> <destinationPortId> <departDate>";
         arguments = 3;
+        loginRequired = true;
     }
 
     @Override

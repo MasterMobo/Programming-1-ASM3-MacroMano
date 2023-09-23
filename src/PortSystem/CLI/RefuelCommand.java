@@ -11,6 +11,7 @@ public class RefuelCommand extends Command{
         desc = "Refuel the given vehicle";
         usage ="refuel <vehicleId>";
         arguments = 1;
+        loginRequired = true;
     }
 
     @Override
