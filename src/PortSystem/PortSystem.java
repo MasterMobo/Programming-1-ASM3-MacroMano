@@ -33,14 +33,11 @@ public class PortSystem {
             try {
                 cli.executeCommand(command);
             }
-            catch (InputMismatchException e) {
+            catch (InputMismatchException | NumberFormatException e) {
                 DisplayUtils.printErrorMessage("Invalid Input");
             }
             catch (CommandNotFoundException e) {
                 DisplayUtils.printErrorMessage(e.getMessage());
-            }
-            catch (NumberFormatException e) {
-                DisplayUtils.printErrorMessage("Invalid Input");
             }
             catch (Exception e) {
                 e.printStackTrace();
