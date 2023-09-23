@@ -39,9 +39,9 @@ public class User implements DatabaseRecord, Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
-                ", password='*****'" +
-                ", role='" + role + '\'' +
+                "Username: " + username +
+                ", Password: *****" +
+                ", Role: " + role +
                 '}';
     }
 }

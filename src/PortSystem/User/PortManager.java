@@ -20,10 +20,10 @@ public class PortManager extends User {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
-                ", password='*****'" +
-                ", role='" + role + '\'' +
-                ", portID='" + portID + '\'' +
+                "Username: " + username +
+                ", Password: *****" +
+                ", Role: " + role + '\'' +
+                ", Port ID: " + portID +
                 '}';
     }
 }
