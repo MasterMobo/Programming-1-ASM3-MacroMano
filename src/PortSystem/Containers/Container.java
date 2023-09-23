@@ -75,14 +75,6 @@ public abstract class Container implements DatabaseRecord, Serializable {
     }
 
 
-    public boolean validatePortID(PortManager user, String portId) {
-        if (!user.getPortID().equals(portId)) {
-            System.out.println("You do not have the authority to this port");
-            return false;
-        }
-        return true;
-    }
-
     public static HashMap<String, Double> countContainerWeight(ArrayList<Container> containers) {
         HashMap<String, Double> res = new HashMap<>();
         double totalWeight = 0.0;
