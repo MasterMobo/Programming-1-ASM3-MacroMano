@@ -29,8 +29,7 @@ public class UserDatabase extends Database<User>{
     }
 
     @Override
-    public String showInfo(String id) {
-        return null;
+    public void showInfo(String id) {
     }
 
     public void showUserInfo(User user) {

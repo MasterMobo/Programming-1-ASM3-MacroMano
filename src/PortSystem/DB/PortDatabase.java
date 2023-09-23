@@ -18,16 +18,18 @@ public class PortDatabase extends Database<Port> {
     }
 
     @Override
-    public String showInfo(String portID) {
+    public void showInfo(String portID) {
         Port foundPort = find(portID);
-        return "Port{" +
+        if (foundPort == null) return;
+
+        System.out.println( "Port{" +
                 "\n     Name: " + foundPort.getName() + ", " +
                 "\n     ID: " + foundPort.getId() + ", " +
                 "\n     Latitude: " + DisplayUtils.formatDouble(foundPort.getLat()) + ", Longitude: " + DisplayUtils.formatDouble(foundPort.getLon()) + ", " +
                 "\n     Capacity: " + DisplayUtils.formatDouble(foundPort.getCapacity())+ ", Current Weight: " + DisplayUtils.formatDouble(foundPort.getCurrentWeight()) + ", " +
                 "\n     Landing: " + foundPort.isLanding() + ", " +
                 "\n     Container Count: " + getContainerCount(portID) + ", Vehicle Count:" + getVehicleCount(portID) +
-                "\n}";
+                "\n}");
     }
 
     @Override

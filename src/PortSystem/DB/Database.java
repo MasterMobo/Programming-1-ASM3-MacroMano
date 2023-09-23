@@ -86,7 +86,7 @@ public abstract class Database<T extends DatabaseRecord> implements DatabaseOper
     }
 
     @Override
-    public abstract String showInfo(String id);
+    public abstract void showInfo(String id);
 
     @Override
     public T createRecord(T item) {

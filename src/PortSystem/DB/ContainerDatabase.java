@@ -348,15 +348,17 @@ public class ContainerDatabase extends Database<Container> implements Serializab
     }
 
     @Override
-    public String showInfo(String containerId) {
+    public void showInfo(String containerId) {
         Container foundContainer = mdb.getContainers().find(containerId);
-        return "Container{" +
+        if (foundContainer == null) return;
+
+        System.out.println("Container{" +
                 "\n          Type: " + foundContainer.getType() + ", " +
                 "\n          ID: '" + foundContainer.getId() + '\'' + ", " +
                 "\n          Vehicle ID: " + foundContainer.getVehicleId() + ", Port ID: " + foundContainer.getPortId() + ", " +
                 "\n          Weight: " + DisplayUtils.formatDouble(foundContainer.getWeight()) + " kg, " +
                 "\n          Ship Fuel Consumption: " + DisplayUtils.formatDouble(foundContainer.getShipFuelConsumption()) + ", " +
                 "\n          Truck Fuel Consumption: " + DisplayUtils.formatDouble(foundContainer.getTruckFuelConsumption()) +
-                "\n          }";
+                "\n          }");
     }
 }

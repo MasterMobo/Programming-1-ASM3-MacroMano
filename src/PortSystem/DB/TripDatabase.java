@@ -163,16 +163,18 @@ public class TripDatabase extends Database<Trip>{
     }
 
     @Override
-    public String showInfo(String tripID) {
+    public void showInfo(String tripID) {
         Trip foundTrip = find(tripID);
-        return "Trip{" +
+        if (foundTrip == null) return;
+
+        System.out.println( "Trip{" +
                 "\n     ID: " + foundTrip.getId() + ", " +
                 "\n     Vehicle ID: " + foundTrip.getVehicleId()  + ", " +
                 "\n     Depart Port ID: " + foundTrip.getDepartPortId() + ", Arrive Port ID: " + foundTrip.getArrivePortId() + ", " +
                 "\n     Depart Date: " + foundTrip.getDepartDate() + ", Arrive Date: " + foundTrip.getArriveDate() + ", " +
                 "\n     Distance: " + foundTrip.getDistance() + ", Fuel Consumed: " + foundTrip.getFuelConsumed() + ", " +
                 "\n     Status: " + foundTrip.getStatus() +
-                "\n     }";
+                "\n     }");
     }
 
 }

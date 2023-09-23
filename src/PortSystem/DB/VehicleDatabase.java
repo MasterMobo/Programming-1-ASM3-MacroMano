@@ -223,9 +223,11 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
     @Override
-    public String showInfo(String vehicleID) {
+    public void showInfo(String vehicleID) {
         Vehicle foundVehicle = find(vehicleID);
-        return
+        if (foundVehicle == null) return;
+
+        System.out.println(
                 "Vehicle {" +
                 "\n         Name: " + foundVehicle.getName() + ", " +
                 "\n         ID: " + foundVehicle.getId() + ", " +
@@ -235,6 +237,6 @@ public class VehicleDatabase extends Database<Vehicle> {
                 "\n         Fuel Capacity: " + DisplayUtils.formatDouble(foundVehicle.getFuelCapacity()) + ", Current Fuel Amount: " + DisplayUtils.formatDouble(foundVehicle.getCurFuelAmount()) + ", " +
                 "\n         Allowed Containers: " + Arrays.toString(foundVehicle.getAllowedContainers())  + ", " +
                 "\n         Container Count: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId()) + " (Dry Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Dry Storage") + "; Liquid: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Liquid") + "; Open Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Storage") + "; Open Top: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Top") + "; Refrigerated: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Refrigerated") + ")" +
-                "\n         }";
+                "\n         }");
     }
 }
