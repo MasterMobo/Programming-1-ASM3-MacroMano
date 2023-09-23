@@ -9,6 +9,7 @@ import PortSystem.Vehicle.Vehicle;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 import static PortSystem.Utils.DateUtils.toLocalDate;
@@ -166,7 +167,7 @@ public class TripDatabase extends Database<Trip>{
                 "\n     Vehicle ID: " + foundTrip.getVehicleId()  + ", " +
                 "\n     Depart Port ID: " + foundTrip.getDepartPortId() + ", Arrive Port ID: " + foundTrip.getArrivePortId() + ", " +
                 "\n     Depart Date: " + foundTrip.getDepartDate() + ", Arrive Date: " + foundTrip.getArriveDate() + ", " +
-                "\n     Distance: " + foundTrip.getLength() + ", Fuel Consumed: " + foundTrip.getFuelConsumed() + ", " +
+                "\n     Distance: " + foundTrip.getDistance() + ", Fuel Consumed: " + foundTrip.getFuelConsumed() + ", " +
                 "\n     Status: " + foundTrip.getStatus() +
                 "\n     }";
     }
