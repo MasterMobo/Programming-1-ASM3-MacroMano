@@ -16,10 +16,6 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         super(mdb, "c");
     }
 
-    private boolean vehicleExists(String vehicleId) {
-        return mdb.getVehicles().exists(vehicleId);
-    }
-
     public ArrayList<Container> fromVehicle(String vehicleId) {
         Vehicle vehicle = mdb.getVehicles().find(vehicleId);
         if (vehicle == null) return null;
