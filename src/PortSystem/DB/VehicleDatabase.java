@@ -18,18 +18,9 @@ public class VehicleDatabase extends Database<Vehicle> {
         super(mdb, "v");
     }
 
-    private boolean portExists(String portId) {
-        return mdb.getPorts().exists(portId);
-    }
-    private boolean vehicleExists(String vehicleId) {
-        return mdb.getVehicles().exists(vehicleId);
-    }
-    private boolean tripExists(String tripId) {
-        return mdb.getTrips().exists(tripId);
-    }
-
     public ArrayList<Vehicle> fromPort(String portID) {
-        if (!portExists(portID)) return null;
+        Port port = mdb.getPorts().find(portID);
+        if (port == null) return null;
 
         ArrayList<Vehicle> res = new ArrayList<>();
 
@@ -44,7 +35,8 @@ public class VehicleDatabase extends Database<Vehicle> {
     
 
     public ArrayList<Vehicle> shipsFromPort(String portID) {
-        if (!portExists(portID)) return null;
+        Port port = mdb.getPorts().find(portID);
+        if (port == null) return null;
 
         ArrayList<Vehicle> res = new ArrayList<>();
 
@@ -58,7 +50,8 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
     public ArrayList<Vehicle> trucksFromPort(String portID) {
-        if (!portExists(portID)) return null;
+        Port port = mdb.getPorts().find(portID);
+        if (port == null) return null;
 
         ArrayList<Vehicle> res = new ArrayList<>();
 
