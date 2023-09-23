@@ -37,10 +37,10 @@ public class UserDatabase extends Database<User>{
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
         if (!Objects.equals(user.getPassword(), password)) {
-            System.out.println("Invalid password");
+            DisplayUtils.printErrorMessage("Invalid password");
             return;
         }
-        System.out.println(user.toString());
+        System.out.println(user);
     }
 
     public User deleteManager(String id) {

@@ -1,11 +1,9 @@
 package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
-import PortSystem.User.PortManager;
-import PortSystem.User.SystemAdmin;
 
-public class UpdateTripStatus extends Command{
-    public UpdateTripStatus() {
+public class UpdateTripStatusCommand extends Command{
+    public UpdateTripStatusCommand() {
         super();
         signature = "uts";
         desc = "Update Trip Status";

@@ -1,11 +1,7 @@
 package PortSystem.CLI;
 
 
-import PortSystem.Containers.Container;
 import PortSystem.DB.MasterDatabase;
-import PortSystem.Port.Port;
-import PortSystem.User.User;
-import PortSystem.Vehicle.Vehicle;
 
 public class ShowUserInfoCommand extends Command{
     public ShowUserInfoCommand() {

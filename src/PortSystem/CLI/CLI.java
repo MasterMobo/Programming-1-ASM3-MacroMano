@@ -3,11 +3,9 @@ package PortSystem.CLI;
 import PortSystem.DB.MasterDatabase;
 import PortSystem.Exceptions.CommandNotFoundException;
 import PortSystem.User.User;
-import PortSystem.Utils.ConsoleColors;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class CLI {
     private final Map<String, Command> commandMap;
@@ -36,8 +34,8 @@ public class CLI {
         commandMap.put("find", new FindCommand());
         commandMap.put("statfuel", new StatFuelCommand());
         commandMap.put("statcon", new StatContainerCommand());
-        commandMap.put("vnt", new VehicleNewTrip());
-        commandMap.put("uts", new UpdateTripStatus());
+        commandMap.put("vnt", new VehicleNewTripCommand());
+        commandMap.put("uts", new UpdateTripStatusCommand());
         commandMap.put("refuel", new RefuelCommand());
         // Add more commands as needed
 

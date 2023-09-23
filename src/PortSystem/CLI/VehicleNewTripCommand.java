@@ -2,8 +2,8 @@ package PortSystem.CLI;
 
 import PortSystem.DB.MasterDatabase;
 
-public class VehicleNewTrip extends Command{
-    public VehicleNewTrip() {
+public class VehicleNewTripCommand extends Command{
+    public VehicleNewTripCommand() {
         super();
         signature = "Vnt";
         desc = "Check if vehicle can move to destination port and create new trip";

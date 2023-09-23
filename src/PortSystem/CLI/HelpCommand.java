@@ -34,8 +34,8 @@ public class HelpCommand extends Command{
                 + new UpdateCommand().getInfo() + "\n"
                 + new LoadContainerCommand().getInfo() + "\n"
                 + new UnloadContainerCommand().getInfo() + "\n"
-                + new VehicleNewTrip().getInfo() + "\n"
-                + new UpdateTripStatus().getInfo() + "\n"
+                + new VehicleNewTripCommand().getInfo() + "\n"
+                + new UpdateTripStatusCommand().getInfo() + "\n"
                 + new RefuelCommand().getInfo() + "\n"
                 + new StatContainerCommand().getInfo() + "\n"
                 + new StatFuelCommand().getInfo()
