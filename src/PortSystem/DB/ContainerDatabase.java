@@ -352,4 +352,15 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         return deletedContainer;
     }
+    public String showInfo(String containerId) {
+        Container foundContainer = mdb.getContainers().find(containerId);
+        return "Container{" +
+                "\n          type='" + foundContainer.getType() + '\'' + ", " +
+                "\n          id='" + foundContainer.getId() + '\'' + ", " +
+                "\n          vehicleId='" + foundContainer.getVehicleId() + '\'' + ", portId='" + foundContainer.getPortId() + '\'' + ", " +
+                "\n          weight=" + foundContainer.getWeight() + "kg, " +
+                "\n          shipFuelConsumption=" + DisplayUtils.formatDouble(foundContainer.getShipFuelConsumption()) + ", " +
+                "\n          truckFuelConsumption=" + DisplayUtils.formatDouble(foundContainer.getTruckFuelConsumption()) +
+                "\n          }";
+    }
 }

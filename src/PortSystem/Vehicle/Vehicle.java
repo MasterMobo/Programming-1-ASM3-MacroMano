@@ -6,7 +6,7 @@ import PortSystem.Containers.*;
 import java.io.Serializable;
 import java.util.*;
 
-public class Vehicle implements DatabaseRecord, Serializable {
+public abstract class Vehicle implements DatabaseRecord, Serializable {
 
     private String name;
     private String id;
@@ -78,7 +78,9 @@ public class Vehicle implements DatabaseRecord, Serializable {
         return carryCapacity;
     }
 
-
+    public String[] getAllowedContainers() {
+        return allowedContainers;
+    }
 
     public boolean allowToAdd(Container c){
         for(String s: allowedContainers) {
@@ -163,15 +165,14 @@ public class Vehicle implements DatabaseRecord, Serializable {
     @Override
     public String toString() {
         return "Vehicle {" +
-                "\n         name='" + name + '\'' +
-                ", \n         id='" + id + '\'' +
-                ", \n         type='" + type + '\'' +
-                ", \n         portId='" + portId + '\'' +
-                ", \n         carryCapacity=" + carryCapacity +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", portId='" + portId + '\'' +
+                ", carryCapacity=" + carryCapacity +
                 ", curCarryWeight=" + curCarryWeight +
                 ", fuelCapacity=" + fuelCapacity +
                 ", curfuelCapacity=" + curfuelCapacity +
-                ", \n         allowedContainers=" + Arrays.toString(allowedContainers) +
-                "\n         }";
+                "}";
     }
 }

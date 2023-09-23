@@ -10,10 +10,7 @@ import PortSystem.Vehicle.Truck;
 import PortSystem.Vehicle.Vehicle;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class VehicleDatabase extends Database<Vehicle> {
@@ -81,6 +78,26 @@ public class VehicleDatabase extends Database<Vehicle> {
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
+    public int getTotalContainerCount(String vehicleId) {
+        Vehicle v = mdb.getVehicles().find(vehicleId);
+        int num;
+        if (mdb.getContainers().fromVehicle(v.getId()) == null) {
+            num = 0;
+        }
+        else { num = (mdb.getContainers().fromVehicle(v.getId())).size();}
+        return num;
+    }
+
+    public int getTotalContainerCount(String vehicleId, String type) {
+        Vehicle v = mdb.getVehicles().find(vehicleId);
+        int num;
+        if (mdb.getContainers().fromVehicle(v.getId(), type) == null) {
+            num = 0;
+        }
+        else { num = (mdb.getContainers().fromVehicle(v.getId(), type)).size();}
+        return num;
+    }
+
 
     public void newTrip(String vehicleId, String nextPortId, String departDateString) {
         Vehicle v = mdb.getVehicles().find(vehicleId);
@@ -114,8 +131,6 @@ public class VehicleDatabase extends Database<Vehicle> {
             return;
         }
 
-
-
         // TODO also need these conditions for moving:
         //  also, can you pls put all the move conditions into one function instead of putting them here? (its really hard to read)
 
@@ -143,7 +158,7 @@ public class VehicleDatabase extends Database<Vehicle> {
             DisplayUtils.printSystemMessage("Added new trip: " + trip);
             return;
         }
-        DisplayUtils.printErrorMessage("Invalid input, Expecting 'y' or 'n\'");
+        DisplayUtils.printInvalidTypeError("y, n");
     }
 
 
@@ -205,15 +220,30 @@ public class VehicleDatabase extends Database<Vehicle> {
         return vehicle;
     }
 
-// TODO do you even need this? just use find()
 
-//    public void showInfo(String vehicleID) {
-//        if (!vehicleExists(vehicleID)) {
-//            System.out.println("Invalid Vehicle ID");
-//            return;
-//        }
-//        Vehicle foundVehicle = find(vehicleID);
-//        System.out.println(foundVehicle.toString());
-//    }
+    @Override
+    public Vehicle delete(String id) {
+        Vehicle deletedVehicle = super.delete(id);
+        if (deletedVehicle == null) return null;
 
+        if (mdb.getPorts().exists(deletedVehicle.getPortId())) {
+            mdb.getPorts().find(deletedVehicle.getPortId()).decreaseVehicleCount();
+        }
+
+        return deletedVehicle;
+    }
+
+    public String showInfo(String vehicleID) {
+        Vehicle foundVehicle = find(vehicleID);
+        return
+                "Vehicle {" +
+                "\n         name='" + foundVehicle.getName() + '\'' + ", " +
+                "\n         id='" + foundVehicle.getId() + '\'' + ", " +
+                "\n         type='" + foundVehicle.getType() + '\'' + ", " +
+                "\n         portId='" + foundVehicle.getPortId() + '\'' + ", " +
+                "\n         carryCapacity=" + foundVehicle.getCarryCapacity() + ", curCarryWeight=" + foundVehicle.getCurCarryWeight() + ", fuelCapacity=" + foundVehicle.getFuelCapacity() + ", curfuelCapacity=" + foundVehicle.getCurfuelCapacity() + ", " +
+                "\n         allowedContainers=" + Arrays.toString(foundVehicle.getAllowedContainers())  + ", " +
+                "\n         curContainerNum=" + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId()) + " (Dry Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Dry Storage") + "; Liquid: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Liquid") + "; Open Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Storage") + "; Open Top: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Top") + "; Refrigerated: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Refrigerated") + ")" +
+                "\n         }";
+    }
 }

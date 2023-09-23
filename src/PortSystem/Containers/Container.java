@@ -2,6 +2,7 @@ package PortSystem.Containers;
 
 import PortSystem.DB.DatabaseRecord;
 import PortSystem.User.PortManager;
+import PortSystem.Utils.DisplayUtils;
 
 import java.io.Serializable;
 import java.util.*;
@@ -127,9 +128,9 @@ public abstract class Container implements DatabaseRecord, Serializable {
                 ", id='" + id + '\'' +
                 ", vehicleId='" + vehicleId + '\'' +
                 ", portId='" + portId + '\'' +
-                ", weight=" + weight +
-                ", shipFuelConsumption=" + shipFuelConsumption +
-                ", truckFuelConsumption=" + truckFuelConsumption +
+                ", weight=" + weight + "kg" +
+                ", shipFuelConsumption=" + DisplayUtils.formatDouble(shipFuelConsumption) +
+                ", truckFuelConsumption=" + DisplayUtils.formatDouble(truckFuelConsumption) +
                 '}';
     }
 

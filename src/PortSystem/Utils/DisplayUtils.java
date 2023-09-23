@@ -11,7 +11,9 @@ public class DisplayUtils {
             System.out.println(o);
         }
     }
-
+    public static String formatDouble(double num) {
+        return String.format("%.2f", num);
+    }
     public static void printInvalidTypeError(String expectedTypes) {
         System.out.println(ConsoleColors.YELLOW + "Invalid Type. Expecting: " + expectedTypes + ConsoleColors.RESET);
     }

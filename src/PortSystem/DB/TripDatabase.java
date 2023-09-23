@@ -161,16 +161,17 @@ public class TripDatabase extends Database<Trip>{
         DisplayUtils.printErrorMessage("Invalid input, Expecting 'y' or 'n\'");
     }
 
-// TODO do you even need this? just use find()
 
-//    public void showInfo(String tripID) {
-//        if (!tripExists(tripID)) {
-//            System.out.println("Invalid Trip ID");
-//            return;
-//        }
-//        Trip foundTrip = find(tripID);
-//        System.out.println(foundTrip.toString());
-//    }
-    
+    public String showInfo(String tripID) {
+        Trip foundTrip = find(tripID);
+        return "Trip{" +
+                "\n     id='" + foundTrip.getId() + '\'' + ", " +
+                "\n     vehicleId='" + foundTrip.getVehicleId() + '\'' + ", " +
+                "\n     departPortId='" + foundTrip.getDepartPortId() + '\'' + ", arrivePortId='" + foundTrip.getArrivePortId() + '\'' + ", " +
+                "\n     departDate=" + foundTrip.getDepartDate() + ", arriveDate=" + foundTrip.getArriveDate() + ", " +
+                "\n     length=" + foundTrip.getLength() + ", fuelConsumed=" + foundTrip.getFuelConsumed() + ", " +
+                "\n     status=" + foundTrip.getStatus() +
+                "\n     }";
+    }
 
 }

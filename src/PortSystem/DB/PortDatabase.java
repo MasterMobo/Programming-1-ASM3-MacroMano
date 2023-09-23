@@ -1,6 +1,7 @@
 package PortSystem.DB;
 
 import PortSystem.Port.Port;
+import PortSystem.Trip.Trip;
 import PortSystem.User.User;
 import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DisplayUtils;
@@ -12,16 +13,18 @@ public class PortDatabase extends Database<Port> {
     public PortDatabase(MasterDatabase mdb) {
         super(mdb, "p");
     }
-    // TODO do you even need this? just use find()
 
-//    public void showInfo(String portID) {
-//        if (!portExists(portID)) {
-//            System.out.println("Invalid Port ID");
-//            return;
-//        }
-//        Port foundPort = find(portID);
-//        System.out.println(foundPort.toString());
-//    }
+    public String showInfo(String portID) {
+        Port foundPort = find(portID);
+        return "Port{" +
+                "\n     name='" + foundPort.getName() + '\'' + ", " +
+                "\n     id='" + foundPort.getId() + '\'' + ", " +
+                "\n     latitude=" + foundPort.getLat() + ", longitude=" + foundPort.getLon() + ", " +
+                "\n     capacity=" + foundPort.getCapacity() + ", currentWeight=" + foundPort.getCurrentWeight() + ", " +
+                "\n     isLanding=" + foundPort.isLanding() + ", " +
+                "\n     containerCount=" + foundPort.getContainerCount() + ", vehicleCount=" + foundPort.getVehicleCount() +
+                "\n}";
+    }
 
     @Override
     public Port updateRecord(String id) {
