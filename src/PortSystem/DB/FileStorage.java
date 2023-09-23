@@ -7,7 +7,7 @@ public class FileStorage {
     private static final String FILE_NAME = "db.obj";
 
     private static String getFileDir() {
-        return "src" + File.separator + FILE_NAME;
+        return FILE_NAME;
     }
 
     static boolean fileExists() {
