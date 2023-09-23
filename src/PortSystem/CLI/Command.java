@@ -31,6 +31,7 @@ public abstract class Command {
         if (!validArguments(args)) {
             DisplayUtils.printErrorMessage("Expected " + arguments + " argument(s), but received " + args.length);
             DisplayUtils.printErrorMessage("Usage: " + usage);
+            DisplayUtils.printErrorMessage("Description: " + desc);
             return;
         }
 

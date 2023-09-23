@@ -6,7 +6,10 @@ import java.util.ArrayList;
 
 public class DisplayUtils {
     public static void printArray(ArrayList arr) {
-        if (arr == null) return;
+        if (arr == null || arr.size() == 0) {
+            DisplayUtils.printErrorMessage("No records found");
+            return;
+        }
         for (Object o : arr) {
             System.out.println(o);
         }

@@ -129,7 +129,7 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
     public String toString() {
         return "Port{" +
                 name +
-                " - " + id + '\'' +
+                " - " + id +
                 ", location: " +
                 "(" + lat + "°N, " +
                 lon + "°E" + ")" +

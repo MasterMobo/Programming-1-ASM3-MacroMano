@@ -28,7 +28,10 @@ public class TripDatabase extends Database<Trip>{
         // Returns all the trips departed on the given date
         ArrayList<Trip> res = new ArrayList<>();
         LocalDate date = toLocalDate(dateString);
-        if (date == null) return null;
+        if (date == null) {
+            DisplayUtils.printErrorMessage("There are no trips on the given day");
+            return null;
+        }
 
         for (Trip trip: data.values()) {
             if (trip.getDepartDate().isEqual(date)) res.add(trip);
