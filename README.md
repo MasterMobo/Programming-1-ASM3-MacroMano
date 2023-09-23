@@ -15,7 +15,7 @@ A Port Management System by Nacromano
 
 ## About
 
-Welcome to the Nacromano Port Management System! This project is a part of the Programming 1 course (COSC2081) and is developed by the talented team Nacromano. Our system is designed to streamline the management of ports, vehicles, and containers using Java.
+Welcome to the Portify! This project is a part of the Programming 1 course (COSC2081) and is developed by the Nacromano team. Our system is designed to streamline the management of ports, vehicles, and containers using Java.
 
 ## Important Links
 - Repository URL: https://github.com/MasterMobo/Programming-1-ASM3-MacroMano
@@ -29,6 +29,7 @@ These instructions will help you get a copy of the project up and running on you
 
 - Java Development Kit (JDK) 8 or higher
 - Git (optional, if you want to clone the repository)
+- IntelliJ (optional)
 
 ### Installation
 
@@ -38,12 +39,15 @@ These instructions will help you get a copy of the project up and running on you
    git clone https://github.com/MasterMobo/Programming-1-ASM3-MacroMano.git
    ```
 
-   Alternatively, you can [download the project as a ZIP file](https://github.com/MasterMobo/Programming-1-ASM3-MacroMano/archive/main.zip) and extract it to your desired directory.
+   Alternatively, you can [download the project as a ZIP file](https://github.com/MasterMobo/Programming-1-ASM3-MacroMano/archive/main.zip) and extract it to your desired directory. 
+
+   After cloning, it is recommended to open the project in IntelliJ. Alternatively, build and execute the project directly with the following steps.
+
 
 2. Navigate to the project directory:
 
    ```bash
-   cd Programming-1-ASM3-MacroMano
+   cd Programming-1-ASM3-MacroMano/src
    ```
 
 3. Compile the Java code:
