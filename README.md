@@ -15,7 +15,7 @@ A Port Management System by Nacromano
 
 ## About
 
-Welcome to the Portify! This project is a part of the Programming 1 course (COSC2081) and is developed by the Nacromano team. Our system is designed to streamline the management of ports, vehicles, and containers using Java.
+Welcome to Portify! This project is a part of the Programming 1 course (COSC2081) and is developed by the Nacromano team. Our system is designed to streamline the management of ports, vehicles, and containers using Java.
 
 ## Important Links
 - Repository URL: https://github.com/MasterMobo/Programming-1-ASM3-MacroMano
@@ -73,7 +73,7 @@ The Nacromano Port Management System provides a user-friendly interface to manag
 - **Container Management**: Monitor containers within the port. Create, update, and remove container records, including ID, weight and fuel consumption.
 - And many more!
 
-Our system provides a simple text-based menu interface to access these features. Follow the on-screen prompts to navigate through the options.
+Our system provides a simple text-based interface to access these features. Follow the on-screen prompts to navigate through the options.
 
 
 ## Contributors
