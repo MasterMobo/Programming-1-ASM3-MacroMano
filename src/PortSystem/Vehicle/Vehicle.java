@@ -6,8 +6,7 @@ import PortSystem.Containers.*;
 import java.io.Serializable;
 import java.util.*;
 
-public abstract class Vehicle implements DatabaseRecord, Serializable {
-
+public abstract class Vehicle implements VehicleOperations, DatabaseRecord, Serializable {
     private String name;
     private String id;
     protected String type;
@@ -15,7 +14,7 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
     private double carryCapacity;
     private double curCarryWeight;
     private double fuelCapacity;
-    private double curFuelAmount = fuelCapacity;
+    private double curFuelAmount;
     protected String[] allowedContainers;
 
     public Vehicle(String name, double carryCapacity, double fuelCapacity) {
@@ -33,17 +32,22 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
         return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public double getCurCarryWeight() {
+        return curCarryWeight;
+    }
+
+    public double getCarryCapacity() {
+        return carryCapacity;
+    }
+
+    public String[] getAllowedContainers() {
+        return allowedContainers;
     }
 
     public double getCurFuelAmount() {
         return curFuelAmount;
     }
 
-    public void setFuelCapacity(double fuelCapacity) {
-        this.fuelCapacity = fuelCapacity;
-    }
 
     public double getFuelCapacity() {
         return fuelCapacity;
@@ -51,6 +55,13 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
 
     public String getPortId() {
         return portId;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFuelCapacity(double fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
     }
 
     public void setPortId(String portId) {
@@ -69,19 +80,7 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
         this.curCarryWeight = curCarryWeight;
     }
 
-
-    public double getCurCarryWeight() {
-        return curCarryWeight;
-    }
-
-    public double getCarryCapacity() {
-        return carryCapacity;
-    }
-
-    public String[] getAllowedContainers() {
-        return allowedContainers;
-    }
-
+    @Override
     public boolean allowToAdd(Container c){
         for(String s: allowedContainers) {
             if (s.equals(c.getType())){
@@ -91,23 +90,25 @@ public abstract class Vehicle implements DatabaseRecord, Serializable {
         return false;
     };
 
-
-    public boolean canAddContainer(Container c){
-        return getCurCarryWeight() + c.getWeight() <= getCarryCapacity();
+    @Override
+    public boolean canAddWeight(Container c){
+        return curCarryWeight + c.getWeight() <= carryCapacity;
     }
 
+    @Override
     public void addWeight(Container c){
         curCarryWeight += c.getWeight();
     }
 
+    @Override
     public void deductWeight(Container c){
         curCarryWeight -= c.getWeight();
     }
-    public double deductFuel(Vehicle v) {
-       return v.getFuelCapacity() - v.getCurFuelAmount();
-    };
 
+    @Override
+    public void deductFuel(double consumeAmount) {curFuelAmount -= consumeAmount;}
 
+    @Override
     public double calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
         float result = 0;
         double portDistance = p1.getDist(p2);

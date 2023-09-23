@@ -13,9 +13,7 @@ import java.util.ArrayList;
 public class MasterDatabase implements Serializable {
     // Class containing all other Databases
     // The main class for User to interact with the Databases
-
     private static final int RECORD_LIFETIME = 7;
-
     private PortDatabase ports;
     private UserDatabase users;
     private TripDatabase trips;

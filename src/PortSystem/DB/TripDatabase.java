@@ -139,7 +139,7 @@ public class TripDatabase extends Database<Trip>{
                 DisplayUtils.printSystemMessage("Trip is initiated! Vehicle is on the way");
                 trip.setStatus(TripStatus.EN_ROUTE);
                 v.setPortId(null);
-                v.setCurFuelAmount(v.getFuelCapacity() - trip.getFuelConsumed());
+                v.deductFuel(trip.getFuelConsumed());
                 mdb.save();
                 return;
             }
