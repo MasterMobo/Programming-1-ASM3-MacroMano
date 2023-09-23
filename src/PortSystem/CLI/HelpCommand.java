@@ -21,7 +21,7 @@ public class HelpCommand extends Command{
             commandInfo.append(command.getInfo()).append("\n");
         }
         // TODO: add more commands for help
-        System.out.println(ConsoleColors.CYAN_UNDERLINED + "Available Commands:\n" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.CYAN_UNDERLINED + "Available Commands:" + ConsoleColors.RESET);
         System.out.println(commandInfo);
     }
 }
