@@ -176,7 +176,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         if (p == null) return null;
 
         vehicle.setPortId(p.getId());
-        p.increaseVehicleCount();
         add(vehicle);
         DisplayUtils.printSystemMessage("Created Record: " + vehicle);
         return vehicle;
@@ -204,18 +203,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         mdb.save();
         DisplayUtils.printSystemMessage("Updated record: " + vehicle);
         return vehicle;
-    }
-
-    @Override
-    public Vehicle delete(String id) {
-        Vehicle deletedVehicle = super.delete(id);
-        if (deletedVehicle == null) return null;
-
-        if (mdb.getPorts().exists(deletedVehicle.getPortId())) {
-            mdb.getPorts().find(deletedVehicle.getPortId()).decreaseVehicleCount();
-        }
-
-        return deletedVehicle;
     }
 
 // TODO do you even need this? just use find()

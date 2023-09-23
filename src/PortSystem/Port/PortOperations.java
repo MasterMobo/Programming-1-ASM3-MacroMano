@@ -7,11 +7,4 @@ public interface PortOperations {
     boolean canAddContainer(Container c);
     void addContainer(Container c);
     void removeContainer(Container c);
-    void increaseContainerCount();
-
-    void increaseVehicleCount();
-
-    void decreaseContainerCount();
-
-    void decreaseVehicleCount();
 }

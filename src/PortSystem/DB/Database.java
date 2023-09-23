@@ -109,8 +109,6 @@ public class Database<T extends DatabaseRecord> implements DatabaseOperations<T>
         return record;
     }
 
-
-
     public void display() {
         data.forEach((key, val) -> {
             System.out.println(val);

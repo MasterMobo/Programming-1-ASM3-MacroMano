@@ -16,8 +16,6 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
     private double capacity;
     private double currentWeight;
     private boolean isLanding;
-    private int containerCount;
-    private int vehicleCount;
 
     public Port() {
     }
@@ -28,8 +26,6 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
         this.lon = lon;
         this.capacity = capacity;
         this.isLanding = isLanding;
-        containerCount = 0;
-        vehicleCount = 0;
     }
 
     public String getName() {
@@ -58,14 +54,6 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
 
     public double getCurrentWeight() {
         return currentWeight;
-    }
-
-    public int getContainerCount() {
-        return containerCount;
-    }
-
-    public int getVehicleCount() {
-        return vehicleCount;
     }
 
     public boolean isLanding() {
@@ -101,13 +89,11 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
     @Override
     public void addContainer(Container c) {
         currentWeight += c.getWeight();
-        containerCount++;
     }
 
     @Override
     public void removeContainer(Container c) {
         currentWeight -= c.getWeight();
-        containerCount--;
     }
 
     @Override
@@ -115,25 +101,6 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
         return c.getWeight() + currentWeight <= capacity;
     }
 
-    @Override
-    public void increaseContainerCount() {
-        containerCount++;
-    }
-
-    @Override
-    public void increaseVehicleCount() {
-        vehicleCount++;
-    }
-
-    @Override
-    public void decreaseContainerCount() {
-        containerCount--;
-    }
-
-    @Override
-    public void decreaseVehicleCount() {
-        vehicleCount--;
-    }
 
     public static Port createPort() {
         Scanner scanner = new Scanner(System.in);
@@ -167,8 +134,6 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
                 ", capacity=" + capacity +
                 ", currentWeight=" + currentWeight +
                 ", isLanding=" + isLanding +
-                ", containerCount=" + containerCount +
-                ", vehicleCount=" + vehicleCount +
                 '}';
     }
 }

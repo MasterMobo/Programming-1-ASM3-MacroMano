@@ -50,4 +50,12 @@ public class PortDatabase extends Database<Port> {
         data.values().forEach((Port p) -> System.out.println(p.getName() + " - " + p.getId()));
     }
 
+    public int getContainerCount(String portId) {
+        return mdb.getContainers().fromPort(portId).size();
+    }
+
+    public int getVehicleCount(String portId) {
+        return mdb.getContainers().fromVehicle(portId).size();
+    }
+
 }

@@ -44,105 +44,85 @@ public class SampleData {
         // Create Ships:
         Ship ship1 = new Ship("Dakota-102", 5000.0, 2500.0);
         ship1.setPortId(p1.getId());
-        p1.increaseVehicleCount();
         db.getVehicles().add(ship1);
 
         Ship ship2 = new Ship("Yamato-234", 5000.0, 2500.0);
         ship2.setPortId(p2.getId());
-        p2.increaseVehicleCount();
         db.getVehicles().add(ship2);
 
         Ship ship3 = new Ship("BanaHill-781", 5500.0, 2500.0);
         ship3.setPortId(p3.getId());
-        p3.increaseVehicleCount();
         db.getVehicles().add(ship3);
 
         Ship ship4 = new Ship("AkiGun-124", 5500.0, 2500.0);
         ship4.setPortId(p4.getId());
-        p4.increaseVehicleCount();
         db.getVehicles().add(ship4);
 
         Ship ship5 = new Ship("NinhKieu-369", 5200.0, 2200.0);
         ship5.setPortId(p5.getId());
-        p5.increaseVehicleCount();
         db.getVehicles().add(ship5);
 
         //Create Trucks:
         Truck truck1 = new Truck("FuMiHung-556", 340.0, 300.0);
         truck1.setPortId(p1.getId());
-        p1.increaseVehicleCount();
         db.getVehicles().add(truck1);
 
         Truck truck2 = new Truck("OnePillar-231", 360.0, 300.0);
         truck2.setPortId(p2.getId());
-        p2.increaseVehicleCount();
         db.getVehicles().add(truck2);
 
         Truck truck3 = new Truck("CauRong-404", 340.0, 300.0);
         truck3.setPortId(p3.getId());
-        p1.increaseVehicleCount();
         db.getVehicles().add(truck3);
 
         Truck truck4 = new Truck("UnderTheSea-142", 320.0, 350.0);
         truck4.setPortId(p4.getId());
-        p4.increaseVehicleCount();
         db.getVehicles().add(truck4);
 
         Truck truck5 = new Truck("KienCuong-876", 320.0, 350.0);
         truck5.setPortId(p5.getId());
-        p5.increaseVehicleCount();
         db.getVehicles().add(truck5);
 
         //Create TankerTrucks:
         TankerTruck tt1 = new TankerTruck("Hulk-014", 1000.0, 500.0);
         tt1.setPortId(p1.getId());
-        p1.increaseVehicleCount();
         db.getVehicles().add(tt1);
 
         TankerTruck tt2 = new TankerTruck("IronMan-031", 1200.0, 600.0);
         tt2.setPortId(p2.getId());
-        p2.increaseVehicleCount();
         db.getVehicles().add(tt2);
 
         TankerTruck tt3 = new TankerTruck("CaptainAmerica-023", 1000.0, 500.0);
         tt3.setPortId(p1.getId());
-        p3.increaseVehicleCount();
         db.getVehicles().add(tt3);
 
         TankerTruck tt4 = new TankerTruck("Thor-134", 1000.0, 500.0);
         tt4.setPortId(p4.getId());
-        p4.increaseVehicleCount();
         db.getVehicles().add(tt4);
 
         TankerTruck tt5 = new TankerTruck("BlackWidow-314", 1000.0, 500.0);
         tt5.setPortId(p5.getId());
-        p5.increaseVehicleCount();
         db.getVehicles().add(tt5);
 
         //Create ReeferTrucks
         ReeferTruck rt1 = new ReeferTruck("Batman-504", 900.0, 600.0);
         rt1.setPortId(p1.getId());
-        p1.increaseVehicleCount();
         db.getVehicles().add(rt1);
 
         ReeferTruck rt2 = new ReeferTruck("Superman-321", 950.0, 650.0);
         rt2.setPortId(p2.getId());
-        p2.increaseVehicleCount();
         db.getVehicles().add(rt2);
 
         ReeferTruck rt3 = new ReeferTruck("WonderWoman-456", 850.0, 600.0);
         rt3.setPortId(p3.getId());
-        p3.increaseVehicleCount();
         db.getVehicles().add(rt3);
 
         ReeferTruck rt4 = new ReeferTruck("TheFlash-131", 850.0, 600.0);
         rt4.setPortId(p4.getId());
-        p4.increaseVehicleCount();
         db.getVehicles().add(rt4);
 
         ReeferTruck rt5 = new ReeferTruck("GreenLantern-122", 850.0, 600.0);
         rt5.setPortId(p5.getId());
-        p5.increaseVehicleCount();
         db.getVehicles().add(rt5);
 
         //Create Containers:
