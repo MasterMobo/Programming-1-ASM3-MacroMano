@@ -1,17 +1,14 @@
 package PortSystem.DB;
 
-import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
 import PortSystem.Trip.Trip;
 import PortSystem.Trip.TripStatus;
-import PortSystem.Utils.DateUtils;
 import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Vehicle;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
 
 import static PortSystem.Utils.DateUtils.toLocalDate;
@@ -138,7 +135,7 @@ public class TripDatabase extends Database<Trip>{
                 DisplayUtils.printSystemMessage("Trip is initiated! Vehicle is on the way");
                 trip.setStatus(TripStatus.EN_ROUTE);
                 v.setPortId(null);
-                v.setCurfuelCapacity(v.getFuelCapacity() - trip.getFuelConsumed());
+                v.setCurFuelAmount(v.getFuelCapacity() - trip.getFuelConsumed());
                 mdb.save();
                 return;
             }

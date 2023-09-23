@@ -124,11 +124,11 @@ public abstract class Container implements DatabaseRecord, Serializable {
     @Override
     public String toString() {
         return "Container{" +
-                "type='" + type + '\'' +
-                ", id='" + id + '\'' +
+                type +
+                " - " + id  +
+                " - " + weight + "kg" +
                 ", vehicleId='" + vehicleId + '\'' +
                 ", portId='" + portId + '\'' +
-                ", weight=" + weight + "kg" +
                 ", shipFuelConsumption=" + DisplayUtils.formatDouble(shipFuelConsumption) +
                 ", truckFuelConsumption=" + DisplayUtils.formatDouble(truckFuelConsumption) +
                 '}';

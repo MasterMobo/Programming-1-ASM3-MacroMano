@@ -7,6 +7,7 @@ import static java.lang.Math.*;
 
 import PortSystem.Containers.*;
 import PortSystem.DB.DatabaseRecord;
+import PortSystem.Utils.DisplayUtils;
 
 public class Port implements PortOperations, DatabaseRecord, Serializable {
     private String name;
@@ -127,12 +128,13 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
     @Override
     public String toString() {
         return "Port{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", lat=" + lat +
-                ", lon=" + lon +
+                name +
+                " - " + id + '\'' +
+                ", location: " +
+                "(" + lat + "°N, " +
+                lon + "°E" + ")" +
                 ", capacity=" + capacity +
-                ", currentWeight=" + currentWeight +
+                ", currentWeight=" + DisplayUtils.formatDouble(currentWeight) +
                 ", isLanding=" + isLanding +
                 '}';
     }

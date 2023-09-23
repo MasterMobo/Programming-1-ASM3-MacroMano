@@ -135,7 +135,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         //  also, can you pls put all the move conditions into one function instead of putting them here? (its really hard to read)
 
         double totalConsumption = getTotalConsumption(v, vCurrentPort, nextPort);
-        if (!(totalConsumption < v.getCurfuelCapacity())) {
+        if (!(totalConsumption < v.getCurFuelAmount())) {
             DisplayUtils.printErrorMessage("Vehicle not allowed to move due to fuel capacity exceeding");
             return;
         }
@@ -176,7 +176,7 @@ public class VehicleDatabase extends Database<Vehicle> {
             return;
         }
 
-        vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
+        vehicle.setCurFuelAmount(vehicle.getFuelCapacity());
         DisplayUtils.printSystemMessage("Successfully refueled vehicle");
         mdb.save();
     }
@@ -214,7 +214,7 @@ public class VehicleDatabase extends Database<Vehicle> {
         vehicle.setPortId(DBUtils.getInputId("Port ID: ", vehicle.getPortId(), scanner, mdb.getPorts()));
 
 
-        vehicle.setCurfuelCapacity(vehicle.getFuelCapacity());
+        vehicle.setCurFuelAmount(vehicle.getFuelCapacity());
         mdb.save();
         DisplayUtils.printSystemMessage("Updated record: " + vehicle);
         return vehicle;
