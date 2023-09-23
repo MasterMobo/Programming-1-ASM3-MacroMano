@@ -15,13 +15,31 @@ public class HelpCommand extends Command{
 
     @Override
     public void execute(String[] arg, MasterDatabase db, CLI cli) {
-        StringBuilder commandInfo = new StringBuilder();
+        System.out.println(ConsoleColors.CYAN_UNDERLINED + "Available Commands:\n" + ConsoleColors.RESET
+                + new HelpCommand().getInfo() + "\n"
+                + new QuitCommand().getInfo() + "\n"
+                + new LoginCommand().getInfo() + "\n"
+                + new RegisterCommand().getInfo() + "\n"
+                + new LogoutCommand().getInfo() + "\n"
+                + new ShowUserInfoCommand().getInfo() + "\n"
+                + new ListCommand().getInfo() + "\n"
+                + new ListContainerFromVehicleCommand().getInfo() + "\n"
+                + new ListContainerFromPortCommand().getInfo() + "\n"
+                + new ListVehicleFromPortCommand().getInfo() + "\n"
+                + new ListTripsFromPortCommand().getInfo() + "\n"
+                + new ListTripsOnDaysCommand().getInfo() + "\n"
+                + new FindCommand().getInfo() + "\n"
+                + new CreateCommand().getInfo() + "\n"
+                + new DeleteCommand().getInfo() + "\n"
+                + new UpdateCommand().getInfo() + "\n"
+                + new LoadContainerCommand().getInfo() + "\n"
+                + new UnloadContainerCommand().getInfo() + "\n"
+                + new VehicleNewTrip().getInfo() + "\n"
+                + new UpdateTripStatus().getInfo() + "\n"
+                + new RefuelCommand().getInfo() + "\n"
+                + new StatContainerCommand().getInfo() + "\n"
+                + new StatFuelCommand().getInfo()
+        );
 
-        for (Command command: cli.getCommandMap().values()) {
-            commandInfo.append(command.getInfo()).append("\n");
-        }
-        // TODO: add more commands for help
-        System.out.println(ConsoleColors.CYAN_UNDERLINED + "Available Commands:" + ConsoleColors.RESET);
-        System.out.println(commandInfo);
     }
 }
