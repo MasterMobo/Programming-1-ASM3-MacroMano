@@ -16,4 +16,14 @@ public class PortManager extends User {
     public String getPortID() {
         return portID;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='*****'" +
+                ", role='" + role + '\'' +
+                ", portID='" + portID + '\'' +
+                '}';
+    }
 }

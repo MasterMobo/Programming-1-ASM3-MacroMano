@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class User implements DatabaseRecord, Serializable {
-    private String username;
+    protected String username;
     private String password;
     protected String role;
 
