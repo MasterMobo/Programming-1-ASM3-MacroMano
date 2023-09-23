@@ -18,7 +18,7 @@ public class CLI {
         this.db = db;
         commandMap = new HashMap<>();
         commandMap.put("ls", new ListCommand());
-        commandMap.put("lsv", new ListContainerFromPortCommand());
+        commandMap.put("lsv", new ListVehicleFromPortCommand());
         commandMap.put("lscv", new ListContainerFromVehicleCommand());
         commandMap.put("lscp", new ListContainerFromPortCommand());
         commandMap.put("lstp", new ListTripsFromPortCommand());
