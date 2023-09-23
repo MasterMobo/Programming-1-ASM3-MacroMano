@@ -1,11 +1,14 @@
 package PortSystem.DB;
 
+import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
 import PortSystem.Trip.Trip;
 import PortSystem.User.User;
 import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DisplayUtils;
+import PortSystem.Vehicle.Vehicle;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PortDatabase extends Database<Port> {
@@ -22,7 +25,7 @@ public class PortDatabase extends Database<Port> {
                 "\n     latitude=" + foundPort.getLat() + ", longitude=" + foundPort.getLon() + ", " +
                 "\n     capacity=" + foundPort.getCapacity() + ", currentWeight=" + foundPort.getCurrentWeight() + ", " +
                 "\n     isLanding=" + foundPort.isLanding() + ", " +
-                "\n     containerCount=" + foundPort.getContainerCount() + ", vehicleCount=" + foundPort.getVehicleCount() +
+                "\n     containerCount=" + getContainerCount(portID) + ", vehicleCount=" + getVehicleCount(portID) +
                 "\n}";
     }
 
@@ -54,11 +57,15 @@ public class PortDatabase extends Database<Port> {
     }
 
     public int getContainerCount(String portId) {
-        return mdb.getContainers().fromPort(portId).size();
+        ArrayList<Container> containers =  mdb.getContainers().fromPort(portId);
+        if (containers == null) return 0;
+        return containers.size();
     }
 
     public int getVehicleCount(String portId) {
-        return mdb.getContainers().fromVehicle(portId).size();
+        ArrayList<Vehicle> vehicles = mdb.getVehicles().fromPort(portId);
+        if (vehicles == null) return 0;
+        return vehicles.size();
     }
 
 }

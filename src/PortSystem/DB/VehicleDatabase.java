@@ -226,10 +226,6 @@ public class VehicleDatabase extends Database<Vehicle> {
         Vehicle deletedVehicle = super.delete(id);
         if (deletedVehicle == null) return null;
 
-        if (mdb.getPorts().exists(deletedVehicle.getPortId())) {
-            mdb.getPorts().find(deletedVehicle.getPortId()).decreaseVehicleCount();
-        }
-
         return deletedVehicle;
     }
 

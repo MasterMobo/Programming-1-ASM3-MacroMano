@@ -25,8 +25,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         ArrayList<Container> res = new ArrayList<>();
 
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
+        for (Container container: data.values()) {
             if (Objects.equals(container.getVehicleId(), vehicleId)) {
                 res.add(container);
             }
@@ -39,8 +38,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         ArrayList<Container> res = new ArrayList<>();
 
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
+        for (Container container: data.values()) {
             if (Objects.equals(container.getVehicleId(), vehicleId) && container.getType().equals(type)) {
                 res.add(container);
             }
@@ -55,9 +53,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         ArrayList<Container> res = new ArrayList<>();
 
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
-            if (container.getPortId().equals(pId)) {
+        for (Container container: data.values()) {
+            if (Objects.equals(container.getPortId(), pId)) {
                 res.add(container);
             }
         }
@@ -72,9 +69,8 @@ public class ContainerDatabase extends Database<Container> implements Serializab
 
         ArrayList<Container> res = new ArrayList<>();
 
-        for (Map.Entry<String, Container> set: data.entrySet()) {
-            Container container = set.getValue();
-            if (container.getPortId().equals(pId) && container.getType().equals(type)) {
+        for (Container container: data.values()) {
+            if (pId.equals(container.getPortId()) && type.equals(container.getType())) {
                 res.add(container);
             }
         }
