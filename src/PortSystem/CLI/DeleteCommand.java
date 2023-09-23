@@ -37,9 +37,12 @@ public class DeleteCommand extends Command{
                 Container container = db.getContainers().find(id);
                 if (container == null) return;
 
-                if (cli.user instanceof PortManager && !container.getPortId().equals(((PortManager) cli.user).getPortID())) {
-                    DisplayUtils.printErrorMessage("You do not have permission to delete this container");
-                    return;
+                if (cli.user instanceof PortManager) {
+                    String portId = ((PortManager) cli.user).getPortID();
+                    if (!Objects.equals(container.getPortId(), portId)) {
+                        DisplayUtils.printErrorMessage("You do not have permission to delete this container");
+                        return;
+                    }
                 }
 
                 db.getContainers().delete(id);

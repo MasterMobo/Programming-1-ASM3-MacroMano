@@ -76,7 +76,7 @@ public class TripDatabase extends Database<Trip>{
 
         for (Map.Entry<String, Trip> set: data.entrySet()) {
             Trip trip = set.getValue();
-            if (trip.getDepartPortId().equals(portId) || trip.getArrivePortId().equals(portId)) {
+            if (Objects.equals(trip.getDepartPortId(), portId) || Objects.equals(trip.getArrivePortId(), portId)) {
                 res.add(trip);
             }
         }
@@ -92,7 +92,7 @@ public class TripDatabase extends Database<Trip>{
 
         for (Map.Entry<String, Trip> set: data.entrySet()) {
             Trip trip = set.getValue();
-            if (trip.getVehicleId().equals(vehicleId)) {
+            if (Objects.equals(trip.getVehicleId(), vehicleId)) {
                 res.add(trip);
             }
         }

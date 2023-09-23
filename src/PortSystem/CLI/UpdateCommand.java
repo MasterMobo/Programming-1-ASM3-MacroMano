@@ -38,9 +38,12 @@ public class UpdateCommand extends Command{
                 Container container = db.getContainers().find(id);
                 if (container == null) return;
 
-                if (cli.user instanceof PortManager && !Objects.equals(container.getPortId(), ((PortManager) cli.user).getPortID())) {
-                    DisplayUtils.printErrorMessage("You do not have permission to this container");
-                    return;
+                if (cli.user instanceof PortManager) {
+                    String portId = ((PortManager) cli.user).getPortID();
+                    if (!Objects.equals(container.getPortId(), portId)) {
+                        DisplayUtils.printErrorMessage("You do not have permission to delete this container");
+                        return;
+                    }
                 }
 
                 if (db.getContainers().updateRecord(id) == null) return;

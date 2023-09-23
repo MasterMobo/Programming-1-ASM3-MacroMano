@@ -32,7 +32,7 @@ public class UserDatabase extends Database<User>{
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
-        if (!user.getPassword().equals(password)) {
+        if (!Objects.equals(user.getPassword(), password)) {
             System.out.println("Invalid password");
             return;
         }
@@ -85,7 +85,7 @@ public class UserDatabase extends Database<User>{
         System.out.print("Confirm Password: ");
         String confirmPassword = scanner.nextLine().trim();
 
-        if (!password.equals(confirmPassword)) {
+        if (!Objects.equals(password, confirmPassword)) {
             DisplayUtils.printErrorMessage("Invalid confirmation password");
             return null;
         }

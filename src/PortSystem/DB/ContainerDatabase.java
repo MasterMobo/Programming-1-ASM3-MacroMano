@@ -70,7 +70,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         ArrayList<Container> res = new ArrayList<>();
 
         for (Container container: data.values()) {
-            if (pId.equals(container.getPortId()) && type.equals(container.getType())) {
+            if (Objects.equals(pId,container.getPortId()) && Objects.equals(type, container.getType())) {
                 res.add(container);
             }
         }
@@ -116,7 +116,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
                 continue;
             }
 
-            if (!container.getPortId().equals(vehicle.getPortId())) {
+            if (!Objects.equals(container.getPortId(), vehicle.getPortId())) {
                 DisplayUtils.printErrorMessage("Container is not within this port");
                 continue;
             }
