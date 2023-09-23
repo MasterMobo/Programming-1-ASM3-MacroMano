@@ -16,20 +16,18 @@ import static PortSystem.Utils.DateUtils.toLocalDate;
 
 public class TripDatabase extends Database<Trip>{
     // Specialized class to store Trip records
+
     public TripDatabase(MasterDatabase mdb) {
         super(mdb, "t");
-    }
-    private boolean tripExists(String tripId) {
-        return mdb.getTrips().find(tripId) != null;
     }
 
     public ArrayList<Trip> tripsOn(String dateString) {
         // Expecting date in "dd/MM/yyyy" format
         // Returns all the trips departed on the given date
+
         ArrayList<Trip> res = new ArrayList<>();
         LocalDate date = toLocalDate(dateString);
         if (date == null) {
-            DisplayUtils.printErrorMessage("There are no trips on the given day");
             return null;
         }
 
@@ -43,6 +41,7 @@ public class TripDatabase extends Database<Trip>{
     private ArrayList<Trip> tripsOn(LocalDate date) {
         // Helper method for tripsBetween
         // Returns all the trips departed on the given date
+
         ArrayList<Trip> res = new ArrayList<>();
 
         for (Trip trip: data.values()) {
@@ -55,6 +54,7 @@ public class TripDatabase extends Database<Trip>{
     public ArrayList<Trip> tripsBetween(String dateString1, String dateString2) {
         // Expecting date in "dd/MM/yyyy" format
         // Returns all the trips departed between one day and another
+
         ArrayList<Trip> res = new ArrayList<>();
         LocalDate date1 = toLocalDate(dateString1);
         LocalDate date2 = toLocalDate(dateString2);
@@ -70,23 +70,25 @@ public class TripDatabase extends Database<Trip>{
     }
 
     public ArrayList<Trip> fromPort(String portId) {
+        // Returns all trips associated with a given port, null if no port found
+
         Port port = mdb.getPorts().find(portId);
         if (port == null) return null;
 
         ArrayList<Trip> res = new ArrayList<>();
 
-        for (Map.Entry<String, Trip> set: data.entrySet()) {
-            Trip trip = set.getValue();
+        for (Trip trip: data.values()) {
             if (Objects.equals(trip.getDepartPortId(), portId) || Objects.equals(trip.getArrivePortId(), portId)) {
                 res.add(trip);
             }
         }
 
         return res;
-
     }
 
     public ArrayList<Trip> fromVehicle(String vehicleId) {
+        // Returns all trips associated with a given vehicle, null if no vehicle found
+
         Vehicle vehicle = mdb.getVehicles().find(vehicleId);
         if (vehicle == null) return null;
         ArrayList<Trip> res = new ArrayList<>();
@@ -99,10 +101,10 @@ public class TripDatabase extends Database<Trip>{
         }
 
         return res;
-
     }
 
     public double fuelConsumed(String dayString) {
+        // Returns the total amount of fuel consumed on a given day, -1 if dayString is invalid
         double res = 0;
 
         ArrayList<Trip> trips = tripsOn(dayString);
@@ -116,19 +118,17 @@ public class TripDatabase extends Database<Trip>{
     }
 
     public void updateTripStatus(String tripId) {
-        Trip trip = mdb.getTrips().find(tripId);
+        Trip trip = find(tripId);
         if (trip == null) return;
 
-
         Vehicle v = mdb.getVehicles().find(trip.getVehicleId());
-
 
         if (trip.getStatus().equals(TripStatus.FULFILLED)) {
             DisplayUtils.printErrorMessage("This trip is already fulfilled, can not update further");
             return;
         }
 
-//        Show current status
+        // Show current status
         DisplayUtils.printSystemMessage("The current trip status is: " + trip.getStatus());
         DisplayUtils.printSystemMessage("Do you want to update trip status? (y/n)");
         Scanner scanner = new Scanner(System.in);

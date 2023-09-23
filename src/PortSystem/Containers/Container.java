@@ -1,13 +1,11 @@
 package PortSystem.Containers;
 
 import PortSystem.DB.DatabaseRecord;
-import PortSystem.User.PortManager;
 import PortSystem.Utils.DisplayUtils;
 
 import java.io.Serializable;
 import java.util.*;
 
-//Parent class
 public abstract class Container implements DatabaseRecord, Serializable {
     protected String type;
     protected String id;

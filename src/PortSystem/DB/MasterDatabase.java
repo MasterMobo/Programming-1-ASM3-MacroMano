@@ -1,7 +1,6 @@
 package PortSystem.DB;
 
 import PortSystem.Trip.Trip;
-import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DateUtils;
 import PortSystem.Utils.SampleData;
 
@@ -12,13 +11,14 @@ import java.util.ArrayList;
 
 public class MasterDatabase implements Serializable {
     // Class containing all other Databases
-    // The main class for User to interact with the Databases
+    // The main class for CLI to interact with the Databases
+
     private static final int RECORD_LIFETIME = 7;
-    private PortDatabase ports;
-    private UserDatabase users;
-    private TripDatabase trips;
-    private ContainerDatabase containers;
-    private VehicleDatabase vehicles;
+    private final PortDatabase ports;
+    private final UserDatabase users;
+    private final TripDatabase trips;
+    private final ContainerDatabase containers;
+    private final VehicleDatabase vehicles;
 
     public MasterDatabase() {
         ports = new PortDatabase(this);

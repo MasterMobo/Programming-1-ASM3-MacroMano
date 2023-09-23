@@ -1,6 +1,5 @@
 package PortSystem.DB;
 
-import PortSystem.Port.Port;
 import PortSystem.User.PortManager;
 import PortSystem.User.SystemAdmin;
 import PortSystem.User.User;
@@ -12,13 +11,15 @@ import java.util.Scanner;
 
 public class UserDatabase extends Database<User>{
     // Specialized class to store User records
+
     public UserDatabase(MasterDatabase mdb) {
         super(mdb, "");
     }
 
     @Override
     public User add(User user) {
-        // User do not have as randomly generated id, but the id will be username instead
+        // User do not have randomly generated id, but the id will be username instead
+
         if (!isValidId(user.getUsername())) {
             System.out.println("Username already exists");
             return null;

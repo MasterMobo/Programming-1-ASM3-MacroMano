@@ -1,12 +1,10 @@
 package PortSystem.DB;
 
-import PortSystem.User.User;
 import PortSystem.Utils.ConsoleColors;
 import PortSystem.Utils.DisplayUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Scanner;
 
 import static PortSystem.Utils.DBUtils.randKey;
 
@@ -42,8 +40,8 @@ public abstract class Database<T extends DatabaseRecord> implements DatabaseOper
         while (!isValidId(id)) {
             id = generateRandomId();
         }
-        return id;
 
+        return id;
     };
 
     @Override
@@ -65,6 +63,7 @@ public abstract class Database<T extends DatabaseRecord> implements DatabaseOper
         if (res == null) {
             DisplayUtils.printErrorMessage("No record found for ID: " + id);
         }
+
         return res;
     }
 
@@ -82,6 +81,7 @@ public abstract class Database<T extends DatabaseRecord> implements DatabaseOper
 
     @Override
     public boolean exists(String id) {
+        // Returns true if a record with this id exists, false otherwise
         return data.containsKey(id);
     }
 

@@ -11,5 +11,6 @@ public interface VehicleOperations {
     void addWeight(Container c);
     void deductWeight(Container c);
     void deductFuel(double consumeAmount);
+    void refuel();
     double calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers);
 }

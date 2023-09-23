@@ -16,7 +16,6 @@ public class Trip implements DatabaseRecord, Serializable {
     private double fuelConsumed;
     private TripStatus status;
 
-
     public Trip(String vehicleId, String departPortId, String arrivePortId, LocalDate departDate, LocalDate arriveDate, double length, double fuelConsumed, TripStatus status) {
         this.vehicleId = vehicleId;
         this.departPortId = departPortId;
@@ -27,7 +26,6 @@ public class Trip implements DatabaseRecord, Serializable {
         this.fuelConsumed = fuelConsumed;
         this.status = status;
     }
-
 
     public LocalDate getArriveDate() {
         return arriveDate;

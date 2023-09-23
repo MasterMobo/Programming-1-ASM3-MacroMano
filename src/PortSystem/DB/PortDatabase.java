@@ -2,8 +2,6 @@ package PortSystem.DB;
 
 import PortSystem.Containers.Container;
 import PortSystem.Port.Port;
-import PortSystem.Trip.Trip;
-import PortSystem.User.User;
 import PortSystem.Utils.DBUtils;
 import PortSystem.Utils.DisplayUtils;
 import PortSystem.Vehicle.Vehicle;
@@ -12,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PortDatabase extends Database<Port> {
+    // Specialized class to store Port records
 
     public PortDatabase(MasterDatabase mdb) {
         super(mdb, "p");

@@ -14,11 +14,15 @@ import java.util.*;
 
 
 public class VehicleDatabase extends Database<Vehicle> {
+    // Specialized class to store Vehicle records
+
     public VehicleDatabase(MasterDatabase mdb) {
         super(mdb, "v");
     }
 
     public ArrayList<Vehicle> fromPort(String portID) {
+        // Returns all vehicles in a given port, null if no port found
+
         Port port = mdb.getPorts().find(portID);
         if (port == null) return null;
 
@@ -35,6 +39,8 @@ public class VehicleDatabase extends Database<Vehicle> {
     
 
     public ArrayList<Vehicle> shipsFromPort(String portID) {
+        // Returns all ships in a given port, null if no port found
+
         Port port = mdb.getPorts().find(portID);
         if (port == null) return null;
 
@@ -50,6 +56,8 @@ public class VehicleDatabase extends Database<Vehicle> {
     }
 
     public ArrayList<Vehicle> trucksFromPort(String portID) {
+        // Returns all trucks in a given port, null if no port found
+
         Port port = mdb.getPorts().find(portID);
         if (port == null) return null;
 
@@ -64,53 +72,42 @@ public class VehicleDatabase extends Database<Vehicle> {
         return res;
     }
 
-
-
     public double getTotalConsumption(Vehicle vehicle, Port currentPort, Port nextPort) {
         ArrayList<Container> loadedContainers = mdb.getContainers().fromVehicle(vehicle.getId());
         return vehicle.calculateTotalConsumption(currentPort, nextPort, loadedContainers);
     }
 
     public int getTotalContainerCount(String vehicleId) {
-        Vehicle v = mdb.getVehicles().find(vehicleId);
-        int num;
-        if (mdb.getContainers().fromVehicle(v.getId()) == null) {
-            num = 0;
-        }
-        else { num = (mdb.getContainers().fromVehicle(v.getId())).size();}
-        return num;
+        ArrayList<Container> containers = mdb.getContainers().fromVehicle(vehicleId);
+        if (containers == null) return 0;
+
+        return containers.size();
     }
 
     public int getTotalContainerCount(String vehicleId, String type) {
-        Vehicle v = mdb.getVehicles().find(vehicleId);
-        int num;
-        if (mdb.getContainers().fromVehicle(v.getId(), type) == null) {
-            num = 0;
-        }
-        else { num = (mdb.getContainers().fromVehicle(v.getId(), type)).size();}
-        return num;
+        ArrayList<Container> containers = mdb.getContainers().fromVehicle(vehicleId, type);
+        if (containers == null) return 0;
+
+        return containers.size();
     }
 
-
     public void newTrip(String vehicleId, String nextPortId, String departDateString) {
-        Vehicle v = mdb.getVehicles().find(vehicleId);
+        Vehicle v = find(vehicleId);
         if (v  == null) return;
 
-        if (v.getPortId () == nextPortId) {
+        if (Objects.equals(v.getPortId(), nextPortId)) {
             System.out.println("This vehicle is already in this port");
             return;
         }
 
         for (Trip trip: mdb.getTrips().fromVehicle(vehicleId)) {
             if (trip.getStatus() == TripStatus.EN_ROUTE || trip.getStatus() == TripStatus.PROCESSING) {
-                DisplayUtils.printErrorMessage("This vehicle is currently on a trip. Unable to receive a new trip");
+                DisplayUtils.printErrorMessage("This vehicle is currently on a trip. Unable to create a new trip");
                 return;
             }
         }
 
-
         Port vCurrentPort = mdb.getPorts().find(v.getPortId());
-
         if (vCurrentPort == null) return;
 
         Port nextPort = mdb.getPorts().find(nextPortId);
@@ -123,9 +120,6 @@ public class VehicleDatabase extends Database<Vehicle> {
             DisplayUtils.printErrorMessage("The ports are currently unavailable for trucks");
             return;
         }
-
-        // TODO also need these conditions for moving:
-        //  also, can you pls put all the move conditions into one function instead of putting them here? (its really hard to read)
 
         double totalConsumption = getTotalConsumption(v, vCurrentPort, nextPort);
         if (!(totalConsumption < v.getCurFuelAmount())) {
@@ -151,12 +145,13 @@ public class VehicleDatabase extends Database<Vehicle> {
             DisplayUtils.printSystemMessage("Added new trip: " + trip);
             return;
         }
+
         DisplayUtils.printInvalidTypeError("y, n");
     }
 
 
     public void refuelVehicle(String vehicleId, String userPortId) {
-        Vehicle vehicle = mdb.getVehicles().find(vehicleId);
+        Vehicle vehicle = find(vehicleId);
         if (vehicle == null) return;
 
         if (userPortId != null && !Objects.equals(vehicle.getPortId(), userPortId)) {
@@ -165,11 +160,11 @@ public class VehicleDatabase extends Database<Vehicle> {
         }
 
         if (vehicle.getPortId() == null) {
-            DisplayUtils.printErrorMessage("Can't refuel because vehicle is on a trip");
+            DisplayUtils.printErrorMessage("Can't refuel because this vehicle is currently on a trip");
             return;
         }
 
-        vehicle.setCurFuelAmount(vehicle.getFuelCapacity());
+        vehicle.refuel();
         DisplayUtils.printSystemMessage("Successfully refueled vehicle");
         mdb.save();
     }
@@ -204,22 +199,13 @@ public class VehicleDatabase extends Database<Vehicle> {
 
         vehicle.setFuelCapacity(DBUtils.getInputDouble("Fuel Capacity: ", vehicle.getFuelCapacity(), scanner));
 
+        vehicle.setCurFuelAmount(DBUtils.getInputDouble("Current Fuel Amount: ", vehicle.getCurFuelAmount(), scanner));
+
         vehicle.setPortId(DBUtils.getInputId("Port ID: ", vehicle.getPortId(), scanner, mdb.getPorts()));
 
-
-        vehicle.setCurFuelAmount(vehicle.getFuelCapacity());
         mdb.save();
         DisplayUtils.printSystemMessage("Updated record: " + vehicle);
         return vehicle;
-    }
-
-
-    @Override
-    public Vehicle delete(String id) {
-        Vehicle deletedVehicle = super.delete(id);
-        if (deletedVehicle == null) return null;
-
-        return deletedVehicle;
     }
 
     @Override
@@ -236,7 +222,7 @@ public class VehicleDatabase extends Database<Vehicle> {
                 "\n         Carry Capacity: " + DisplayUtils.formatDouble(foundVehicle.getCarryCapacity()) + ", Current Carry Weight: " + DisplayUtils.formatDouble(foundVehicle.getCurCarryWeight()) +
                 "\n         Fuel Capacity: " + DisplayUtils.formatDouble(foundVehicle.getFuelCapacity()) + ", Current Fuel Amount: " + DisplayUtils.formatDouble(foundVehicle.getCurFuelAmount()) + ", " +
                 "\n         Allowed Containers: " + Arrays.toString(foundVehicle.getAllowedContainers())  + ", " +
-                "\n         Container Count: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId()) + " (Dry Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Dry Storage") + "; Liquid: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Liquid") + "; Open Storage: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Storage") + "; Open Top: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Open Top") + "; Refrigerated: " + mdb.getVehicles().getTotalContainerCount(foundVehicle.getId(), "Refrigerated") + ")" +
+                "\n         Container Count: " + getTotalContainerCount(foundVehicle.getId()) + " (Dry Storage: " + getTotalContainerCount(foundVehicle.getId(), "Dry Storage") + "; Liquid: " + getTotalContainerCount(foundVehicle.getId(), "Liquid") + "; Open Storage: " + getTotalContainerCount(foundVehicle.getId(), "Open Storage") + "; Open Top: " + getTotalContainerCount(foundVehicle.getId(), "Open Top") + "; Refrigerated: " + getTotalContainerCount(foundVehicle.getId(), "Refrigerated") + ")" +
                 "\n         }");
     }
 }

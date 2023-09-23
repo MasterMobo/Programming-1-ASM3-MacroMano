@@ -1,17 +1,6 @@
 package PortSystem.Utils;
 
-import PortSystem.Containers.*;
 import PortSystem.DB.Database;
-import PortSystem.DB.MasterDatabase;
-import PortSystem.Port.Port;
-import PortSystem.Trip.Trip;
-import PortSystem.Trip.TripStatus;
-import PortSystem.User.PortManager;
-import PortSystem.User.SystemAdmin;
-import PortSystem.Vehicle.ReeferTruck;
-import PortSystem.Vehicle.Ship;
-import PortSystem.Vehicle.TankerTruck;
-import PortSystem.Vehicle.Truck;
 
 import java.util.Random;
 import java.util.Scanner;

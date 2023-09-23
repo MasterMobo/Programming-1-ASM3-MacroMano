@@ -109,6 +109,11 @@ public abstract class Vehicle implements VehicleOperations, DatabaseRecord, Seri
     public void deductFuel(double consumeAmount) {curFuelAmount -= consumeAmount;}
 
     @Override
+    public void refuel() {
+        curCarryWeight = fuelCapacity;
+    }
+
+    @Override
     public double calculateTotalConsumption(Port p1, Port p2, ArrayList<Container> containers) {
         float result = 0;
         double portDistance = p1.getDist(p2);

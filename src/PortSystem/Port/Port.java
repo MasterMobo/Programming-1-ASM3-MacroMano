@@ -102,7 +102,6 @@ public class Port implements PortOperations, DatabaseRecord, Serializable {
         return c.getWeight() + currentWeight <= capacity;
     }
 
-
     public static Port createPort() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Creating new Port...");
