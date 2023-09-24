@@ -18,7 +18,7 @@ Welcome to Portify! This project is a part of the Programming 1 course (COSC2081
 
 ## Important Links
 - Repository URL: https://github.com/MasterMobo/Programming-1-ASM3-MacroMano
-- Presentation Video:
+- Presentation Video: https://youtu.be/7qCPT3xZ4EE
 
 ## Getting Started
 
