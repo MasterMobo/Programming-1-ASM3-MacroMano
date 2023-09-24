@@ -260,7 +260,7 @@ public class ContainerDatabase extends Database<Container> implements Serializab
             System.out.println(containerType + ": " + weight + " (kg)");
         }
 
-        System.out.println("Total Weight" + typeCount.get("Total Weight") + "(kg)");
+        System.out.println("Total Weight: " + typeCount.get("Total Weight") + "(kg)");
 
     }
 
@@ -272,10 +272,14 @@ public class ContainerDatabase extends Database<Container> implements Serializab
         HashMap<String, Double> typeCount = Container.countContainerWeight(containers);
         for (Map.Entry<String, Double> set: typeCount.entrySet()) {
             String containerType = set.getKey();
+            if (Objects.equals(containerType, "Total Weight")) continue;
+
             double weight = set.getValue();
 
             System.out.println(containerType + ": " + weight + " (kg)");
         }
+
+        System.out.println("Total Weight: " + typeCount.get("Total Weight") + "(kg)");
     }
 
     public Container createRecord(Container container, String portId) {
